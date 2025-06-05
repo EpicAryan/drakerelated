@@ -4,17 +4,19 @@ import { motion, AnimatePresence } from 'motion/react';
 import RoomControls from './roomControls';
 import Hotspot from './hotspot';
 import { HotspotType } from './hotspot';
-
+import {Navigation, NavigationType } from './navigation';
 interface InteractiveRoomProps {
   backgroundImage: string;
   hotspots?: HotspotType[];
+  navigationItems?: NavigationType[];
   className?: string;
 }
 
 
 const InteractiveRoom: React.FC<InteractiveRoomProps> = ({ 
   backgroundImage, 
-  hotspots = [], 
+  hotspots = [],
+  navigationItems = [], 
   className = ""
 }) => {
   const [isExploring, setIsExploring] = useState(false);
@@ -72,6 +74,12 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
               />
             ))}
           </AnimatePresence>
+
+          <AnimatePresence>
+            {navigationItems.map((nav) => (
+              <Navigation key={nav.id} navigation={nav} />
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
 
@@ -79,6 +87,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         onExplore={setIsExploring}
         isExploring={isExploring}
       />
+  
 
       {/* Mobile Instructions */}
       <AnimatePresence>
