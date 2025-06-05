@@ -49,8 +49,8 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           transformOrigin: isRight ? 'right center' : 'left center',
         }}
         animate={{
-          paddingLeft: isHovered ? 4 : 4,
-          paddingRight: isHovered ? 6 : 4,
+          paddingLeft: isHovered ? 5 : 5,
+          paddingRight: isHovered ? 6 : 5,
           height: 28,
         }}
         transition={{

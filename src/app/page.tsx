@@ -1,10 +1,7 @@
-'use client'
+"use client";
 
-import { Bedroom } from "@/components";
-
+import { Livingroom } from "@/components";
 
 export default function Home() {
-  return (
-    <Bedroom/>
-  );
+    return <Livingroom />;
 }
