@@ -13,11 +13,11 @@ export const useKitchenNavigation = (): NavigationType[] => {
     ...item,
     onClick: () => {
       switch (item.label) {
-        case "Back to Living Room":
+        case "Living Room":
           startTransition(() => router.push("/"));
           break;
         case "Exterior":
-          startTransition(() => router.push("/rooms/front"));
+          startTransition(() => router.push("/rooms/exterior"));
           break;
       }
     },

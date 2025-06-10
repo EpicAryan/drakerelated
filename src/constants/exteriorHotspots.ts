@@ -10,14 +10,14 @@ export const exteriorHotspots = [
     id: "2",
     x: 68,
     y: 38,
-    title: "Smart Light",
+    title: "Smart Door Lock",
     description: "Modern hexagonal design",
   },
   {
     id: "3",
     x: 80,
-    y: 21,
-    title: "Indoor Camera",
+    y: 22,
+    title: "Outdoor Camera",
     description: "Cozy sleeping area",
   },
 ];

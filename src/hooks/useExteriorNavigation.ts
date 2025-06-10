@@ -13,11 +13,11 @@ export const useExteriorNavigation = (): NavigationType[] => {
     ...item,
     onClick: () => {
       switch (item.label) {
-        case "Back to Living Room":
-          startTransition(() => router.push("/"));
-          break;
         case "Kitchen":
           startTransition(() => router.push("/rooms/kitchen"));
+          break;
+        case "Living Room":
+          startTransition(() => router.push("/"));
           break;
       }
     },

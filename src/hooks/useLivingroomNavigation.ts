@@ -13,18 +13,12 @@ export const useLivingroomNavigation = (): NavigationType[] => {
         ...item,
         onClick: () => {
         switch (item.label) {
-            case "Enter Lounge":
-            console.log("Navigating to lounge...");
-            //   startTransition(() => router.push("/rooms/lounge"));
+            case "Exterior":
+                startTransition(() => router.push("/rooms/exterior"));
             break;
             case "Kitchen":
-            startTransition(() => router.push("/rooms/kitchen"));
+                startTransition(() => router.push("/rooms/kitchen"));
             break;
-            case "Upstairs":
-            console.log("Going upstairs...");
-            //   startTransition(() => router.push("/rooms/upstairs"));
-            break;
-        }
-        },
+        }},
     }));
 };
