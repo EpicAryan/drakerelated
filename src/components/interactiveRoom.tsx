@@ -1,10 +1,12 @@
-'use client'
-import React, {useEffect, useState, useRef} from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import RoomControls from './roomControls';
-import Hotspot from './hotspot';
-import { HotspotType } from './hotspot';
-import {Navigation, NavigationType } from './navigation';
+"use client";
+
+import React, { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import RoomControls from "./roomControls";
+import Hotspot from "./hotspot";
+import { HotspotType } from "./hotspot";
+import { Navigation, NavigationType } from "./navigation";
+
 interface InteractiveRoomProps {
   backgroundImage: string;
   hotspots?: HotspotType[];
@@ -12,17 +14,18 @@ interface InteractiveRoomProps {
   className?: string;
 }
 
-
-const InteractiveRoom: React.FC<InteractiveRoomProps> = ({ 
-  backgroundImage, 
+const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
+  backgroundImage,
   hotspots = [],
-  navigationItems = [], 
-  className = ""
+  navigationItems = [],
+  className = "",
 }) => {
   const [isExploring, setIsExploring] = useState(false);
-  const containerRef = useRef(null);
   const [canScroll, setCanScroll] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef(null);
 
+  // Handle scrollable layout
   useEffect(() => {
     const checkScrollable = () => {
       const screenWidth = window.innerWidth;
@@ -30,51 +33,50 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
     };
 
     checkScrollable();
-    window.addEventListener('resize', checkScrollable);
-    return () => window.removeEventListener('resize', checkScrollable);
+    window.addEventListener("resize", checkScrollable);
+    return () => window.removeEventListener("resize", checkScrollable);
   }, []);
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = backgroundImage;
+    img.onload = () => setIsLoaded(true);
+  }, [backgroundImage]);
 
   return (
     <div className={`relative w-full min-h-screen bg-gray-900 ${className}`}>
-      
-      
-      {/* Main Content Container with Horizontal Scroll */}
-      <div 
+      {/* Scrollable wrapper */}
+      <div
         ref={containerRef}
-        className={`
-          relative h-screen
-          ${canScroll ? 'overflow-x-auto room-scroll' : 'overflow-hidden'}
-        `}
+        className={`relative h-screen ${
+          canScroll ? "overflow-x-auto room-scroll" : "overflow-hidden"
+        }`}
       >
-        {/* Background Image Container */}
-        <motion.div 
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+        {/* Background with smooth blur transition */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className={`
             relative bg-cover bg-center bg-no-repeat
-            ${canScroll ? 'min-w-[1560px] w-[1560px]' : 'w-full'}
+            transition-all duration-700 ease-out
+            ${canScroll ? "min-w-[1560px] w-[1560px]" : "w-full"}
             h-full
+            ${isLoaded ? "blur-0" : "blur-md scale-105"}
           `}
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-          }}
+          style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-          {/* Gradient Overlay */}
+          {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
 
-          {/* Interactive Hotspots */}
+          {/* Hotspots */}
           <AnimatePresence>
             {hotspots.map((hotspot) => (
-              <Hotspot
-                key={hotspot.id}
-                hotspot={hotspot}
-
-              />
+              <Hotspot key={hotspot.id} hotspot={hotspot} />
             ))}
           </AnimatePresence>
 
+          {/* Navigation items */}
           <AnimatePresence>
             {navigationItems.map((nav) => (
               <Navigation key={nav.id} navigation={nav} />
@@ -83,21 +85,17 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         </motion.div>
       </div>
 
-      <RoomControls 
-        onExplore={setIsExploring}
-        isExploring={isExploring}
-      />
-  
+      {/* Room control buttons */}
+      <RoomControls onExplore={setIsExploring} isExploring={isExploring} />
 
-      {/* Mobile Instructions */}
+      {/* Mobile tap hint */}
       <AnimatePresence>
         {isExploring && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="md:hidden fixed bottom-20 left-1/2 transform -translate-x-1/2 
-                      text-white/80 text-center text-sm z-40"
+            className="md:hidden fixed bottom-20 left-1/2 transform -translate-x-1/2 text-white/80 text-center text-sm z-40"
           >
             <div className="bg-black/70 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
               Tap the white dots to explore
@@ -109,4 +107,4 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   );
 };
 
-export default InteractiveRoom
+export default InteractiveRoom;

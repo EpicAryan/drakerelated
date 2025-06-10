@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Navbar, InitialLoader } from '@/components';
+import { TransitionProvider } from './Transition/transitionContext';
+import TransitionOverlay from './Transition/transitionOverlay';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [showLoader, setShowLoader] = useState(true);
@@ -17,8 +19,11 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <InitialLoader />
       ) : (
         <>
+          <TransitionProvider>
           <Navbar />
+          <TransitionOverlay />
           {children}
+        </TransitionProvider>
         </>
       )}
     </>

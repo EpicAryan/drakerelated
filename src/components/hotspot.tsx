@@ -65,10 +65,9 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
 
         {/* Ripple ring */}
           <motion.div 
-            className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full border-white"
+            className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full border border-white"
             style={{ 
-              transform: 'translate(-50%, -50%)',  
-              borderWidth: '1px',    
+              transform: 'translate(-50%, -50%)',      
               opacity: 0  
             }}
             animate={{ 
