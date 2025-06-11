@@ -11,7 +11,7 @@ const TransitionOverlay = () => {
       {isTransitioning && (
         <motion.div
           className="fixed inset-0 z-[999] bg-black"
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}

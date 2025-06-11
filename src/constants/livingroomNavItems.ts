@@ -10,7 +10,7 @@ export const livingroomNavConstants: Omit<NavigationType, "onClick">[] = [
   },
   {
     id: "nav2",
-    x: 70,
+    x: 65,
     y: 35,
     direction: "right",
     label: "Kitchen",

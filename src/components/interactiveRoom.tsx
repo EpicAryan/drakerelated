@@ -29,7 +29,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   useEffect(() => {
     const checkScrollable = () => {
       const screenWidth = window.innerWidth;
-      setCanScroll(screenWidth < 1560);
+      setCanScroll(screenWidth < 1520);
     };
 
     checkScrollable();
@@ -58,9 +58,9 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className={`
-            relative bg-cover bg-center bg-no-repeat
+            relative bg-cover bg-top bg-no-repeat
             transition-all duration-700 ease-out
-            ${canScroll ? "min-w-[1560px] w-[1560px]" : "w-full"}
+            ${canScroll ? "min-w-[1520px] w-[1520px]" : "w-full"}
             h-full
             ${isLoaded ? "blur-0" : "blur-md scale-105"}
           `}

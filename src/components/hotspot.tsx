@@ -2,6 +2,7 @@
 
 import React, {useState} from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import HotspotCard from './hotspotCard';
 
 
 export interface HotspotType {
@@ -10,7 +11,9 @@ export interface HotspotType {
   y: number;
   title: string;
   description: string;
-  
+  image: string;
+  cardPosition?: 'top' | 'bottom' | 'left' | 'right';
+   tooltipPosition?: 'top' | 'bottom';
 }
 
 interface HotspotProps {
@@ -18,10 +21,15 @@ interface HotspotProps {
 }
 
 
+
 const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const tooltipPosition = hotspot.tooltipPosition || 'top';
 
   return (
+    <>
     <div
       className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
       style={{
@@ -33,37 +41,38 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
     >
       {/* Hotspot Dot */}
       <motion.div 
-        className="relative w-3 h-3"  
+        className="relative w-3 h-3"
+        onClick={() => setIsOpen(!isOpen)}  
       >
-        {/* Dot */}
         <motion.div 
-          className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10"
+          className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
           style={{ transform: 'translate(-50%, -50%)' }}
           animate={{
-            scale: [1, 1, 0.3, 1],
-            opacity: [1, 1, 0.7, 1],
-            boxShadow: [
-              '0 0 10px rgba(0,0,0,0.8)',
-              '0 0 10px rgba(0,0,0,0.8)', 
-              '0 0 15px rgba(0,0,0,0.9)',
-              '0 0 10px rgba(0,0,0,0.8)'
-            ]
+            scale: isOpen ? [1.2, 1.2] : [1, 1, 0.3, 1],
+            opacity: isOpen ? [1, 1] : [1, 1, 0.7, 1],
+            boxShadow: isOpen 
+              ? ['0 0 20px rgba(59, 130, 246, 0.8)', '0 0 20px rgba(59, 130, 246, 0.8)']
+              : [
+                  '0 0 10px rgba(0,0,0,0.8)',
+                  '0 0 10px rgba(0,0,0,0.8)', 
+                  '0 0 15px rgba(0,0,0,0.9)',
+                  '0 0 10px rgba(0,0,0,0.8)'
+                ]
           }}
           transition={{
-            duration: 2.5,
-            repeat: Infinity,
+            duration: isOpen ? 0.3 : 2.5,
+            repeat: isOpen ? 0 : Infinity,
             ease: 'easeInOut',
-            times: [0, 0.6, 0.6, 1],
-            repeatDelay: 1.2 
+            times: isOpen ? [0, 1] : [0, 0.6, 0.6, 1],
+            repeatDelay: isOpen ? 0 : 1.2 
           }}
-
           whileHover={{
-            scale:      0,
-            transition: { duration: 0 }   
+            scale: 1.2,
+            boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)'
           }}
         />
 
-        {/* Ripple ring */}
+        {!isOpen && (
           <motion.div 
             className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full border border-white"
             style={{ 
@@ -73,43 +82,66 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
             animate={{ 
               scale: [1, 1, 1, 6],
               opacity: [0, 0, 0.6, 0]
-          }}
-          transition={{
-            duration: 2.5,
-            delay: 0.8,
-            repeat: Infinity,
-            ease: 'easeOut',
-            times: [0, 0.4, 0.6, 1],
-            repeatDelay: 1.2 
-          }}
-        />
+            }}
+            transition={{
+              duration: 2.5,
+              delay: 0.8,
+              repeat: Infinity,
+              ease: 'easeOut',
+              times: [0, 0.4, 0.6, 1],
+              repeatDelay: 1.2 
+            }}
+          />
+        )}
       </motion.div>
 
+       {/* Tooltip */}
+        <AnimatePresence>
+          {isHovered && !isOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className={`
+                absolute z-40 pointer-events-none 
+                bg-black/90 text-white px-3 py-2 rounded-lg text-xs 
+                whitespace-nowrap backdrop-blur-sm border border-white/20 shadow-xl
+                left-1/2 transform -translate-x-1/2
+                ${tooltipPosition === 'top' ? 'bottom-full mb-3' : ''}
+                ${tooltipPosition === 'bottom' ? 'top-full mt-3' : ''}
+              `}
+            >
+              <div className="font-semibold">{hotspot.title}</div>
+              <div className="text-gray-300 text-xs mt-0.5">Click to view</div>
 
-
-      {/* Tooltip */}
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
-            className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 
-                      bg-black/90 text-white px-4 py-3 rounded-xl text-xs md:text-sm 
-                      whitespace-nowrap backdrop-blur-sm border border-white/20 shadow-2xl
-                      min-w-max"
-          >
-            <div className="font-semibold text-white">{hotspot.title}</div>
-            <div className="text-gray-300 text-xs mt-1">{hotspot.description}</div>
-
-            {/* Arrow */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 
-                          border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {/* Arrow */}
+              {tooltipPosition === 'top' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 
+                  border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90" />
+              )}
+              {tooltipPosition === 'bottom' && (
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 
+                  border-l-4 border-r-4 border-b-4 border-transparent border-b-black/90" />
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
     </div>
+     <div
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 z-50"
+        style={{
+          left: `${hotspot.x}%`,
+          top: `${hotspot.y}%`,
+        }}
+      >
+        <HotspotCard 
+          hotspot={hotspot} 
+          isOpen={isOpen} 
+          onClose={() => setIsOpen(false)} 
+        />
+      </div>
+    </>
   );
 };
 

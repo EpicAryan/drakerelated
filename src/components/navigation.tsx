@@ -26,7 +26,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
 
   return (
     <motion.div
-      className="absolute z-30 cursor-pointer"
+      className="absolute z-60 cursor-pointer"
       style={{
         left: `${navigation.x}%`,
         top: `${navigation.y}%`,
