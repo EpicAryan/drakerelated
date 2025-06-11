@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 
@@ -17,6 +17,23 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize(); // Check initially
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsHovered(true); // Always expanded on mobile
+    }
+  }, [isMobile]);
 
   const getArrowRotation = (direction: 'left' | 'right') => {
     return direction === 'right' ? 180 : 0;
@@ -32,8 +49,8 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         top: `${navigation.y}%`,
         transform: 'translate(-50%, -50%)',
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseLeave={() => !isMobile && setIsHovered(false)}
       onClick={navigation.onClick}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -42,8 +59,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
     >
       <motion.div
         layout
-        className={`flex items-center justify-center rounded-full 
-          bg-transparent border border-white shadow-lg overflow-hidden`}
+        className="flex items-center justify-center rounded-full bg-transparent border border-white shadow-lg overflow-hidden"
         style={{
           flexDirection: isRight ? 'row-reverse' : 'row',
           transformOrigin: isRight ? 'right center' : 'left center',
@@ -56,12 +72,11 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         transition={{
           layout: {
             type: 'spring',
-            stiffness: 180, 
-            damping: 22,    
+            stiffness: 180,
+            damping: 22,
           },
         }}
       >
-        {/* Arrow Icon */}
         <motion.div
           layout
           className="flex items-center justify-center flex-shrink-0"
@@ -74,7 +89,6 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           <ArrowLeft size={16} strokeWidth={2.5} />
         </motion.div>
 
-        {/* Label Text */}
         <AnimatePresence mode="wait">
           {isHovered && (
             <motion.div
