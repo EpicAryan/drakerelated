@@ -8,7 +8,7 @@ export const exteriorHotspots: HotspotType[] = [
     title: "Video DoorBell",
     description: "Vintage music collection",
     image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop",
-    cardPosition: 'right'
+    cardPosition: 'left'
   },
   {
     id: "2",
@@ -17,15 +17,24 @@ export const exteriorHotspots: HotspotType[] = [
     title: "Smart Door Lock",
     description: "Modern hexagonal design",
     image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop",
-    cardPosition: 'right'
+    cardPosition: 'bottom'
   },
   {
     id: "3",
     x: 80,
-    y: 22,
+    y: 24,
     title: "Outdoor Camera",
     description: "Cozy sleeping area",
     image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop",
-    cardPosition: 'right'
+    cardPosition: 'right',
+
+    hasLightBeam: true,
+    beamAngle: 145, 
+    beamLength: 700,
+    beamWidth: 60,
+    beamColor: '#ffffff', 
+    beamSpread: 600,
+    beamOpacity: 0.1,
+    beamGlowIntensity: 3
   },
 ];

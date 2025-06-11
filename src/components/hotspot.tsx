@@ -1,9 +1,9 @@
 'use client'
 
 import React, {useState} from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import HotspotCard from './hotspotCard';
-
+import LightBeam from '@/lib/lightBeam';
 
 export interface HotspotType {
   id: string;
@@ -13,89 +13,117 @@ export interface HotspotType {
   description: string;
   image: string;
   cardPosition?: 'top' | 'bottom' | 'left' | 'right';
-   tooltipPosition?: 'top' | 'bottom';
+  tooltipPosition?: 'top' | 'bottom';
+  // Light beam properties
+  hasLightBeam?: boolean;
+  beamAngle?: number;
+  beamLength?: number;
+  beamWidth?: number;
+  beamColor?: string;
+  beamSpread?: number;
+  beamOpacity?: number;
+  beamGlowIntensity?: number;
 }
 
 interface HotspotProps {
   hotspot: HotspotType;
 }
 
-
-
 const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const tooltipPosition = hotspot.tooltipPosition || 'top';
+  
+  // Determine if this hotspot should show light beam (camera hotspots on hover)
+  const shouldShowBeam = (hotspot.hasLightBeam || 
+    hotspot.title.toLowerCase().includes('camera')) && isHovered;
 
   return (
     <>
-    <div
-      className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
-      style={{
-        left: `${hotspot.x}%`,
-        top: `${hotspot.y}%`,
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Hotspot Dot */}
-      <motion.div 
-        className="relative w-3 h-3"
-        onClick={() => setIsOpen(!isOpen)}  
+      <div
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
+        style={{
+          left: `${hotspot.x}%`,
+          top: `${hotspot.y}%`,
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        <motion.div 
-          className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
-          style={{ transform: 'translate(-50%, -50%)' }}
-          animate={{
-            scale: isOpen ? [1.2, 1.2] : [1, 1, 0.3, 1],
-            opacity: isOpen ? [1, 1] : [1, 1, 0.7, 1],
-            boxShadow: isOpen 
-              ? ['0 0 20px rgba(59, 130, 246, 0.8)', '0 0 20px rgba(59, 130, 246, 0.8)']
-              : [
-                  '0 0 10px rgba(0,0,0,0.8)',
-                  '0 0 10px rgba(0,0,0,0.8)', 
-                  '0 0 15px rgba(0,0,0,0.9)',
-                  '0 0 10px rgba(0,0,0,0.8)'
-                ]
-          }}
-          transition={{
-            duration: isOpen ? 0.3 : 2.5,
-            repeat: isOpen ? 0 : Infinity,
-            ease: 'easeInOut',
-            times: isOpen ? [0, 1] : [0, 0.6, 0.6, 1],
-            repeatDelay: isOpen ? 0 : 1.2 
-          }}
-          whileHover={{
-            scale: 1.2,
-            boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)'
-          }}
+        {/* Light Beam Effect */}
+        <LightBeam
+          isVisible={shouldShowBeam}
+          angle={hotspot.beamAngle || 135} // Default diagonal down-right
+          length={hotspot.beamLength || 180}
+          width={hotspot.beamWidth || 12}
+          color={hotspot.beamColor || '#60a5fa'} // Blue light
+          opacity={hotspot.beamOpacity || 0.7}
+          spread={hotspot.beamSpread || 25}
+          glowIntensity={hotspot.beamGlowIntensity || 8}
+          animationDuration={0.3}
         />
 
-        {!isOpen && (
+        {/* Hotspot Dot */}
+        <motion.div 
+          className="relative w-3 h-3"
+          onClick={() => setIsOpen(!isOpen)}  
+        >
           <motion.div 
-            className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full border border-white"
-            style={{ 
-              transform: 'translate(-50%, -50%)',      
-              opacity: 0  
-            }}
-            animate={{ 
-              scale: [1, 1, 1, 6],
-              opacity: [0, 0, 0.6, 0]
+            className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
+            style={{ transform: 'translate(-50%, -50%)' }}
+            animate={{
+              scale: isOpen ? [1.2, 1.2] : [1, 1, 0.3, 1],
+              opacity: isOpen ? [1, 1] : [1, 1, 0.7, 1],
+              boxShadow: isOpen 
+                ? ['0 0 20px rgba(59, 130, 246, 0.8)', '0 0 20px rgba(59, 130, 246, 0.8)']
+                : shouldShowBeam && isHovered
+                ? ['0 0 15px rgba(96, 165, 250, 0.9)', '0 0 15px rgba(96, 165, 250, 0.9)']
+                : [
+                    '0 0 10px rgba(0,0,0,0.8)',
+                    '0 0 10px rgba(0,0,0,0.8)', 
+                    '0 0 15px rgba(0,0,0,0.9)',
+                    '0 0 10px rgba(0,0,0,0.8)'
+                  ]
             }}
             transition={{
-              duration: 2.5,
-              delay: 0.8,
-              repeat: Infinity,
-              ease: 'easeOut',
-              times: [0, 0.4, 0.6, 1],
-              repeatDelay: 1.2 
+              duration: isOpen ? 0.3 : 2.5,
+              repeat: isOpen ? 0 : Infinity,
+              ease: 'easeInOut',
+              times: isOpen ? [0, 1] : [0, 0.6, 0.6, 1],
+              repeatDelay: isOpen ? 0 : 1.2 
+            }}
+            whileHover={{
+              scale: 1.2,
+              boxShadow: shouldShowBeam 
+                ? '0 0 20px rgba(96, 165, 250, 0.9)'
+                : '0 0 20px rgba(59, 130, 246, 0.8)'
             }}
           />
-        )}
-      </motion.div>
 
-       {/* Tooltip */}
+          {!isOpen && (
+            <motion.div 
+              className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full border border-white"
+              style={{ 
+                transform: 'translate(-50%, -50%)',      
+                opacity: 0  
+              }}
+              animate={{ 
+                scale: [1, 1, 1, 6],
+                opacity: [0, 0, 0.6, 0]
+              }}
+              transition={{
+                duration: 2.5,
+                delay: 0.8,
+                repeat: Infinity,
+                ease: 'easeOut',
+                times: [0, 0.4, 0.6, 1],
+                repeatDelay: 1.2 
+              }}
+            />
+          )}
+        </motion.div>
+
+        {/* Tooltip */}
         <AnimatePresence>
           {isHovered && !isOpen && (
             <motion.div
@@ -113,7 +141,9 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
               `}
             >
               <div className="font-semibold">{hotspot.title}</div>
-              <div className="text-gray-300 text-xs mt-0.5">Click to view</div>
+              <div className="text-gray-300 text-xs mt-0.5">
+                {shouldShowBeam ? 'Camera view' : 'Click to view'}
+              </div>
 
               {/* Arrow */}
               {tooltipPosition === 'top' && (
@@ -127,8 +157,9 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
             </motion.div>
           )}
         </AnimatePresence>
-    </div>
-     <div
+      </div>
+      
+      <div
         className="absolute transform -translate-x-1/2 -translate-y-1/2 z-50"
         style={{
           left: `${hotspot.x}%`,

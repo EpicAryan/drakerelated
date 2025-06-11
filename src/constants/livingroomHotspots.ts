@@ -27,7 +27,16 @@ export const livingroomHotspots: HotspotType[] = [
     description: "Cozy sleeping area",
     image:"https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=400&h=300&fit=crop",
     cardPosition: 'bottom',
-    tooltipPosition: "bottom"
+    tooltipPosition: "bottom",
+
+    hasLightBeam: true,
+    beamAngle: 50, 
+    beamLength: 500,
+    beamWidth: 60,
+    beamColor: '#ffffff', 
+    beamSpread: 480,
+    beamOpacity: 0.1,
+    beamGlowIntensity: 6
   },
   {
     id: "4",
@@ -36,7 +45,16 @@ export const livingroomHotspots: HotspotType[] = [
     title: "Baby Camera",
     description: "Work & study space",
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-    cardPosition: 'left'
+    cardPosition: 'left',
+
+    hasLightBeam: true,
+    beamAngle: 175, 
+    beamLength: 600,
+    beamWidth: 60,
+    beamColor: '#ffffff', 
+    beamSpread: 480,
+    beamOpacity: 0.2,
+    beamGlowIntensity: 6
   },
   {
     id: "5",

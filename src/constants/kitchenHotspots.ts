@@ -18,6 +18,15 @@ export const kitchenHotspots: HotspotType[] = [
     description: "Gas burner with oven",
     image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop",
     cardPosition: 'bottom',
-    tooltipPosition: 'bottom'
+    tooltipPosition: 'bottom',
+
+    hasLightBeam: true,
+    beamAngle: 120, 
+    beamLength: 700,
+    beamWidth: 60,
+    beamColor: '#ffffff', 
+    beamSpread: 600,
+    beamOpacity: 0.15,
+    beamGlowIntensity: 3
   },
 ];
