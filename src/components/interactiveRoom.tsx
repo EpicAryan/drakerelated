@@ -3,8 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import RoomControls from "./roomControls";
-import Hotspot from "./hotspot";
-import { HotspotType } from "./hotspot";
+import Hotspot, { HotspotType } from "./hotspot"; // Make sure HotspotType is exported from Hotspot
 import { Navigation, NavigationType } from "./navigation";
 
 interface InteractiveRoomProps {
@@ -12,6 +11,13 @@ interface InteractiveRoomProps {
   hotspots?: HotspotType[];
   navigationItems?: NavigationType[];
   className?: string;
+}
+
+interface RenderedImageProps {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 }
 
 const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
@@ -23,9 +29,50 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   const [isExploring, setIsExploring] = useState(false);
   const [canScroll, setCanScroll] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const containerRef = useRef(null);
+ const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  // Handle scrollable layout
+
+  const [renderedImageProps, setRenderedImageProps] = useState<RenderedImageProps | null>(null);
+
+
+  const originalImageWidth = 3840;
+  const originalImageHeight = 2160;
+
+ useEffect(() => {
+    const calculateImagePosition = () => {
+      if (imageContainerRef.current) {
+        const containerWidth = imageContainerRef.current.offsetWidth;
+        const containerHeight = imageContainerRef.current.offsetHeight;
+
+        const imageAspect = originalImageWidth / originalImageHeight;
+        const containerAspect = containerWidth / containerHeight;
+
+        let renderedWidth, renderedHeight, left, top;
+
+        if (containerAspect > imageAspect) {
+          renderedWidth = containerWidth;
+          renderedHeight = containerWidth / imageAspect;
+          left = 0;
+          top = 0; 
+        } else {
+          renderedHeight = containerHeight;
+          renderedWidth = containerHeight * imageAspect;
+          top = 0; 
+          left = (containerWidth - renderedWidth) / 2;
+        }
+
+        setRenderedImageProps({ width: renderedWidth, height: renderedHeight, left, top });
+      }
+    };
+
+    window.addEventListener("resize", calculateImagePosition);
+    const timer = setTimeout(calculateImagePosition, 50);
+    return () => {
+      window.removeEventListener("resize", calculateImagePosition);
+      clearTimeout(timer);
+    };
+  }, [isLoaded, canScroll]);
+
   useEffect(() => {
     const checkScrollable = () => {
       const screenWidth = window.innerWidth;
@@ -37,6 +84,8 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
     return () => window.removeEventListener("resize", checkScrollable);
   }, []);
 
+
+
   useEffect(() => {
     const img = new Image();
     img.src = backgroundImage;
@@ -47,18 +96,18 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
     <div className={`relative w-full min-h-screen bg-gray-900 ${className}`}>
       {/* Scrollable wrapper */}
       <div
-        ref={containerRef}
         className={`relative h-screen ${
           canScroll ? "overflow-x-auto room-scroll" : "overflow-hidden"
         }`}
       >
         {/* Background with smooth blur transition */}
         <motion.div
+        ref={imageContainerRef}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className={`
-            relative bg-cover bg-top bg-no-repeat
+            relative bg-cover bg-[center_top] bg-no-repeat
             transition-all duration-700 ease-out
             ${canScroll ? "min-w-[1520px] w-[1520px]" : "w-full"}
             h-full
@@ -70,18 +119,25 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
 
           {/* Hotspots */}
-          <AnimatePresence>
-            {hotspots.map((hotspot) => (
-              <Hotspot key={hotspot.id} hotspot={hotspot} />
-            ))}
-          </AnimatePresence>
-
-          {/* Navigation items */}
-          <AnimatePresence>
-            {navigationItems.map((nav) => (
-              <Navigation key={nav.id} navigation={nav} />
-            ))}
-          </AnimatePresence>
+          {renderedImageProps && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+              <AnimatePresence>
+                {hotspots.map((hotspot) => (
+                  <Hotspot
+                    key={hotspot.id}
+                    hotspot={hotspot}
+                    imageProps={renderedImageProps}
+                  />
+                ))}
+              </AnimatePresence>
+              <AnimatePresence>
+                {navigationItems.map((nav) => (
+                  <Navigation key={nav.id} navigation={nav} />
+                ))}
+              </AnimatePresence>
+            </>
+          )}
         </motion.div>
       </div>
 

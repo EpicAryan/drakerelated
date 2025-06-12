@@ -111,7 +111,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
   {
     id: "4",
     x: 93.5,
-    y: 57,
+    y: 56,
     title: "Baby Camera",
     description: "This compact indoor camera offers crystal-clear Full HD video and full-room coverage with 360° rotation. It's ideal for home or office security with smart features packed into a sleek design.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",

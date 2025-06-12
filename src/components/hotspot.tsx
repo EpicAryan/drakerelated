@@ -31,11 +31,20 @@ export interface HotspotType {
   buttonText?: string;
 }
 
-interface HotspotProps {
-  hotspot: HotspotType;
+interface RenderedImageProps {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 }
 
-const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
+
+interface HotspotProps {
+  hotspot: HotspotType;
+  imageProps: RenderedImageProps;
+}
+
+const Hotspot: React.FC<HotspotProps> = ({ hotspot, imageProps  }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -45,6 +54,9 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
   
   const shouldShowBeam = (hotspot.hasLightBeam || 
     hotspot.title.toLowerCase().includes('camera')) && isHovered;
+
+const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
+  const calculatedTop = imageProps.top + (hotspot.y / 100) * imageProps.height;
 
      useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -75,8 +87,8 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
         ref={dotRef}
         className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
         style={{
-          left: `${hotspot.x}%`,
-          top: `${hotspot.y}%`,
+           left: `${calculatedLeft}px`,
+          top: `${calculatedTop}px`,
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -198,8 +210,8 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
         ref={cardRef}
         className="absolute transform -translate-x-1/2 -translate-y-1/2 z-50"
         style={{
-          left: `${hotspot.x}%`,
-          top: `${hotspot.y}%`,
+           left: `${calculatedLeft}px`,
+          top: `${calculatedTop}px`,
         }}
       >
         <HotspotCard 
