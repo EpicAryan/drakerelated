@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HotspotCard from './hotspotCard';
 import LightBeam from '@/lib/lightBeam';
@@ -14,7 +14,7 @@ export interface HotspotType {
   image: string;
   cardPosition?: 'top' | 'bottom' | 'left' | 'right';
   tooltipPosition?: 'top' | 'bottom';
-  // Light beam properties
+  // beam properties
   hasLightBeam?: boolean;
   beamAngle?: number;
   beamLength?: number;
@@ -23,6 +23,12 @@ export interface HotspotType {
   beamSpread?: number;
   beamOpacity?: number;
   beamGlowIntensity?: number;
+  // card properties
+  brand?: string;
+  productName?: string;
+  features?: string[];
+  price?: string;
+  buttonText?: string;
 }
 
 interface HotspotProps {
@@ -32,16 +38,41 @@ interface HotspotProps {
 const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+   const dotRef = useRef<HTMLDivElement>(null);
 
   const tooltipPosition = hotspot.tooltipPosition || 'top';
   
-  // Determine if this hotspot should show light beam (camera hotspots on hover)
   const shouldShowBeam = (hotspot.hasLightBeam || 
     hotspot.title.toLowerCase().includes('camera')) && isHovered;
+
+     useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
+      
+      // Check if click is outside card AND outside dot
+      if (cardRef.current && !cardRef.current.contains(target) &&
+          dotRef.current && !dotRef.current.contains(target)) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
 
   return (
     <>
       <div
+        ref={dotRef}
         className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
         style={{
           left: `${hotspot.x}%`,
@@ -49,14 +80,15 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+
       >
         {/* Light Beam Effect */}
         <LightBeam
           isVisible={shouldShowBeam}
-          angle={hotspot.beamAngle || 135} // Default diagonal down-right
+          angle={hotspot.beamAngle || 135} 
           length={hotspot.beamLength || 180}
           width={hotspot.beamWidth || 12}
-          color={hotspot.beamColor || '#60a5fa'} // Blue light
+          color={hotspot.beamColor || '#60a5fa'} 
           opacity={hotspot.beamOpacity || 0.7}
           spread={hotspot.beamSpread || 25}
           glowIntensity={hotspot.beamGlowIntensity || 8}
@@ -66,7 +98,10 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
         {/* Hotspot Dot */}
         <motion.div 
           className="relative w-3 h-3"
-          onClick={() => setIsOpen(!isOpen)}  
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen((prev) => !prev);
+          }}
         >
           <motion.div 
             className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
@@ -160,6 +195,7 @@ const Hotspot: React.FC<HotspotProps> = ({ hotspot }) => {
       </div>
       
       <div
+        ref={cardRef}
         className="absolute transform -translate-x-1/2 -translate-y-1/2 z-50"
         style={{
           left: `${hotspot.x}%`,
