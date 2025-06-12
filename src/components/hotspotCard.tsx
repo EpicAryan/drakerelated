@@ -157,7 +157,15 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
 
               {/* Content overlayed on top of SVG */}
               <div className="relative z-10">
-                <div className="text-sm text-gray-400 font-mono mb-1">{brand}</div>
+                <div className="text-sm text-gray-400 font-mono mb-1 flex items-center">
+                   <Image
+                    src={brand}
+                    alt="Brand logo"
+                    width={60}
+                    height={20}
+                    className="h-5 w-auto object-contain"
+                  />
+                </div>
                 <h3 className="text-xl font-bold mt-4 mb-2">{productName}</h3>
                 <p className="text-xs text-[#EAEAEA] leading-normal mb-3">
                   {hotspot.description}

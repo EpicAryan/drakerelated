@@ -28,7 +28,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/686OKDzgVRqvxgLSOnnykI/20bad0eaf7b9627a6f3418b9f4bc52d2/Qubo_Doorbell.png",
     imageClassName: "w-56 h-56 absolute top-0",
     cardPosition: 'left',
-    brand: "Qubo",
+    brand: "/flipkart.svg",
     productName: "Video Door Phone",
     featuresWithIcons: [
       { text: "2K resolution camera", icon: Monitor },
@@ -52,7 +52,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6iZwAtiSfuBTR0qaXkBYXv/e1c61065f8c086e4132be81fdedefae4/Yale_doorlock.jpg",
     imageClassName: "w-56 h-56 absolute top-2",
     cardPosition: 'left',
-    brand: "Yale",
+    brand: "/flipkart.svg",
     productName: "Smart Door Lock",
     featuresWithIcons: [
       { text: "Fingerprint access", icon: Monitor },
@@ -77,7 +77,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     imageClassName: "w-56 h-50 absolute top-0",
     cardPosition: 'bottom',
 
-    brand: "Qubo",
+    brand: "/flipkart.svg",
     productName: "Outdoor Camera",
     featuresWithIcons: [
       { text: "3MP (1296p) resolution", icon: Monitor },

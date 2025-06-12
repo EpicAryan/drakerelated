@@ -32,7 +32,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/4zHTPU0slfi0O7CcetZEIy/6a3d6ce8183c1784ff1eadb791db2a77/Tapo_strip_light.jpg",
     imageClassName: "w-96 h-60 absolute top-0",
     cardPosition: 'right',
-    brand: "Tapo",
+    brand: "/flipkart.svg",
     productName: "Strip Light",
     featuresWithIcons: [
       { text: "16 million colors", icon: Monitor },
@@ -57,7 +57,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     imageClassName: "w-80 h-68 absolute top-0",
     cardPosition: 'bottom',
     tooltipPosition: "bottom",
-    brand: "Tp-Link",
+    brand: "/flipkart.svg",
     productName: "Indoor Security Camera",
     featuresWithIcons: [
       { text: "Full HD 1080p resolution", icon: Monitor },

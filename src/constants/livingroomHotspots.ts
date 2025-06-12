@@ -16,7 +16,6 @@ import {
   Gauge
 } from 'lucide-react';
 
-
 export interface HotspotTypeWithIcons extends HotspotType {
   featuresWithIcons?: Array<{
     text: string;
@@ -37,7 +36,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
     imageClassName: "w-80 h-60 absolute top-0",
     cardPosition: 'right',
-    brand: "Qubo",
+    brand: "/flipkart.svg",
     productName: "Video Door Phone",
     featuresWithIcons: [
       { text: "2K resolution camera", icon: Monitor },
@@ -61,7 +60,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/4zHTPU0slfi0O7CcetZEIy/6a3d6ce8183c1784ff1eadb791db2a77/Tapo_strip_light.jpg",
     imageClassName: "w-96 h-60 absolute top-0",
     cardPosition: 'right',
-    brand: "Philips",
+    brand: "/flipkart.svg",
     productName: "Smart Light",
     featuresWithIcons: [
       { text: "16 million color options", icon: Lightbulb },
@@ -85,7 +84,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     imageClassName: "w-96 h-68 absolute top-0",
     cardPosition: 'bottom',
     tooltipPosition: "bottom",
-    brand: "Tp-Link",
+    brand: "/flipkart.svg",
     productName: "Indoor Security Camera",
     featuresWithIcons: [
       { text: "Full HD 1080p resolution", icon: Monitor },
@@ -117,7 +116,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
     imageClassName: "w-80 h-68 absolute top-0",
     cardPosition: 'left',
-    brand: "TP-Link",
+    brand: "/flipkart.svg",
     productName: "Baby Camera",
     featuresWithIcons: [
       { text: "Full HD 1080p resolution", icon: Monitor },
@@ -149,7 +148,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/4zHTPU0slfi0O7CcetZEIy/6a3d6ce8183c1784ff1eadb791db2a77/Tapo_strip_light.jpg",
     imageClassName: "w-96 h-60 absolute top-0",
     cardPosition: 'left',
-    brand: "Wipro",
+    brand: "/flipkart.svg",
     productName: "Smart Switch",
     featuresWithIcons: [
       { text: "Control up to 4 switches", icon: Radio },
