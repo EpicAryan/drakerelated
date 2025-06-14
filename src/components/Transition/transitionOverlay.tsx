@@ -3,6 +3,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useTransition } from "@/components/Transition/transitionContext";
+import Image from "next/image";
 
 const TransitionOverlay = () => {
   const { isTransitioning } = useTransition();
@@ -27,7 +28,14 @@ const TransitionOverlay = () => {
               ease: "easeInOut",
             }}
           >
-            Drake Related
+            <Image
+              src="/flipkart.svg"
+              alt="Flipkart Logo"
+              width={110}
+              height={40}
+              className="cursor-pointer"
+              priority
+            />
           </motion.h1>
         </motion.div>
       )}

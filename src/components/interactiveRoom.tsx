@@ -4,12 +4,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import RoomControls from "./roomControls";
 import Hotspot, { HotspotType } from "./hotspot"; // Make sure HotspotType is exported from Hotspot
-import { Navigation, NavigationType } from "./navigation";
+
 
 interface InteractiveRoomProps {
   backgroundImage: string;
   hotspots?: HotspotType[];
-  navigationItems?: NavigationType[];
   className?: string;
 }
 
@@ -23,7 +22,6 @@ interface RenderedImageProps {
 const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   backgroundImage,
   hotspots = [],
-  navigationItems = [],
   className = "",
 }) => {
   const [isExploring, setIsExploring] = useState(false);
@@ -129,11 +127,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
                     hotspot={hotspot}
                     imageProps={renderedImageProps}
                   />
-                ))}
-              </AnimatePresence>
-              <AnimatePresence>
-                {navigationItems.map((nav) => (
-                  <Navigation key={nav.id} navigation={nav} />
                 ))}
               </AnimatePresence>
             </>

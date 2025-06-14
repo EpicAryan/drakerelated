@@ -2,11 +2,10 @@
 
 import React from "react";
 import InteractiveRoom from "./interactiveRoom";
-import { useLivingroomNavigation } from "@/hooks/useLivingroomNavigation";
 import { livingroomHotspots } from "@/constants/livingroomHotspots";
 
 const Livingroom = () => {
-  const navigationItems = useLivingroomNavigation();
+
   const BG_IMAGE =
     "https://images.ctfassets.net/m3x6aw9x53qp/2SapyE1GBBxOx0UhWr3LnC/75429c9d903252eb1b1de175286feda8/Living_Room.png";
 
@@ -14,7 +13,6 @@ const Livingroom = () => {
     <InteractiveRoom
       backgroundImage={BG_IMAGE}
       hotspots={livingroomHotspots}
-      navigationItems={navigationItems}
     />
   );
 };
