@@ -4,7 +4,9 @@ import React, {useState, useEffect, useRef} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HotspotCard from './hotspotCard';
 import LightBeam from '@/lib/lightBeam';
+import MagnifyingGlass from '@/lib/magnifying';
 
+// HotspotType interface remains the same
 export interface HotspotType {
   id: string;
   x: number;
@@ -23,6 +25,10 @@ export interface HotspotType {
   beamSpread?: number;
   beamOpacity?: number;
   beamGlowIntensity?: number;
+  // magnifying glass properties
+  hasMagnifier?: boolean;
+  magnifierZoom?: number;
+  magnifierRadius?: number;
   // card properties
   brand?: string;
   productName?: string;
@@ -38,31 +44,43 @@ interface RenderedImageProps {
   height: number;
 }
 
-
 interface HotspotProps {
   hotspot: HotspotType;
   imageProps: RenderedImageProps;
+  backgroundImage: string;
+  originalImageWidth?: number;
+  originalImageHeight?: number;
 }
 
-const Hotspot: React.FC<HotspotProps> = ({ hotspot, imageProps  }) => {
+const Hotspot: React.FC<HotspotProps> = ({ 
+  hotspot, 
+  imageProps, 
+  backgroundImage,
+  originalImageWidth = 3840,
+  originalImageHeight = 2160
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  // Removed the separate showMagnifier state as it's no longer needed
   const cardRef = useRef<HTMLDivElement>(null);
-   const dotRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
 
   const tooltipPosition = hotspot.tooltipPosition || 'top';
   
   const shouldShowBeam = (hotspot.hasLightBeam || 
     hotspot.title.toLowerCase().includes('camera')) && isHovered;
 
-const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
+  // MODIFICATION: Magnifier is now only shown when the hotspot is 'isOpen' (clicked).
+  const shouldShowMagnifier = (hotspot.hasMagnifier !== false) && isOpen;
+
+  const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
   const calculatedTop = imageProps.top + (hotspot.y / 100) * imageProps.height;
 
-     useEffect(() => {
+  // This effect correctly handles closing the card/magnifier when clicking outside.
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Node;
       
-      // Check if click is outside card AND outside dot
       if (cardRef.current && !cardRef.current.contains(target) &&
           dotRef.current && !dotRef.current.contains(target)) {
         setIsOpen(false);
@@ -79,22 +97,28 @@ const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
-
+  
+  // Removed the delayed magnifier useEffect as it's no longer necessary
 
   return (
     <>
       <div
         ref={dotRef}
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30 p-4"
         style={{
            left: `${calculatedLeft}px`,
           top: `${calculatedTop}px`,
         }}
+        // MODIFICATION: onMouseEnter and onMouseLeave now only control hover effects like the tooltip and beam.
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-
+        // MODIFICATION: The onClick handler is moved to the parent div to ensure better click handling.
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen((prev) => !prev);
+        }}
       >
-        {/* Light Beam Effect */}
+        {/* Light Beam Effect (no change) */}
         <LightBeam
           isVisible={shouldShowBeam}
           angle={hotspot.beamAngle || 135} 
@@ -107,15 +131,13 @@ const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
           animationDuration={0.3}
         />
 
-        {/* Hotspot Dot */}
+        {/* Hotspot Dot (no change) */}
         <motion.div 
           className="relative w-3 h-3"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsOpen((prev) => !prev);
-          }}
+          // Removed onClick from here to avoid nested handlers
         >
-          <motion.div 
+          {/* ... (inner motion.divs for dot animation remain the same) ... */}
+           <motion.div 
             className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
             style={{ transform: 'translate(-50%, -50%)' }}
             animate={{
@@ -170,7 +192,7 @@ const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
           )}
         </motion.div>
 
-        {/* Tooltip */}
+        {/* Tooltip (no change) */}
         <AnimatePresence>
           {isHovered && !isOpen && (
             <motion.div
@@ -187,9 +209,10 @@ const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
                 ${tooltipPosition === 'bottom' ? 'top-full mt-3' : ''}
               `}
             >
+              {/* ... (tooltip content remains the same) ... */}
               <div className="font-semibold">{hotspot.title}</div>
               <div className="text-gray-300 text-xs mt-0.5">
-                {shouldShowBeam ? 'Camera view' : 'Click to view'}
+                {shouldShowBeam ? 'Camera view' : 'Click to magnify'}
               </div>
 
               {/* Arrow */}
@@ -206,11 +229,25 @@ const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
         </AnimatePresence>
       </div>
       
+      {/* Magnifying Glass Effect (no change needed in this component call) */}
+      <MagnifyingGlass
+        isVisible={shouldShowMagnifier}
+        x={hotspot.x}
+        y={hotspot.y}
+        backgroundImage={backgroundImage}
+        imageProps={imageProps}
+        zoomLevel={hotspot.magnifierZoom || 2.5}
+        radius={hotspot.magnifierRadius || 120}
+        originalImageWidth={originalImageWidth}
+        originalImageHeight={originalImageHeight}
+      />
+      
+      {/* Hotspot Card (no change) */}
       <div
         ref={cardRef}
         className="absolute transform -translate-x-1/2 -translate-y-1/2 z-50"
         style={{
-           left: `${calculatedLeft}px`,
+          left: `${calculatedLeft}px`,
           top: `${calculatedTop}px`,
         }}
       >

@@ -2,14 +2,15 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import RoomControls from "./roomControls";
-import Hotspot, { HotspotType } from "./hotspot"; // Make sure HotspotType is exported from Hotspot
-
+// import RoomControls from "./roomControls";
+import Hotspot, { HotspotType } from "./hotspot";
 
 interface InteractiveRoomProps {
   backgroundImage: string;
   hotspots?: HotspotType[];
   className?: string;
+  originalImageWidth?: number;
+  originalImageHeight?: number;
 }
 
 interface RenderedImageProps {
@@ -23,20 +24,16 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   backgroundImage,
   hotspots = [],
   className = "",
+  originalImageWidth = 3840,
+  originalImageHeight = 2160,
 }) => {
-  const [isExploring, setIsExploring] = useState(false);
+  // const [isExploring, setIsExploring] = useState(false);
   const [canScroll, setCanScroll] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
- const imageContainerRef = useRef<HTMLDivElement>(null);
-
-
+  const imageContainerRef = useRef<HTMLDivElement>(null);
   const [renderedImageProps, setRenderedImageProps] = useState<RenderedImageProps | null>(null);
 
-
-  const originalImageWidth = 3840;
-  const originalImageHeight = 2160;
-
- useEffect(() => {
+  useEffect(() => {
     const calculateImagePosition = () => {
       if (imageContainerRef.current) {
         const containerWidth = imageContainerRef.current.offsetWidth;
@@ -69,7 +66,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
       window.removeEventListener("resize", calculateImagePosition);
       clearTimeout(timer);
     };
-  }, [isLoaded, canScroll]);
+  }, [isLoaded, canScroll, originalImageWidth, originalImageHeight]);
 
   useEffect(() => {
     const checkScrollable = () => {
@@ -81,8 +78,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
     window.addEventListener("resize", checkScrollable);
     return () => window.removeEventListener("resize", checkScrollable);
   }, []);
-
-
 
   useEffect(() => {
     const img = new Image();
@@ -100,7 +95,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
       >
         {/* Background with smooth blur transition */}
         <motion.div
-        ref={imageContainerRef}
+          ref={imageContainerRef}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -119,13 +114,15 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
           {/* Hotspots */}
           {renderedImageProps && (
             <>
-              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
               <AnimatePresence>
                 {hotspots.map((hotspot) => (
                   <Hotspot
                     key={hotspot.id}
                     hotspot={hotspot}
                     imageProps={renderedImageProps}
+                    backgroundImage={backgroundImage}
+                    originalImageWidth={originalImageWidth}
+                    originalImageHeight={originalImageHeight}
                   />
                 ))}
               </AnimatePresence>
@@ -135,9 +132,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
       </div>
 
       {/* Room control buttons */}
-      <RoomControls onExplore={setIsExploring} isExploring={isExploring} />
-
-      {/* Mobile tap hint */}
+      {/* <RoomControls onExplore={setIsExploring} isExploring={isExploring} />
       <AnimatePresence>
         {isExploring && (
           <motion.div
@@ -147,11 +142,11 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
             className="md:hidden fixed bottom-20 left-1/2 transform -translate-x-1/2 text-white/80 text-center text-sm z-40"
           >
             <div className="bg-black/70 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
-              Tap the white dots to explore
+              Hover over dots to magnify
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 };

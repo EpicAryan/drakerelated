@@ -50,7 +50,6 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
   const productName = hotspot.productName || hotspot.title;
   const buttonText = hotspot.buttonText || 'Add to Cart';
 
-  // Use featuresWithIcons if available, otherwise fallback to features with default icon
   const displayFeatures = hotspot.featuresWithIcons || 
     (hotspot.features || defaultFeatures).map(feature => ({
       text: feature,
@@ -63,15 +62,15 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
     
     switch (position) {
       case 'top':
-        return `${baseClasses} bottom-full left-1/2 transform -translate-x-1/2 mb-4`;
+        return `${baseClasses} bottom-full left-1/2 transform -translate-x-1/2 mb-12`;
       case 'bottom':
-        return `${baseClasses} top-full left-1/2 transform -translate-x-1/2 mt-4`;
+        return `${baseClasses} top-full left-1/2 transform -translate-x-1/2 mt-12`;
       case 'left':
-        return `${baseClasses} right-full top-1/2 transform -translate-y-1/2 mr-4`;
+        return `${baseClasses} right-full top-1/2 transform -translate-y-1/2 mr-12`;
       case 'right':
-        return `${baseClasses} left-full top-1/2 transform -translate-y-1/2 ml-4`;
+        return `${baseClasses} left-full top-1/2 transform -translate-y-1/2 ml-12`;
       default:
-        return `${baseClasses} bottom-full left-1/2 transform -translate-x-1/2 mb-4`;
+        return `${baseClasses} bottom-full left-1/2 transform -translate-x-1/2 mb-12`;
     }
   };
 

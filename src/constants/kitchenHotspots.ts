@@ -45,12 +45,15 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
       { text: "2100 mcd brightness", icon: Star },
       { text: "Up to 50,000 hours lifespan", icon: Star }
     ],
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 2.0,
+    magnifierRadius: 50,
   },
   {
     id: "2",
-    x: 67,
-    y: 2,
+    x: 67.3,
+    y: 2.2,
      title: "Indoor Camera",
     description: "This compact indoor camera offers crystal-clear Full HD video and full-room coverage with 360° rotation. It's ideal for home or office security with smart features packed into a sleek design.",
     image:"https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
@@ -78,6 +81,9 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     beamColor: '#ffffff', 
     beamSpread: 600,
     beamOpacity: 0.15,
-    beamGlowIntensity: 3
+    beamGlowIntensity: 3,
+    hasMagnifier: true,
+    magnifierZoom: 1.8,
+    magnifierRadius: 60,
   },
 ];

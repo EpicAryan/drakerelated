@@ -21,8 +21,8 @@ export interface HotspotTypeWithIcons extends HotspotType {
 export const exteriorHotspots: HotspotTypeWithIcons[] = [
   {
     id: "1",
-    x: 63,
-    y: 39,
+    x: 63.4,
+    y: 38.7,
     title: "Video DoorBell",
     description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/686OKDzgVRqvxgLSOnnykI/20bad0eaf7b9627a6f3418b9f4bc52d2/Qubo_Doorbell.png",
@@ -41,12 +41,15 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
       { text: "Expandable storage up to 1TB", icon: Star },
       { text: "Mobile app integration", icon: Star }
     ],
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 3,
+    magnifierRadius: 60,
   },
   {
     id: "2",
-    x: 68,
-    y: 38,
+    x: 68.2,
+    y: 40.3,
     title: "Smart Door Lock",
     description: "This sleek smart door lock offers advanced security with multiple access methods, ensuring both convenience and protection for your home. Its durable build and intelligent features make it an ideal choice for modern households.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6iZwAtiSfuBTR0qaXkBYXv/e1c61065f8c086e4132be81fdedefae4/Yale_doorlock.jpg",
@@ -65,7 +68,10 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
       { text: "Low battery alerts", icon: Star },
       { text: "Emergency USB charging", icon: Star }
     ],
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 3,
+    magnifierRadius: 70,
   },
   {
     id: "3",
@@ -95,11 +101,14 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
 
     hasLightBeam: true,
     beamAngle: 145, 
-    beamLength: 700,
+    beamLength: 900,
     beamWidth: 60,
     beamColor: '#ffffff', 
-    beamSpread: 600,
+    beamSpread: 800,
     beamOpacity: 0.1,
-    beamGlowIntensity: 3
+    beamGlowIntensity: 3,
+    hasMagnifier: true,
+    magnifierZoom: 2.8,
+    magnifierRadius: 60,
   },
 ];

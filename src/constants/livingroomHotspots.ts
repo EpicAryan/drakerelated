@@ -30,7 +30,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
   {
     id: "1",
     x: 12,
-    y: 52,
+    y: 53,
     title: "Video Screen",
     description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
@@ -49,7 +49,10 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
       { text: "Smart assistant compatibility", icon: Star },
       { text: "Expandable storage up to 1TB", icon: Star }
     ],
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 1.3,
+    magnifierRadius: 100,
   },
   {
     id: "2",
@@ -72,12 +75,15 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
       { text: "Group control for multiple bulbs", icon: Zap },
       { text: "No hub required; operates over Wi-Fi", icon: Zap }
     ],
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 1.3,
+    magnifierRadius: 80,
   },
   {
     id: "3",
     x: 51.2,
-    y: 5,
+    y: 5.2,
     title: "Indoor Camera",
     description: "This compact indoor camera offers crystal-clear Full HD video and full-room coverage with 360° rotation. It's ideal for home or office security with smart features packed into a sleek design.",
     image:"https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
@@ -99,13 +105,16 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     ],
     hasLightBeam: true,
     beamAngle: 50, 
-    beamLength: 500,
+    beamLength: 900,
     beamWidth: 60,
     beamColor: '#ffffff', 
-    beamSpread: 480,
+    beamSpread: 900,
     beamOpacity: 0.1,
     beamGlowIntensity: 6,
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 2.0,
+    magnifierRadius: 50,
   },
   {
     id: "4",
@@ -131,18 +140,21 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     ],
     hasLightBeam: true,
     beamAngle: 175, 
-    beamLength: 600,
+    beamLength: 900,
     beamWidth: 60,
     beamColor: '#ffffff', 
-    beamSpread: 480,
+    beamSpread: 800,
     beamOpacity: 0.2,
     beamGlowIntensity: 6,
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 2.4,
+    magnifierRadius: 80,
   },
   {
     id: "5",
     x: 79.8,
-    y: 46,
+    y: 47,
     title: "Smart Switch",
     description: "This smart switch module transforms your existing switches into smart ones, enabling remote control and automation without altering your current setup. Its seamless integration with voice assistants and mobile apps offers enhanced convenience and energy efficiency.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/4zHTPU0slfi0O7CcetZEIy/6a3d6ce8183c1784ff1eadb791db2a77/Tapo_strip_light.jpg",
@@ -160,6 +172,9 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
       { text: "No hub required", icon: Gauge },
       { text: "Energy-efficient operation", icon: Gauge }
     ],
-    buttonText: "Add to Cart"
+    buttonText: "Add to Cart",
+    hasMagnifier: true,
+    magnifierZoom: 3.0,
+    magnifierRadius: 70,
   },
 ];
