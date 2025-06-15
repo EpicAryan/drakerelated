@@ -36,6 +36,8 @@ interface HotspotCardProps {
 }
 
 const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
+
+
   // Default features if none provided
   const defaultFeatures = [
     'Full HD 1080p resolution',
@@ -126,7 +128,7 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
             ease: "easeInOut"
           }}
         >
-          <div className="relative w-96 min-h-140 rounded-3xl overflow-hidden drop-shadow-2xl text-black ">
+          <div className="relative w-96 min-h-140 rounded-3xl overflow-hidden lg:drop-shadow-2xl text-black ">
             <div className="absolute w-full h-70 flex justify-center items-center bg-white">
               <div className={hotspot.imageClassName ?? "w-40 h-28"}>
                 <Image
@@ -198,7 +200,7 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
                 </div>
 
                 <motion.button
-                  className="w-full bg-white text-black font-semibold py-2 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200"
+                  className="w-full bg-white text-black font-semibold py-2 px-6 rounded-xl lg:hover:bg-gray-100 transition-colors duration-200"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={(e) => {
