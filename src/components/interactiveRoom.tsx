@@ -124,15 +124,17 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         {/* Background with smooth blur transition */}
         <motion.div
           ref={imageContainerRef}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          // initial={{ opacity: 0, scale: 1.05 }}
+          // animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className={`
             relative bg-cover bg-[center_top] bg-no-repeat
             transition-all duration-700 ease-out
             ${canScroll ? "min-w-[1520px] w-[1520px]" : "w-full"}
             h-full
-            ${isLoaded ? "blur-0" : "blur-md scale-105"}
+            ${isLoaded ? "blur-0" : "blur-sm"}
           `}
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >

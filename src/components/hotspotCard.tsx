@@ -118,10 +118,12 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
           className={`${getCardPosition()}`}
           {...getCardAnimation()}
           transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-            duration: 0.4,
+            // type: "spring",
+            // stiffness: 300,
+            // damping: 30,
+            // duration: 0.4,
+            duration: 0.3,
+            ease: "easeInOut"
           }}
         >
           <div className="relative w-96 min-h-140 rounded-3xl overflow-hidden drop-shadow-2xl text-black ">

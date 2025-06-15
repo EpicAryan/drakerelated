@@ -103,10 +103,12 @@ const Hotspot: React.FC<HotspotProps> = ({
     <>
       <div
         ref={dotRef}
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-30 p-4"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 group z-30 p-4"
         style={{
            left: `${calculatedLeft}px`,
           top: `${calculatedTop}px`,
+          cursor: 'pointer',
+          touchAction: 'manipulation'
         }}
 
         onMouseEnter={() => setIsHovered(true)}
@@ -134,7 +136,7 @@ const Hotspot: React.FC<HotspotProps> = ({
           className="relative w-3 h-3"
         >
            <motion.div 
-            className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
+            className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 lg:shadow-lg"
             style={{ transform: 'translate(-50%, -50%)' }}
             animate={{
               scale: isOpen ? [1.2, 1.2] : [1, 1, 0.3, 1],
