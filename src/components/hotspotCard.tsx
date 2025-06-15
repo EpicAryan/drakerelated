@@ -416,8 +416,8 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
                   {/* Mobile: Scrollable single column showing 4.5 items */}
                   <div className="sm:hidden">
                     <div 
-                      className=" grid grid-cols-2 overflow-y-auto scrollbar-hide space-y-[1px] text-[10px] text-[#AEAEAE]"
-                      style={{ maxHeight: '108px' }} // Roughly 4.5 items (24px per item)
+                      className="overflow-y-auto scrollbar-hide space-y-[1px] text-[10px] text-[#AEAEAE]"
+                      style={{ maxHeight: '112px' }} // Roughly 4.5 items (24px per item)
                     >
                       {displayFeatures.map((feature, index) => {
                         const IconComponent = feature.icon;
@@ -431,11 +431,11 @@ const HotspotCard: React.FC<HotspotCardProps> = ({ hotspot, isOpen }) => {
                           >
                             <div className="flex-shrink-0">
                               <IconComponent 
-                                className="w-[10px] h-[10px] text-blue-400" 
+                                className="w-3 h-3 text-blue-400" 
                                 strokeWidth={1.5}
                               />
                             </div>
-                            <span className="text-[10px">{feature.text}</span>
+                            <span className="text-xs">{feature.text}</span>
                           </motion.div>
                         );
                       })}
