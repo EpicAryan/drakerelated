@@ -8,9 +8,21 @@ import clsx from 'clsx'
 import { useTransition } from '@/components/Transition/transitionContext'
 
 const navItems = [
-  { name: 'Entrance', href: '/rooms/entrance' },
-  { name: 'Living Room', href: '/' },
-  { name: 'Kitchen', href: '/rooms/kitchen' }
+  { 
+    name: 'Entrance', 
+    href: '/rooms/entrance',
+    imageUrl: 'https://images.ctfassets.net/m3x6aw9x53qp/11Cp7QsgBRFbooVQGV9SQQ/186b14284923a95a6ceb67223e085c61/Exterior.png' 
+  },
+  { 
+    name: 'Living Room', 
+    href: '/',
+    imageUrl: 'https://images.ctfassets.net/m3x6aw9x53qp/2SapyE1GBBxOx0UhWr3LnC/75429c9d903252eb1b1de175286feda8/Living_Room.png'
+  },
+  { 
+    name: 'Kitchen', 
+    href: '/rooms/kitchen',
+    imageUrl: 'https://images.ctfassets.net/m3x6aw9x53qp/6UjgoCRepn9Fmg1Q4XSwAG/a8276165a6c3a7be48daf671502a9452/kitchen.png' 
+  }
 ]
 
 const Navbar = () => {
@@ -18,8 +30,8 @@ const Navbar = () => {
   const router = useRouter()
   const { startTransition } = useTransition()
 
-  const handleNavigation = (href: string) => {
-    startTransition(() => router.push(href))
+  const handleNavigation = (href: string, imageUrl?: string) => {
+    startTransition(() => router.push(href), imageUrl)
   }
 
   return (
@@ -29,12 +41,12 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
           {/* Nav Tabs */}
           <div className="flex space-x-6 bg-white/10 px-4 py-2 rounded-full shadow-md backdrop-blur-sm pointer-events-auto">
-            {navItems.map(({ name, href }) => {
+            {navItems.map(({ name, href, imageUrl }) => {
               const isActive = pathname === href
               return (
                 <motion.button
                   key={name}
-                  onClick={() => handleNavigation(href)}
+                  onClick={() => handleNavigation(href, imageUrl)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={clsx(
@@ -54,8 +66,7 @@ const Navbar = () => {
             alt="Flipkart Logo"
             width={110}
             height={40}
-            className="cursor-pointer pointer-events-auto"
-            onClick={() => handleNavigation('/')}
+            className="pointer-events-auto"
             priority
           />
         </div>
@@ -68,20 +79,19 @@ const Navbar = () => {
           alt="Flipkart Logo"
           width={90}
           height={30}
-          className="cursor-pointer"
-          onClick={() => handleNavigation('/')}
+          className=""
           priority
         />
       </div>
 
       {/* Bottom Navbar for Mobile */}
       <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[80%] max-w-sm bg-white/10 backdrop-blur-sm px-8 py-2 rounded-full shadow-lg flex items-center justify-center space-x-6 pointer-events-auto">
-        {navItems.map(({ name, href }) => {
+        {navItems.map(({ name, href, imageUrl }) => {
           const isActive = pathname === href
           return (
             <motion.button
               key={name}
-              onClick={() => handleNavigation(href)}
+              onClick={() => handleNavigation(href, imageUrl)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={clsx(

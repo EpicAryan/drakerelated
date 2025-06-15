@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 // import RoomControls from "./roomControls";
 import Hotspot, { HotspotType } from "./hotspot";
 import { useLoading } from "./loading/loadingContext";
@@ -93,7 +93,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         resolve();
       };
       img.onerror = () => {
-        console.error("INTERACTIVE_ROOM: Image failed to load.");
         reject(new Error("Image load failed"));
       };
     });
@@ -106,7 +105,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
 
     Promise.all([imageLoadPromise, minTimePromise])
       .then(() => {
-        console.log("INTERACTIVE_ROOM: Both conditions met. Hiding loader.");
         setPageLoaded(true);
       })
       .catch((error) => {

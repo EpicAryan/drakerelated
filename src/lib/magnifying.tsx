@@ -139,11 +139,11 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
         </div>
         
         {/* Optional zoom indicator */}
-        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+        {/* <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
           <div className="bg-black/70 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm border border-white/20">
             {zoomLevel}x zoom
           </div>
-        </div>
+        </div> */}
       </motion.div>
     </AnimatePresence>
   );
