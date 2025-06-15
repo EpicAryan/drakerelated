@@ -1,35 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Navbar, InitialLoader } from "@/components";
 import { TransitionProvider } from "../components/Transition/transitionContext";
 import TransitionOverlay from "../components/Transition/transitionOverlay";
+import { useLoading } from "@/components/loading/loadingContext";
+import { AnimatePresence } from "framer-motion"; // 1. Import AnimatePresence
 
 export default function ClientLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    const [showLoader, setShowLoader] = useState(true);
+  const { isPageLoaded } = useLoading();
 
-    useEffect(() => {
-        const timeout = setTimeout(() => setShowLoader(false), 2000);
-        return () => clearTimeout(timeout);
-    }, []);
-
-    return (
-        <>
-            {showLoader ? (
-                <InitialLoader />
-            ) : (
-                <>
-                    <TransitionProvider>
-                        <Navbar />
-                        <TransitionOverlay />
-                        {children}
-                    </TransitionProvider>
-                </>
-            )}
-        </>
-    );
+  return (
+    <>
+      <AnimatePresence>
+        {!isPageLoaded && <InitialLoader />}
+      </AnimatePresence>
+         
+      <TransitionProvider>
+         {isPageLoaded && <Navbar />}
+        <TransitionOverlay />
+        {children}
+      </TransitionProvider>
+    </>
+  );
 }

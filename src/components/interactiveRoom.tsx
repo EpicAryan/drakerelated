@@ -4,6 +4,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 // import RoomControls from "./roomControls";
 import Hotspot, { HotspotType } from "./hotspot";
+import { useLoading } from "./loading/loadingContext";
+
 
 interface InteractiveRoomProps {
   backgroundImage: string;
@@ -32,6 +34,9 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const [renderedImageProps, setRenderedImageProps] = useState<RenderedImageProps | null>(null);
+  const { setPageLoaded } = useLoading();
+
+  const MIN_LOAD_TIME = 3000; 
 
   useEffect(() => {
     const calculateImagePosition = () => {
@@ -79,11 +84,36 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
     return () => window.removeEventListener("resize", checkScrollable);
   }, []);
 
-  useEffect(() => {
-    const img = new Image();
-    img.src = backgroundImage;
-    img.onload = () => setIsLoaded(true);
-  }, [backgroundImage]);
+   useEffect(() => {
+    const imageLoadPromise = new Promise<void>((resolve, reject) => {
+      const img = new Image();
+      img.src = backgroundImage;
+      img.onload = () => {
+        setIsLoaded(true);
+        resolve();
+      };
+      img.onerror = () => {
+        console.error("INTERACTIVE_ROOM: Image failed to load.");
+        reject(new Error("Image load failed"));
+      };
+    });
+
+    const minTimePromise = new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, MIN_LOAD_TIME);
+    });
+
+    Promise.all([imageLoadPromise, minTimePromise])
+      .then(() => {
+        console.log("INTERACTIVE_ROOM: Both conditions met. Hiding loader.");
+        setPageLoaded(true);
+      })
+      .catch((error) => {
+        console.error("Loading sequence failed:", error);
+        setPageLoaded(true);
+      });
+  }, [backgroundImage, setPageLoaded]);
 
   return (
     <div className={`relative w-full min-h-screen bg-gray-900 ${className}`}>

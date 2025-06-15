@@ -21,8 +21,8 @@ export const TransitionProvider = ({ children }: { children: React.ReactNode }) 
     setIsTransitioning(true);
     setTimeout(() => {
       callback();
-      setTimeout(() => setIsTransitioning(false), 400); // hide overlay after new page loads
-    }, 500); // delay before navigating to new route
+      setTimeout(() => setIsTransitioning(false), 400); 
+    }, 500); 
   };
 
   return (
