@@ -197,7 +197,7 @@ const Hotspot: React.FC<HotspotProps> = ({
               exit={{ opacity: 0, scale: 0.8, y: 10 }}
               transition={{ duration: 0.2 }}
               className={`
-                absolute z-40 pointer-events-none 
+                hidden lg:block absolute z-40 pointer-events-none 
                 bg-black/90 text-white px-3 py-2 rounded-lg text-xs 
                 whitespace-nowrap backdrop-blur-sm border border-white/20 shadow-xl
                 left-1/2 transform -translate-x-1/2
