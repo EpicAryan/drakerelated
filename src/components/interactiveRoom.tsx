@@ -124,8 +124,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         {/* Background with smooth blur transition */}
         <motion.div
           ref={imageContainerRef}
-          // initial={{ opacity: 0, scale: 1.05 }}
-          // animate={{ opacity: 1, scale: 1 }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}

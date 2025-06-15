@@ -61,29 +61,11 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
           width: `${magnifierSize}px`,
           height: `${magnifierSize}px`,
         }}
-        // initial={{ 
-        //   opacity: 0, 
-        //   scale: 0.5,
-        //   filter: 'blur(4px)'
-        // }}
-        // animate={{ 
-        //   opacity: 1, 
-        //   scale: 1,
-        //   filter: 'blur(0px)'
-        // }}
-        // exit={{ 
-        //   opacity: 0, 
-        //   scale: 0.5,
-        //   filter: 'blur(4px)'
-        // }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
 
         transition={{
-          // type: "spring",
-          // stiffness: 300,
-          // damping: 25,
           duration: 0.3,
           ease: "easeInOut"
         }}

@@ -34,7 +34,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     title: "Video Screen",
     description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
-    imageClassName: "w-80 h-60 absolute top-0",
+    imageClassName: "sm:w-80 sm:h-60 absolute top-0",
     cardPosition: 'right',
     brand: "/flipkart.svg",
     productName: "Video Door Phone",
