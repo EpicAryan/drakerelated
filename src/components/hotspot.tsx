@@ -60,6 +60,7 @@ const Hotspot: React.FC<HotspotProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [showCard, setShowCard] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
@@ -97,13 +98,23 @@ const Hotspot: React.FC<HotspotProps> = ({
     };
   }, [isOpen]);
 
- 
+  useEffect(() => {
+    if (isOpen) {
+      const timeout = setTimeout(() => {
+        setShowCard(true);
+      }, 100); // delay helps reduce rendering spike
+      return () => clearTimeout(timeout);
+    } else {
+      setShowCard(false);
+    }
+  }, [isOpen]);
+
 
   return (
     <>
       <div
         ref={dotRef}
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 group z-30 p-4"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 group z-30 p-2 lg:p-4 touch-manipulation"
         style={{
            left: `${calculatedLeft}px`,
           top: `${calculatedTop}px`,
@@ -113,7 +124,7 @@ const Hotspot: React.FC<HotspotProps> = ({
 
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={(e) => {
+        onPointerDown={(e) => {
           e.stopPropagation();
           setIsOpen((prev) => !prev);
         }}
@@ -249,11 +260,18 @@ const Hotspot: React.FC<HotspotProps> = ({
           top: `${calculatedTop}px`,
         }}
       >
-        <HotspotCard 
+        {/* <HotspotCard 
           hotspot={hotspot} 
           isOpen={isOpen} 
           onClose={() => setIsOpen(false)} 
-        />
+        /> */}
+        {showCard && (
+          <HotspotCard 
+            hotspot={hotspot} 
+            isOpen={isOpen} 
+            onClose={() => setIsOpen(false)} 
+          />
+        )}
       </div>
     </>
   );
