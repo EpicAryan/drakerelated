@@ -76,10 +76,10 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
 
     hasLightBeam: true,
     beamAngle: 120, 
-    beamLength: 700,
+    beamLength: 800,
     beamWidth: 60,
     beamColor: '#ffffff', 
-    beamSpread: 600,
+    beamSpread: 700,
     beamOpacity: 0.15,
     beamGlowIntensity: 3,
     hasMagnifier: true,

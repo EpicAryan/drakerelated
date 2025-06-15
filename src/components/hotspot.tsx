@@ -1,12 +1,11 @@
 'use client'
 
 import React, {useState, useEffect, useRef} from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import HotspotCard from './hotspotCard';
 import LightBeam from '@/lib/lightBeam';
 import MagnifyingGlass from '@/lib/magnifying';
 
-// HotspotType interface remains the same
 export interface HotspotType {
   id: string;
   x: number;
@@ -61,7 +60,7 @@ const Hotspot: React.FC<HotspotProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // Removed the separate showMagnifier state as it's no longer needed
+
   const cardRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
 
@@ -70,13 +69,13 @@ const Hotspot: React.FC<HotspotProps> = ({
   const shouldShowBeam = (hotspot.hasLightBeam || 
     hotspot.title.toLowerCase().includes('camera')) && isHovered;
 
-  // MODIFICATION: Magnifier is now only shown when the hotspot is 'isOpen' (clicked).
+
   const shouldShowMagnifier = (hotspot.hasMagnifier !== false) && isOpen;
 
   const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
   const calculatedTop = imageProps.top + (hotspot.y / 100) * imageProps.height;
 
-  // This effect correctly handles closing the card/magnifier when clicking outside.
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Node;
@@ -97,8 +96,8 @@ const Hotspot: React.FC<HotspotProps> = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
-  
-  // Removed the delayed magnifier useEffect as it's no longer necessary
+
+ 
 
   return (
     <>
@@ -109,16 +108,15 @@ const Hotspot: React.FC<HotspotProps> = ({
            left: `${calculatedLeft}px`,
           top: `${calculatedTop}px`,
         }}
-        // MODIFICATION: onMouseEnter and onMouseLeave now only control hover effects like the tooltip and beam.
+
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        // MODIFICATION: The onClick handler is moved to the parent div to ensure better click handling.
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen((prev) => !prev);
         }}
       >
-        {/* Light Beam Effect (no change) */}
+        {/* Light Beam Effect */}
         <LightBeam
           isVisible={shouldShowBeam}
           angle={hotspot.beamAngle || 135} 
@@ -131,12 +129,10 @@ const Hotspot: React.FC<HotspotProps> = ({
           animationDuration={0.3}
         />
 
-        {/* Hotspot Dot (no change) */}
+        {/* Hotspot Dot */}
         <motion.div 
           className="relative w-3 h-3"
-          // Removed onClick from here to avoid nested handlers
         >
-          {/* ... (inner motion.divs for dot animation remain the same) ... */}
            <motion.div 
             className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 shadow-lg"
             style={{ transform: 'translate(-50%, -50%)' }}
@@ -192,7 +188,7 @@ const Hotspot: React.FC<HotspotProps> = ({
           )}
         </motion.div>
 
-        {/* Tooltip (no change) */}
+        {/* Tooltip */}
         <AnimatePresence>
           {isHovered && !isOpen && (
             <motion.div
@@ -229,7 +225,7 @@ const Hotspot: React.FC<HotspotProps> = ({
         </AnimatePresence>
       </div>
       
-      {/* Magnifying Glass Effect (no change needed in this component call) */}
+      {/* Magnifying Glass Effect */}
       <MagnifyingGlass
         isVisible={shouldShowMagnifier}
         x={hotspot.x}
@@ -242,7 +238,7 @@ const Hotspot: React.FC<HotspotProps> = ({
         originalImageHeight={originalImageHeight}
       />
       
-      {/* Hotspot Card (no change) */}
+      {/* Hotspot Card */}
       <div
         ref={cardRef}
         className="absolute transform -translate-x-1/2 -translate-y-1/2 z-50"
