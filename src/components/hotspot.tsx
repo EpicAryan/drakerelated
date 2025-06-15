@@ -114,7 +114,7 @@ const Hotspot: React.FC<HotspotProps> = ({
     <>
       <div
         ref={dotRef}
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 group z-30 p-2 lg:p-4 touch-manipulation"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 group z-30 p-4 touch-manipulation"
         style={{
            left: `${calculatedLeft}px`,
           top: `${calculatedTop}px`,

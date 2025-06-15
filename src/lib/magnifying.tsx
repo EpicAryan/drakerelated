@@ -54,7 +54,7 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
   return (
     <AnimatePresence>
       <motion.div
-        className="absolute pointer-events-none z-40"
+        className="hidden md:block absolute pointer-events-none z-40"
         style={{
           left: `${magnifierLeft}px`,
           top: `${magnifierTop}px`,
