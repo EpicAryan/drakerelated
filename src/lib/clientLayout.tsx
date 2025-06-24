@@ -1,6 +1,6 @@
 "use client";
 
-import { Navbar, InitialLoader } from "@/components";
+import { Navbar, InitialLoader, IntroModal } from "@/components";
 import { TransitionProvider } from "../components/Transition/transitionContext";
 import TransitionOverlay from "../components/Transition/transitionOverlay";
 import { useLoading } from "@/components/loading/loadingContext";
@@ -22,6 +22,7 @@ export default function ClientLayout({
       <TransitionProvider>
          {isPageLoaded && <Navbar />}
         <TransitionOverlay />
+        {isPageLoaded && <IntroModal />}
         {children}
       </TransitionProvider>
     </>

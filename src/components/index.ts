@@ -6,5 +6,16 @@ import InteractiveRoom from "./interactiveRoom";
 import Kitchen from "./kitchen";
 import Exterior from "./exterior";
 import { LoadingProvider } from "./loading/loadingContext";
+import IntroModal from "./introModal";
 
-export { Navbar, Livingroom, InitialLoader, ClientLayout, InteractiveRoom, Kitchen, Exterior, LoadingProvider };
+export {
+    Navbar,
+    Livingroom,
+    InitialLoader,
+    ClientLayout,
+    InteractiveRoom,
+    Kitchen,
+    Exterior,
+    LoadingProvider,
+    IntroModal
+};
