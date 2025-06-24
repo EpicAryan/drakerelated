@@ -51,7 +51,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                   className={clsx(
                     'text-sm lg:text-base font-medium transition-all duration-300',
-                    isActive ? 'bg-[#107bd4] text-white px-4 py-3 rounded-full' : 'text-white hover:text-[#107bd4]'
+                    isActive ? 'bg-[#107bd4] text-white px-4 py-2 rounded-full' : 'text-white hover:text-gray-300'
                   )}
                 >
                   {name}
@@ -85,7 +85,7 @@ const Navbar = () => {
       </div>
 
       {/* Bottom Navbar for Mobile */}
-      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[80%] max-w-sm bg-white/10 backdrop-blur-sm px-8 py-1 rounded-full shadow-lg flex items-center justify-center space-x-6 pointer-events-auto">
+      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[80%] max-w-sm bg-white/10 backdrop-blur-sm px-8 py-1 rounded-full shadow-lg flex items-center justify-between space-x-6 pointer-events-auto">
         {navItems.map(({ name, href, imageUrl }) => {
           const isActive = pathname === href
           return (
@@ -95,8 +95,8 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={clsx(
-                'text-xs font-medium transition-all duration-300',
-                isActive ? 'bg-[#107bd4] text-white px-3 py-2 rounded-full' : 'text-white hover:text-[#107bd4]'
+                'text-xs font-medium transition-all duration-300 text-nowrap',
+                isActive ? 'bg-[#107bd4] text-white px-3 py-2 rounded-full' : 'text-white hover:text-gray-300'
               )}
             >
               {name}

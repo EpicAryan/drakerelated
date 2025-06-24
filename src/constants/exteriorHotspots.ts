@@ -26,7 +26,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     title: "Video DoorBell",
     description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/686OKDzgVRqvxgLSOnnykI/20bad0eaf7b9627a6f3418b9f4bc52d2/Qubo_Doorbell.png",
-    imageClassName: "w-48 h-48 sm:w-56 sm:h-56 absolute top-0",
+    imageClassName: "w-auto h-44 sm:h-48 absolute top-0",
     cardPosition: 'left',
     brand: "/flipkart.svg",
     productName: "Video Door Phone",
@@ -41,7 +41,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
       { text: "Expandable storage up to 1TB", icon: Star },
       { text: "Mobile app integration", icon: Star }
     ],
-    buttonText: "Add to Cart",
+    buttonText: "Buy Now",
     hasMagnifier: true,
     magnifierZoom: 3,
     magnifierRadius: 60,
@@ -53,7 +53,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     title: "Smart Door Lock",
     description: "This sleek smart door lock offers advanced security with multiple access methods, ensuring both convenience and protection for your home. Its durable build and intelligent features make it an ideal choice for modern households.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6iZwAtiSfuBTR0qaXkBYXv/e1c61065f8c086e4132be81fdedefae4/Yale_doorlock.jpg",
-    imageClassName: "w-52 h-52 sm:w-56 sm:h-56 absolute -top-2 sm:top-2",
+    imageClassName: "w-auto h-48 sm:h-52 absolute -top-2 sm:top-2",
     cardPosition: 'left',
     brand: "/flipkart.svg",
     productName: "Smart Door Lock",
@@ -68,7 +68,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
       { text: "Low battery alerts", icon: Star },
       { text: "Emergency USB charging", icon: Star }
     ],
-    buttonText: "Add to Cart",
+    buttonText: "Buy Now",
     hasMagnifier: true,
     magnifierZoom: 3,
     magnifierRadius: 70,
@@ -80,7 +80,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     title: "Outdoor Camera",
     description: "This weatherproof outdoor camera combines high-resolution video with smart AI features, ensuring reliable surveillance in all conditions. Its robust design and intelligent detection capabilities make it ideal for safeguarding your property.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/1VABeET7zxtzAwN5H8c1Nn/01f7dd95c5994273481e9733a9d863e6/Qubo_Outdoor_Cam.png",
-    imageClassName: "w-48 h-40 sm:w-56 sm:h-50 absolute top-0",
+    imageClassName: "w-auto h-36 sm:h-40 absolute top-0",
     cardPosition: 'bottom',
 
     brand: "/flipkart.svg",
@@ -97,7 +97,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
       { text: "Wi-Fi (2.4GHz) connectivity", icon: Star },
       { text: "Mobile app control with OTA updates", icon: Star }
     ],
-    buttonText: "Add to Cart",
+    buttonText: "Buy Now",
 
     hasLightBeam: true,
     beamAngle: 145, 

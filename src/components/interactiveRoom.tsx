@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
-// import RoomControls from "./roomControls";
+import React, { useEffect, useState, useRef, useCallback } from "react"; 
+import { motion, AnimatePresence } from "motion/react"; 
 import Hotspot, { HotspotType } from "./hotspot";
 import { useLoading } from "./loading/loadingContext";
 
@@ -29,38 +28,45 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   originalImageWidth = 3840,
   originalImageHeight = 2160,
 }) => {
-  // const [isExploring, setIsExploring] = useState(false);
   const [canScroll, setCanScroll] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const [renderedImageProps, setRenderedImageProps] = useState<RenderedImageProps | null>(null);
   const { setPageLoaded } = useLoading();
 
-  const MIN_LOAD_TIME = 3000; 
+  const MIN_LOAD_TIME = 3000;
+
+  const [openHotspotId, setOpenHotspotId] = useState<string | null>(null);
+
+  const handleHotspotToggle = useCallback((hotspotId: string) => {
+    setOpenHotspotId(prevOpenId => (prevOpenId === hotspotId ? null : hotspotId));
+  }, []);
+
+  const handleHotspotClose = useCallback(() => {
+    setOpenHotspotId(null);
+  }, []);
+
 
   useEffect(() => {
     const calculateImagePosition = () => {
       if (imageContainerRef.current) {
         const containerWidth = imageContainerRef.current.offsetWidth;
         const containerHeight = imageContainerRef.current.offsetHeight;
-
         const imageAspect = originalImageWidth / originalImageHeight;
         const containerAspect = containerWidth / containerHeight;
-
         let renderedWidth, renderedHeight, left, top;
 
         if (containerAspect > imageAspect) {
           renderedWidth = containerWidth;
           renderedHeight = containerWidth / imageAspect;
           left = 0;
-          top = 0; 
+          top = 0;
         } else {
           renderedHeight = containerHeight;
           renderedWidth = containerHeight * imageAspect;
-          top = 0; 
+          top = 0;
           left = (containerWidth - renderedWidth) / 2;
         }
-
         setRenderedImageProps({ width: renderedWidth, height: renderedHeight, left, top });
       }
     };
@@ -71,14 +77,12 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
       window.removeEventListener("resize", calculateImagePosition);
       clearTimeout(timer);
     };
-  }, [isLoaded, canScroll, originalImageWidth, originalImageHeight]);
-
+  }, [isLoaded, canScroll, originalImageWidth, originalImageHeight]); 
   useEffect(() => {
     const checkScrollable = () => {
       const screenWidth = window.innerWidth;
       setCanScroll(screenWidth < 1520);
     };
-
     checkScrollable();
     window.addEventListener("resize", checkScrollable);
     return () => window.removeEventListener("resize", checkScrollable);
@@ -92,15 +96,14 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         setIsLoaded(true);
         resolve();
       };
-      img.onerror = () => {
+      img.onerror = (e) => { 
+        console.error("Image load failed:", e);
         reject(new Error("Image load failed"));
       };
     });
 
     const minTimePromise = new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, MIN_LOAD_TIME);
+      setTimeout(resolve, MIN_LOAD_TIME); 
     });
 
     Promise.all([imageLoadPromise, minTimePromise])
@@ -109,19 +112,16 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
       })
       .catch((error) => {
         console.error("Loading sequence failed:", error);
-        setPageLoaded(true);
+        setPageLoaded(true); 
       });
-  }, [backgroundImage, setPageLoaded]);
-
+  }, [backgroundImage, setPageLoaded, MIN_LOAD_TIME]); 
   return (
     <div className={`relative w-full min-h-screen bg-gray-900 ${className}`}>
-      {/* Scrollable wrapper */}
       <div
         className={`relative h-screen ${
           canScroll ? "overflow-x-auto room-scroll" : "overflow-hidden"
         }`}
       >
-        {/* Background with smooth blur transition */}
         <motion.div
           ref={imageContainerRef}
           initial={{ opacity: 0 }}
@@ -136,10 +136,8 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
           `}
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none" />
 
-          {/* Hotspots */}
           {renderedImageProps && (
             <>
               <AnimatePresence>
@@ -151,6 +149,9 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
                     backgroundImage={backgroundImage}
                     originalImageWidth={originalImageWidth}
                     originalImageHeight={originalImageHeight}
+                    isOpen={openHotspotId === hotspot.id}
+                    onToggle={() => handleHotspotToggle(hotspot.id)} 
+                    onClose={handleHotspotClose} 
                   />
                 ))}
               </AnimatePresence>
@@ -158,23 +159,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
           )}
         </motion.div>
       </div>
-
-      {/* Room control buttons */}
-      {/* <RoomControls onExplore={setIsExploring} isExploring={isExploring} />
-      <AnimatePresence>
-        {isExploring && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="md:hidden fixed bottom-20 left-1/2 transform -translate-x-1/2 text-white/80 text-center text-sm z-40"
-          >
-            <div className="bg-black/70 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
-              Hover over dots to magnify
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
     </div>
   );
 };
