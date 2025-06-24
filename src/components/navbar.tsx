@@ -40,7 +40,7 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 w-full z-50 hidden sm:block pointer-events-none">
         <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
           {/* Nav Tabs */}
-          <div className="flex space-x-6 bg-white/10 px-4 py-2 rounded-full shadow-md backdrop-blur-sm pointer-events-auto">
+          <div className="flex space-x-6 bg-white/10 px-4 py-1 rounded-full shadow-md backdrop-blur-sm pointer-events-auto">
             {navItems.map(({ name, href, imageUrl }) => {
               const isActive = pathname === href
               return (
@@ -51,7 +51,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                   className={clsx(
                     'text-sm lg:text-base font-medium transition-all duration-300',
-                    isActive ? 'text-blue-400 underline underline-offset-4' : 'text-white hover:text-blue-300'
+                    isActive ? 'bg-[#107bd4] text-white px-4 py-3 rounded-full' : 'text-white hover:text-[#107bd4]'
                   )}
                 >
                   {name}
@@ -73,7 +73,7 @@ const Navbar = () => {
       </nav>
 
       {/* Top-right Flipkart logo for mobile */}
-      <div className="fixed top-2 right-4 z-50 sm:hidden pointer-events-auto">
+      <div className="fixed top-4 right-4 z-50 sm:hidden pointer-events-auto">
         <Image
           src="/flipkart.svg"
           alt="Flipkart Logo"
@@ -85,7 +85,7 @@ const Navbar = () => {
       </div>
 
       {/* Bottom Navbar for Mobile */}
-      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[80%] max-w-sm bg-white/10 backdrop-blur-sm px-8 py-2 rounded-full shadow-lg flex items-center justify-center space-x-6 pointer-events-auto">
+      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[80%] max-w-sm bg-white/10 backdrop-blur-sm px-8 py-1 rounded-full shadow-lg flex items-center justify-center space-x-6 pointer-events-auto">
         {navItems.map(({ name, href, imageUrl }) => {
           const isActive = pathname === href
           return (
@@ -96,7 +96,7 @@ const Navbar = () => {
               whileTap={{ scale: 0.95 }}
               className={clsx(
                 'text-xs font-medium transition-all duration-300',
-                isActive ? 'text-blue-400 underline underline-offset-4' : 'text-white hover:text-blue-300'
+                isActive ? 'bg-[#107bd4] text-white px-3 py-2 rounded-full' : 'text-white hover:text-[#107bd4]'
               )}
             >
               {name}

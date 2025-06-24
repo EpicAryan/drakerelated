@@ -4,7 +4,7 @@ import { Navbar, InitialLoader } from "@/components";
 import { TransitionProvider } from "../components/Transition/transitionContext";
 import TransitionOverlay from "../components/Transition/transitionOverlay";
 import { useLoading } from "@/components/loading/loadingContext";
-import { AnimatePresence } from "framer-motion"; // 1. Import AnimatePresence
+import { AnimatePresence } from "motion/react"; 
 
 export default function ClientLayout({
   children,
