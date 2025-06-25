@@ -48,7 +48,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 2.0,
+    magnifierZoom: 1.0,
     magnifierRadius: 50,
   },
   {
@@ -84,7 +84,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     beamOpacity: 0.15,
     beamGlowIntensity: 3,
     hasMagnifier: true,
-    magnifierZoom: 1.8,
-    magnifierRadius: 60,
+    magnifierZoom: 0.8,
+    magnifierRadius: 50,
   },
 ];
