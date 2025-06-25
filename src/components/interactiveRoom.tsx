@@ -1,10 +1,32 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState, useRef, useCallback } from "react"; 
-import { motion, AnimatePresence } from "motion/react"; 
-import Hotspot, { HotspotType } from "./hotspot";
-import { useLoading } from "./loading/loadingContext";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
+import Hotspot, { HotspotType } from './hotspot';
+import { useLoading } from './loading/loadingContext';
+
+function useRect<T extends HTMLElement>() {
+  const ref = React.useRef<T>(null);
+  const [rect, setRect] = useState<DOMRectReadOnly | null>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const ro = new ResizeObserver(([entry]) =>
+      setRect(entry.contentRect)
+    );
+    ro.observe(ref.current);
+
+    return () => ro.disconnect();
+  }, []);
+
+  return [ref, rect] as const;
+}
 
 interface InteractiveRoomProps {
   backgroundImage: string;
@@ -24,138 +46,118 @@ interface RenderedImageProps {
 const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   backgroundImage,
   hotspots = [],
-  className = "",
+  className = '',
   originalImageWidth = 3840,
   originalImageHeight = 2160,
 }) => {
   const [canScroll, setCanScroll] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-  const [renderedImageProps, setRenderedImageProps] = useState<RenderedImageProps | null>(null);
+  const [rendered, setRendered] = useState<RenderedImageProps | null>(null);
+  const [openHotspotId, setOpenId] = useState<string | null>(null);
   const { setPageLoaded } = useLoading();
 
+  const [containerRef, rect] = useRect<HTMLDivElement>();
+
+  useEffect(() => {
+    if (!rect) return;
+
+    const imgAspect = originalImageWidth / originalImageHeight;
+    const containerAspect = rect.width / rect.height;
+
+    let width: number, height: number, left: number, top: number;
+
+    if (containerAspect > imgAspect) {
+      width  = rect.width;
+      height = rect.width / imgAspect;
+      left   = 0;
+      top    = 0;
+    } else {
+      height = rect.height;
+      width  = rect.height * imgAspect;
+      top    = 0;
+      left   = (rect.width - width) / 2;
+    }
+
+    setRendered({ width, height, left, top });
+  }, [rect, originalImageWidth, originalImageHeight]);
+
+  
+  useEffect(() => {
+    const checkScrollable = () => setCanScroll(window.innerWidth < 1520);
+    checkScrollable();
+    window.addEventListener('resize', checkScrollable);
+    return () => window.removeEventListener('resize', checkScrollable);
+  }, []);
+
+ 
   const MIN_LOAD_TIME = 3000;
 
-  const [openHotspotId, setOpenHotspotId] = useState<string | null>(null);
-
-  const handleHotspotToggle = useCallback((hotspotId: string) => {
-    setOpenHotspotId(prevOpenId => (prevOpenId === hotspotId ? null : hotspotId));
-  }, []);
-
-  const handleHotspotClose = useCallback(() => {
-    setOpenHotspotId(null);
-  }, []);
-
-
   useEffect(() => {
-    const calculateImagePosition = () => {
-      if (imageContainerRef.current) {
-        const containerWidth = imageContainerRef.current.offsetWidth;
-        const containerHeight = imageContainerRef.current.offsetHeight;
-        const imageAspect = originalImageWidth / originalImageHeight;
-        const containerAspect = containerWidth / containerHeight;
-        let renderedWidth, renderedHeight, left, top;
-
-        if (containerAspect > imageAspect) {
-          renderedWidth = containerWidth;
-          renderedHeight = containerWidth / imageAspect;
-          left = 0;
-          top = 0;
-        } else {
-          renderedHeight = containerHeight;
-          renderedWidth = containerHeight * imageAspect;
-          top = 0;
-          left = (containerWidth - renderedWidth) / 2;
-        }
-        setRenderedImageProps({ width: renderedWidth, height: renderedHeight, left, top });
-      }
-    };
-
-    window.addEventListener("resize", calculateImagePosition);
-    const timer = setTimeout(calculateImagePosition, 50);
-    return () => {
-      window.removeEventListener("resize", calculateImagePosition);
-      clearTimeout(timer);
-    };
-  }, [isLoaded, canScroll, originalImageWidth, originalImageHeight]); 
-  useEffect(() => {
-    const checkScrollable = () => {
-      const screenWidth = window.innerWidth;
-      setCanScroll(screenWidth < 1520);
-    };
-    checkScrollable();
-    window.addEventListener("resize", checkScrollable);
-    return () => window.removeEventListener("resize", checkScrollable);
-  }, []);
-
-   useEffect(() => {
-    const imageLoadPromise = new Promise<void>((resolve, reject) => {
+    const imgPromise = new Promise<void>((res, rej) => {
       const img = new Image();
       img.src = backgroundImage;
-      img.onload = () => {
-        setIsLoaded(true);
-        resolve();
-      };
-      img.onerror = (e) => { 
-        console.error("Image load failed:", e);
-        reject(new Error("Image load failed"));
-      };
+      img.onload  = () => { setIsLoaded(true); res(); };
+      img.onerror = (e) => { console.error('Image load failed', e); rej(e); };
     });
 
-    const minTimePromise = new Promise<void>((resolve) => {
-      setTimeout(resolve, MIN_LOAD_TIME); 
-    });
+    const minTimePromise = new Promise<void>((res) =>
+      setTimeout(res, MIN_LOAD_TIME)
+    );
 
-    Promise.all([imageLoadPromise, minTimePromise])
-      .then(() => {
-        setPageLoaded(true);
-      })
-      .catch((error) => {
-        console.error("Loading sequence failed:", error);
-        setPageLoaded(true); 
-      });
-  }, [backgroundImage, setPageLoaded, MIN_LOAD_TIME]); 
+    Promise.all([imgPromise, minTimePromise])
+      .then(() => setPageLoaded(true))
+      .catch(()  => setPageLoaded(true));        
+  }, [backgroundImage, setPageLoaded]);
+
+
+  const toggleHotspot = useCallback(
+    (id: string) => setOpenId((prev) => (prev === id ? null : id)),
+    [],
+  );
+
+  const closeHotspot  = useCallback(() => setOpenId(null), []);
+
   return (
     <div className={`relative w-full min-h-screen bg-gray-900 ${className}`}>
       <div
         className={`relative h-screen ${
-          canScroll ? "overflow-x-auto room-scroll" : "overflow-hidden"
+          canScroll ? 'overflow-x-auto room-scroll' : 'overflow-hidden'
         }`}
       >
         <motion.div
-          ref={imageContainerRef}
+          ref={containerRef}                
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           className={`
             relative bg-cover bg-[center_top] bg-no-repeat
             transition-all duration-700 ease-out
-            ${canScroll ? "min-w-[1520px] w-[1520px]" : "w-full"}
+            ${canScroll ? 'min-w-[1520px] w-[1520px]' : 'w-full'}
             h-full
-            ${isLoaded ? "blur-0" : "blur-sm"}
+            ${isLoaded ? 'blur-0' : 'blur-sm'}
           `}
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b
+                          from-black/20 via-transparent to-black/30
+                          pointer-events-none" />
 
-          {renderedImageProps && (
-            <>
-              <AnimatePresence>
-                {hotspots.map((hotspot) => (
-                  <Hotspot
-                    key={hotspot.id}
-                    hotspot={hotspot}
-                    imageProps={renderedImageProps}
-                    backgroundImage={backgroundImage}
-                    originalImageWidth={originalImageWidth}
-                    originalImageHeight={originalImageHeight}
-                    isOpen={openHotspotId === hotspot.id}
-                    onToggle={() => handleHotspotToggle(hotspot.id)} 
-                    onClose={handleHotspotClose} 
-                  />
-                ))}
-              </AnimatePresence>
-            </>
+          {rendered && (
+            <AnimatePresence>
+              {hotspots.map((h) => (
+                <Hotspot
+                  key={h.id}
+                  hotspot={h}
+                  imageProps={rendered}
+                  backgroundImage={backgroundImage}
+                  originalImageWidth={originalImageWidth}
+                  originalImageHeight={originalImageHeight}
+                  isOpen={openHotspotId === h.id}
+                  onToggle={() => toggleHotspot(h.id)}
+                  onClose={closeHotspot}
+                />
+              ))}
+            </AnimatePresence>
           )}
         </motion.div>
       </div>

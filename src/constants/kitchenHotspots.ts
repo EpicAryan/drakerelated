@@ -15,6 +15,7 @@ export interface HotspotTypeWithIcons extends HotspotType {
   featuresWithIcons?: Array<{
     text: string;
     icon: LucideIcon;
+    isFullWidth?: boolean;
   }>;
   imageWidth?: number | string;
   imageHeight?: number | string;
@@ -39,11 +40,11 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
       { text: "50 separate color zones", icon: Star },
       { text: "Music sync", icon: Mic },
       { text: "No hub required", icon: Zap },
-      { text: "Voice control via Alexa, Google Assistant, and Siri Shortcuts", icon: Wifi },
       { text: "Cuttable and flexible with 3M adhesive", icon: Star },
       { text: "PU coating for durability", icon: Star },
       { text: "2100 mcd brightness", icon: Star },
-      { text: "Up to 50,000 hours lifespan", icon: Star }
+      { text: "Up to 50,000 hours lifespan", icon: Star },
+      { text: "Voice control via Alexa, Google Assistant, and Siri Shortcuts", icon: Wifi, isFullWidth: true },
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
@@ -71,7 +72,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
       { text: "Voice assistant compatible", icon: Moon },
       { text: "MicroSD card support", icon: Moon },
       { text: "Mobile app control", icon: Eye },
-      { text: "Motion and human detection", icon: Moon }
+      { text: "Motion and human detection", icon: Moon, isFullWidth: true }
     ],
     buttonText: "Buy Now",
     hasLightBeam: true,

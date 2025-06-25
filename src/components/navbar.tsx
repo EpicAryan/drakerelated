@@ -40,18 +40,17 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 w-full z-50 hidden sm:block pointer-events-none">
         <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
           {/* Nav Tabs */}
-          <div className="flex space-x-6 bg-white/10 px-4 py-1 rounded-full shadow-md backdrop-blur-sm pointer-events-auto">
+          <div className="flex bg-white/10 rounded-full p-1 shadow-md backdrop-blur-sm pointer-events-auto w-full max-w-md">
             {navItems.map(({ name, href, imageUrl }) => {
               const isActive = pathname === href
               return (
                 <motion.button
                   key={name}
                   onClick={() => handleNavigation(href, imageUrl)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.97 }}
                   className={clsx(
-                    'text-sm lg:text-base font-medium transition-all duration-300',
-                    isActive ? 'bg-[#107bd4] text-white px-4 py-2 rounded-full' : 'text-white hover:text-gray-300'
+                    'flex-1 text-center text-sm lg:text-base font-medium rounded-full py-2 px-3 transition-all duration-300',
+                    isActive ? 'bg-[#107bd4] text-white shadow-sm' : 'text-white hover:bg-white/20'
                   )}
                 >
                   {name}
@@ -59,6 +58,7 @@ const Navbar = () => {
               )
             })}
           </div>
+
 
           {/* Logo Right */}
           <Image
@@ -85,18 +85,18 @@ const Navbar = () => {
       </div>
 
       {/* Bottom Navbar for Mobile */}
-      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[80%] max-w-sm bg-white/10 backdrop-blur-sm px-8 py-1 rounded-full shadow-lg flex items-center justify-between space-x-6 pointer-events-auto">
+      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[90%] max-w-sm bg-white/10 backdrop-blur-sm p-1 rounded-full shadow-lg flex pointer-events-auto">
         {navItems.map(({ name, href, imageUrl }) => {
           const isActive = pathname === href
           return (
             <motion.button
               key={name}
               onClick={() => handleNavigation(href, imageUrl)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
               className={clsx(
-                'text-xs font-medium transition-all duration-300 text-nowrap',
-                isActive ? 'bg-[#107bd4] text-white px-3 py-2 rounded-full' : 'text-white hover:text-gray-300'
+                'flex-1 text-center text-xs font-medium rounded-full py-2 transition-all duration-300',
+                isActive ? 'bg-[#107bd4] text-white shadow-sm' : 'text-white hover:bg-white/20'
               )}
             >
               {name}

@@ -7,48 +7,49 @@ import LightBeam from "@/lib/lightBeam";
 import MagnifyingGlass from "@/lib/magnifying";
 
 export interface HotspotType {
-id: string;
-x: number;
-y: number;
-title: string;
-description: string;
-image: string;
-cardPosition?: "top" | "bottom" | "left" | "right";
-tooltipPosition?: "top" | "bottom";
-hasLightBeam?: boolean;
-beamAngle?: number;
-beamLength?: number;
-beamWidth?: number;
-beamColor?: string;
-beamSpread?: number;
-beamOpacity?: number;
-beamGlowIntensity?: number;
-hasMagnifier?: boolean;
-magnifierZoom?: number;
-magnifierRadius?: number;
-brand?: string;
-productName?: string;
-features?: string[];
-price?: string;
-buttonText?: string;
+  id: string;
+  x: number;
+  y: number;
+  title: string;
+  description: string;
+  image: string;
+  cardPosition?: "top" | "bottom" | "left" | "right";
+  tooltipPosition?: "top" | "bottom";
+  hasLightBeam?: boolean;
+  beamAngle?: number;
+  beamLength?: number;
+  beamWidth?: number;
+  beamColor?: string;
+  beamSpread?: number;
+  beamOpacity?: number;
+  beamGlowIntensity?: number;
+  hasMagnifier?: boolean;
+  magnifierZoom?: number;
+  magnifierRadius?: number;
+  brand?: string;
+  productName?: string;
+  features?: string[];
+  price?: string;
+  buttonText?: string;
+  cardOffsetY?: number;
 }
 
 interface RenderedImageProps {
-left: number;
-top: number;
-width: number;
-height: number;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 }
 
 interface HotspotProps {
-hotspot: HotspotType;
-imageProps: RenderedImageProps;
-backgroundImage: string;
-originalImageWidth?: number;
-originalImageHeight?: number;
-isOpen: boolean;
- onToggle: () => void; 
- onClose: () => void; 
+  hotspot: HotspotType;
+  imageProps: RenderedImageProps;
+  backgroundImage: string;
+  originalImageWidth?: number;
+  originalImageHeight?: number;
+  isOpen: boolean;
+  onToggle: () => void; 
+  onClose: () => void; 
 }
 
 
@@ -63,8 +64,7 @@ const Hotspot: React.FC<HotspotProps> = ({
   onClose,  
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-//   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false); // For magnifier logic
+  const [isMobile, setIsMobile] = useState(false); 
 
   const cardRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);

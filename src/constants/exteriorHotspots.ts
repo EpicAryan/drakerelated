@@ -12,6 +12,7 @@ export interface HotspotTypeWithIcons extends HotspotType {
   featuresWithIcons?: Array<{
     text: string;
     icon: LucideIcon;
+    isFullWidth?: boolean;
   }>;
   imageWidth?: number | string;
   imageHeight?: number | string;
@@ -43,7 +44,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 3,
+    magnifierZoom: 1.4,
     magnifierRadius: 60,
   },
   {
@@ -70,7 +71,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 3,
+    magnifierZoom: 1.2,
     magnifierRadius: 70,
   },
   {
@@ -81,8 +82,8 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     description: "This weatherproof outdoor camera combines high-resolution video with smart AI features, ensuring reliable surveillance in all conditions. Its robust design and intelligent detection capabilities make it ideal for safeguarding your property.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/1VABeET7zxtzAwN5H8c1Nn/01f7dd95c5994273481e9733a9d863e6/Qubo_Outdoor_Cam.png",
     imageClassName: "w-auto h-36 sm:h-40 absolute top-0",
-    cardPosition: 'bottom',
-
+    cardPosition: 'left',
+    cardOffsetY: 80,
     brand: "/flipkart.svg",
     productName: "Outdoor Camera",
     featuresWithIcons: [
@@ -91,11 +92,11 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
       { text: "Color night vision", icon: Mic },
       { text: "IP66 weather resistance", icon: Star },
       { text: "AI-powered person detection", icon: Wifi },
-      { text: "Smart spotlight with multiple modes", icon: Zap },
-      { text: "Two-way audio with echo cancellation", icon: Star },
-      { text: "Up to 1TB microSD and cloud storage support", icon: Star },
       { text: "Wi-Fi (2.4GHz) connectivity", icon: Star },
-      { text: "Mobile app control with OTA updates", icon: Star }
+      { text: "Smart spotlight with multiple modes", icon: Zap },
+      { text: "Two-way audio with echo cancellation", icon: Star,  },
+      { text: "Mobile app control with OTA updates", icon: Star, isFullWidth: true  },
+      { text: "Up to 1TB microSD and cloud storage support", icon: Star, isFullWidth: true }
     ],
     buttonText: "Buy Now",
 
@@ -108,7 +109,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     beamOpacity: 0.1,
     beamGlowIntensity: 3,
     hasMagnifier: true,
-    magnifierZoom: 2.8,
+    magnifierZoom: 1.2,
     magnifierRadius: 60,
   },
 ];

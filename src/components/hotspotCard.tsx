@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { Check, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import clsx from 'clsx';
 
 export interface HotspotCardData {
   id: string;
@@ -21,12 +22,14 @@ export interface HotspotCardData {
   featuresWithIcons?: Array<{
     text: string;
     icon: LucideIcon;
+    isFullWidth?: boolean;
   }>;
   price?: string;
   buttonText?: string;
   imageWidth?: number | string;
   imageHeight?: number | string;
   imageClassName?: string;
+  cardOffsetY?: number;
 }
 
 interface HotspotCardProps {
@@ -41,7 +44,7 @@ interface _CardContentProps {
   productName: string;
   brandLogoSrc: string; 
   buttonText: string;
-  displayFeatures: Array<{ text: string; icon: LucideIcon }>;
+  displayFeatures: Array<{ text: string; icon: LucideIcon; isFullWidth?: boolean; }>;
 }
 
 const _CardContent: React.FC<_CardContentProps> = React.memo(({
@@ -91,14 +94,20 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
             <div className="hidden sm:grid grid-cols-2 gap-1 font-semibold text-[#AEAEAE]">
               {displayFeatures.map((feature, index) => {
                 const Icon = feature.icon;
+                const isFullRow = feature.isFullWidth;
                 return (
-                  <motion.div key={index} className="flex items-center space-x-3"
+                  <motion.div
+                    key={index}
+                    className={clsx(
+                      "flex items-center space-x-3",
+                      isFullRow && "col-span-2"
+                    )}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: (index * 0.05) + 0.3 }} 
+                    transition={{ delay: index * 0.05 + 0.3 }}
                   >
-                    <Icon className="w-3 h-3 text-blue-400" strokeWidth={1.5} />
-                    <span className='text-[10px]'>{feature.text}</span>
+                    <Icon className="w-3 h-3 text-blue-400 flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-[10px]">{feature.text}</span>
                   </motion.div>
                 );
               })}
@@ -258,11 +267,19 @@ const HotspotCardComponent: React.FC<HotspotCardProps> = ({ hotspot, isOpen, onC
     );
   }
 
+  const cardStyle: React.CSSProperties = {};
+  if (hotspot.cardPosition === 'left' || hotspot.cardPosition === 'right') {
+    if (hotspot.cardOffsetY) {
+      cardStyle.top = `calc(50% + ${hotspot.cardOffsetY}px)`;
+    }
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           className={getDesktopCardPosition()}
+          style={cardStyle}
           variants={getCardAnimation()} initial="initial" animate="animate" exit="exit"
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >

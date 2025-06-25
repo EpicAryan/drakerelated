@@ -2,7 +2,7 @@ import { HotspotType } from "@/components/hotspot";
 import type { LucideIcon } from 'lucide-react';
 import { 
   Monitor, 
-  // Star, 
+  Star, 
   Mic, 
   Wifi, 
   Zap, 
@@ -20,6 +20,7 @@ export interface HotspotTypeWithIcons extends HotspotType {
   featuresWithIcons?: Array<{
     text: string;
     icon: LucideIcon;
+    isFullWidth?: boolean;
   }>;
   imageWidth?: number | string;
   imageHeight?: number | string;
@@ -27,33 +28,34 @@ export interface HotspotTypeWithIcons extends HotspotType {
 }
 
 export const livingroomHotspots: HotspotTypeWithIcons[] = [
-  // {
-  //   id: "1",
-  //   x: 12,
-  //   y: 53,
-  //   title: "Video Door Phone",
-  //   description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
-  //   image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
-  //   imageClassName: "w-64 h-44 sm:w-76 sm:h-52 absolute top-0",
-  //   cardPosition: 'right',
-  //   brand: "/flipkart.svg",
-  //   productName: "Video Door Phone",
-  //   featuresWithIcons: [
-  //     { text: "2K resolution camera", icon: Monitor },
-  //     { text: "140° wide-angle lens", icon: Star },
-  //     { text: "Night vision", icon: Mic },
-  //     { text: "Mobile app integration", icon: Star },
-  //     { text: "Motion and person detection", icon: Wifi },
-  //     { text: "Two-way audio with echo cancellation", icon: Zap },
-  //     { text: "Dual-band Wi-Fi and Ethernet PoE support", icon: Star },
-  //     { text: "Smart assistant compatibility", icon: Star },
-  //     { text: "Expandable storage up to 1TB", icon: Star }
-  //   ],
-  //   buttonText: "Buy Now",
-  //   hasMagnifier: true,
-  //   magnifierZoom: 1.3,
-  //   magnifierRadius: 100,
-  // },
+  {
+    id: "1",
+    x: 12,
+    y: 53,
+    title: "Video Door Phone",
+    description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
+    image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
+    imageClassName: "w-64 h-44 sm:w-76 sm:h-52 absolute top-0",
+    cardPosition: 'right',
+    cardOffsetY: -50,
+    brand: "/flipkart.svg",
+    productName: "Video Door Phone",
+    featuresWithIcons: [
+      { text: "2K resolution camera", icon: Monitor },
+      { text: "140° wide-angle lens", icon: Star },
+      { text: "Night vision", icon: Mic },
+      { text: "Mobile app integration", icon: Star },
+      { text: "Motion and person detection", icon: Wifi },
+      { text: "Two-way audio with echo cancellation", icon: Zap },
+      { text: "Dual-band Wi-Fi and Ethernet PoE support", icon: Star },
+      { text: "Smart assistant compatibility", icon: Star },
+      { text: "Expandable storage up to 1TB", icon: Star }
+    ],
+    buttonText: "Buy Now",
+    hasMagnifier: true,
+    magnifierZoom: 0.7,
+    magnifierRadius: 90,
+  },
   {
     id: "2",
     x: 22,
@@ -77,7 +79,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 1.3,
+    magnifierZoom: 0.7,
     magnifierRadius: 80,
   },
   {
@@ -101,7 +103,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
       { text: "Voice assistant compatible", icon: Moon },
       { text: "MicroSD card support", icon: Moon },
       { text: "Mobile app control", icon: Eye },
-      { text: "Motion and human detection", icon: Moon }
+      { text: "Motion and human detection", icon: Moon,  isFullWidth: true }
     ],
     hasLightBeam: true,
     beamAngle: 50, 
@@ -113,7 +115,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     beamGlowIntensity: 2,
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 2.0,
+    magnifierZoom: 1.0,
     magnifierRadius: 50,
   },
   {
@@ -125,6 +127,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
     imageClassName: "w-auto h-44 sm:h-48 absolute top-0",
     cardPosition: 'left',
+    cardOffsetY: -50,
     brand: "/flipkart.svg",
     productName: "Baby Camera",
     featuresWithIcons: [
@@ -136,7 +139,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
       { text: "Voice assistant compatible", icon: Moon },
       { text: "MicroSD card support", icon: Moon },
       { text: "Mobile app control", icon: Eye },
-      { text: "Motion and human detection", icon: Moon }
+      { text: "Motion and human detection", icon: Moon, isFullWidth: true }
     ],
     hasLightBeam: true,
     beamAngle: 175, 
@@ -148,7 +151,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     beamGlowIntensity: 2,
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 2.4,
+    magnifierZoom: 1.3,
     magnifierRadius: 80,
   },
   {
@@ -165,16 +168,16 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     featuresWithIcons: [
       { text: "Control up to 4 switches", icon: Radio },
       { text: "Wi-Fi connectivity (2.4GHz)", icon: Settings },
-      { text: "Voice assistant compatibility (Alexa, Google Assistant)", icon: Mic },
       { text: "Mobile app control", icon: Settings },
       { text: "Manual override support", icon: Smartphone },
       { text: "Compact retrofit design", icon: Gauge },
       { text: "No hub required", icon: Gauge },
-      { text: "Energy-efficient operation", icon: Gauge }
+      { text: "Energy-efficient operation", icon: Gauge },
+      { text: "Voice assistant compatibility (Alexa, Google Assistant)", icon: Mic }
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 3.0,
+    magnifierZoom: 1.5,
     magnifierRadius: 70,
   },
 ];

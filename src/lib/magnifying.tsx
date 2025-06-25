@@ -1,12 +1,12 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react'; 
 
 interface MagnifyingGlassProps {
   isVisible: boolean;
-  x: number;
-  y: number;
+  x: number; 
+  y: number; 
   backgroundImage: string;
-  imageProps: {
+  imageProps: { 
     left: number;
     top: number;
     width: number;
@@ -15,8 +15,8 @@ interface MagnifyingGlassProps {
   zoomLevel?: number;
   radius?: number;
   borderWidth?: number;
-  originalImageWidth?: number;
-  originalImageHeight?: number;
+  originalImageWidth?: number;  
+  originalImageHeight?: number; 
 }
 
 const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
@@ -28,28 +28,36 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
   zoomLevel = 2.5,
   radius = 120,
   borderWidth = 4,
+  originalImageWidth,  
+  originalImageHeight, 
 }) => {
   if (!isVisible) return null;
 
-  // Calculate the magnified area position
   const magnifierSize = radius * 2;
+
+  const baseMagnificationWidth = (originalImageWidth && originalImageWidth > 0)
+                               ? originalImageWidth
+                               : imageProps.width; 
+  const baseMagnificationHeight = (originalImageHeight && originalImageHeight > 0)
+                                ? originalImageHeight
+                                : imageProps.height; 
+
+  const hotspotXOnBase = (x / 100) * baseMagnificationWidth;
+  const hotspotYOnBase = (y / 100) * baseMagnificationHeight;
+
+  const renderedHotspotX = (x / 100) * imageProps.width;
+  const renderedHotspotY = (y / 100) * imageProps.height;
   
-  // Convert hotspot percentage coordinates to actual image coordinates
-  const actualImageX = (x / 100) * imageProps.width;
-  const actualImageY = (y / 100) * imageProps.height;
+  const magnifierLeft = imageProps.left + renderedHotspotX - radius;
+  const magnifierTop = imageProps.top + renderedHotspotY - radius;
   
-  // Calculate the position for the magnifier circle
-  const magnifierLeft = imageProps.left + actualImageX - radius;
-  const magnifierTop = imageProps.top + actualImageY - radius;
+  const backgroundX = radius - (hotspotXOnBase * zoomLevel);
+  const backgroundY = radius - (hotspotYOnBase * zoomLevel);
   
-  // Calculate background position for the zoomed image
-  // We need to offset the background to show the correct portion
-  const backgroundX = -(actualImageX * zoomLevel - radius);
-  const backgroundY = -(actualImageY * zoomLevel - radius);
+  const zoomedTotalBackgroundWidth = baseMagnificationWidth * zoomLevel;
+  const zoomedTotalBackgroundHeight = baseMagnificationHeight * zoomLevel;
+
   
-  // Calculate the background size for the zoomed image
-  const zoomedWidth = imageProps.width * zoomLevel;
-  const zoomedHeight = imageProps.height * zoomLevel;
 
   return (
     <AnimatePresence>
@@ -64,7 +72,6 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
-
         transition={{
           duration: 0.3,
           ease: "easeInOut"
@@ -86,12 +93,13 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
         >
           {/* Zoomed background image */}
           <div
-            className="absolute inset-0 bg-cover bg-no-repeat"
+            className="absolute inset-0 bg-no-repeat" 
             style={{
               backgroundImage: `url(${backgroundImage})`,
-              backgroundSize: `${zoomedWidth}px ${zoomedHeight}px`,
+              backgroundSize: `${zoomedTotalBackgroundWidth}px ${zoomedTotalBackgroundHeight}px`,
               backgroundPosition: `${backgroundX}px ${backgroundY}px`,
-              transform: 'scale(1.02)', 
+              filter: 'contrast(110%) brightness(105%)', 
+              imageRendering: 'auto', 
             }}
           />
           
@@ -124,13 +132,6 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
             }}
           />
         </div>
-        
-        {/* Optional zoom indicator */}
-        {/* <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="bg-black/70 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm border border-white/20">
-            {zoomLevel}x zoom
-          </div>
-        </div> */}
       </motion.div>
     </AnimatePresence>
   );
