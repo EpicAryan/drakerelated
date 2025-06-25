@@ -2,7 +2,6 @@ import { HotspotType } from "@/components/hotspot";
 import type { LucideIcon } from 'lucide-react';
 import { 
   Monitor, 
-  Star, 
   Mic, 
   Wifi, 
   Zap, 
@@ -30,34 +29,6 @@ export interface HotspotTypeWithIcons extends HotspotType {
 export const livingroomHotspots: HotspotTypeWithIcons[] = [
   {
     id: "1",
-    x: 12,
-    y: 53,
-    title: "Video Door Phone",
-    description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
-    image: "https://images.ctfassets.net/m3x6aw9x53qp/6MBuQWbiNQWt0NFDTSIir6/73b5795f4a8cd0c95fdd75ee70112602/Indoor_Camera_tp_link.jpg",
-    imageClassName: "w-64 h-44 sm:w-76 sm:h-52 absolute top-0",
-    cardPosition: 'right',
-    cardOffsetY: -50,
-    brand: "/flipkart.svg",
-    productName: "Video Door Phone",
-    featuresWithIcons: [
-      { text: "2K resolution camera", icon: Monitor },
-      { text: "140° wide-angle lens", icon: Star },
-      { text: "Night vision", icon: Mic },
-      { text: "Mobile app integration", icon: Star },
-      { text: "Motion and person detection", icon: Wifi },
-      { text: "Two-way audio with echo cancellation", icon: Zap },
-      { text: "Dual-band Wi-Fi and Ethernet PoE support", icon: Star },
-      { text: "Smart assistant compatibility", icon: Star },
-      { text: "Expandable storage up to 1TB", icon: Star }
-    ],
-    buttonText: "Buy Now",
-    hasMagnifier: true,
-    magnifierZoom: 0.7,
-    magnifierRadius: 90,
-  },
-  {
-    id: "2",
     x: 22,
     y: 42,
     title: "Smart Light",
@@ -83,7 +54,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     magnifierRadius: 80,
   },
   {
-    id: "3",
+    id: "2",
     x: 51.2,
     y: 5.2,
     title: "Indoor Security Camera",
@@ -119,7 +90,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     magnifierRadius: 50,
   },
   {
-    id: "4",
+    id: "3",
     x: 93.5,
     y: 56,
     title: "Baby Camera",
@@ -155,7 +126,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     magnifierRadius: 80,
   },
   {
-    id: "5",
+    id: "4",
     x: 79.8,
     y: 47,
     title: "Smart Switch",

@@ -7,6 +7,7 @@ import Kitchen from "./kitchen";
 import Exterior from "./exterior";
 import { LoadingProvider } from "./loading/loadingContext";
 import IntroModal from "./introModal";
+import LandscapeHint from "./landscapeHint";
 
 export {
     Navbar,
@@ -17,5 +18,6 @@ export {
     Kitchen,
     Exterior,
     LoadingProvider,
-    IntroModal
+    IntroModal,
+    LandscapeHint
 };
