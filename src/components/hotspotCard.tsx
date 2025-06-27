@@ -112,7 +112,7 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
 
         <div className="relative z-10">
           <div className="text-sm text-gray-400 font-mono flex items-center">
-            <Image src={brandLogoSrc} alt={`${hotspot.brand || 'Brand'} logo`} width={600} height={600} className={hotspot.brandClass ?? "h-4 sm:h-4 w-auto object-contain"} />
+            <Image src={brandLogoSrc} alt={`${hotspot.brand || 'Brand'} logo`} width={100} height={100} className={hotspot.brandClass ?? "h-4 sm:h-4 w-auto object-contain"} />
           </div>
           <h3 className="text-xs md:text-sm xl:text-lg font-bold mt-2 sm:mt-3 mb-1">{productName}</h3>
           <p className="text-[10px] xl:text-[11px] text-[#EAEAEA] leading-normal mb-1 lg:mb-3">{hotspot.description}</p>
