@@ -57,13 +57,13 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   const decideScrollMode = useCallback(() => {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
+    const isLandscape = vw > vh;
 
-    if (vw >= 1024) {
+    if (vw >= 1024 && isLandscape) {
       setScrollMode('none');
       return;
     }
 
-    const isLandscape = vw > vh;
     if (isLandscape && originalImageHeight > vh) {
       setScrollMode('both');
     } else {
@@ -93,7 +93,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         left: 0,
         top: 0,
       });
-    } else {
+    } else { 
       const containerAspect = rect.width / rect.height;
       let width, height, left, top;
       if (containerAspect > imgAspect) {
@@ -105,7 +105,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
         height = rect.height;
         width = rect.height * imgAspect;
         top = 0;
-        left = rect.width - width;
+        left = rect.width - width; 
       }
       setRendered({ width, height, left, top });
     }
@@ -154,7 +154,7 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
       const newWidth = rect.height * (originalImageWidth / originalImageHeight);
       contentStyles.width = `${newWidth}px`;
     }
-  } else { // 'both' mode
+  } else { 
     contentClasses.push('max-w-none', 'bg-cover');
     contentStyles.width = `${originalImageWidth}px`;
     contentStyles.height = `${originalImageHeight}px`;
