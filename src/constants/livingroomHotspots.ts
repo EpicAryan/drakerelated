@@ -39,6 +39,8 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     cardPosition: 'right',
     brand: "/philips-logo.webp",
     brandClass: "h-auto w-12 sm:w-16",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Smart Light",
     featuresWithIcons: [
       { text: "16 million color options", icon: Lightbulb },
@@ -75,6 +77,8 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     tooltipPosition: "bottom",
     brand: "/qubo-logo.webp",
     brandClass: "h-auto w-14 sm:w-18",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Indoor Camera",
     featuresWithIcons: [
       { text: "Full HD 1080p resolution", icon: Monitor },
@@ -119,6 +123,8 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     cardOffsetY: -50,
     brand: "/cp-plus-logo.webp",
     brandClass: "h-auto w-12 sm:w-16 invert brightness-0",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Baby Camera",
     featuresWithIcons: [
       { text: "3MP Full HD Video Quality", icon: Monitor },
@@ -163,6 +169,8 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     cardPosition: 'left',
     brand: "/wipro-logo.webp",
     brandClass: "h-auto w-8 ml-3 sm:ml-5 invert brightness-0",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Smart Switch",
     featuresWithIcons: [
       { text: "Control up to 4 switches", icon: Radio },

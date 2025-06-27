@@ -35,6 +35,8 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     cardOffsetY: 40,
     brand: "/qubo-logo.webp",
     brandClass: "h-auto w-14 sm:w-18",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Video Door Phone",
     featuresWithIcons: [
       { text: "2K resolution camera", icon: Monitor },
@@ -71,6 +73,8 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     cardOffsetY: 36,
     brand: "/atomberg-logo.webp",
     brandClass: "h-auto w-14 sm:w-18",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Smart Door Lock",
     featuresWithIcons: [
       { text: "6-in-1 Smart Unlock Options", icon: Lock },
@@ -108,6 +112,8 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     cardOffsetY: 124,
     brand: "/qubo-logo.webp",
     brandClass: "h-auto w-14 sm:w-18",
+    brandLogoWidth: 200,
+    brandLogoHeight: 45,
     productName: "Outdoor Camera",
     featuresWithIcons: [
       { text: "3MP (1296p) resolution", icon: Monitor },
