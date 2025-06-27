@@ -40,7 +40,7 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 w-full z-50 hidden sm:block pointer-events-none">
         <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
           {/* Nav Tabs */}
-          <div className="flex bg-white/10 rounded-full p-1 shadow-md backdrop-blur-sm pointer-events-auto w-full max-w-md">
+          <div className="flex bg-white/10 rounded-full p-1 shadow-md backdrop-blur-sm pointer-events-auto w-full max-w-xs xl:max-w-md">
             {navItems.map(({ name, href, imageUrl }) => {
               const isActive = pathname === href
               return (
@@ -49,7 +49,7 @@ const Navbar = () => {
                   onClick={() => handleNavigation(href, imageUrl)}
                   whileTap={{ scale: 0.97 }}
                   className={clsx(
-                    'flex-1 text-center text-sm lg:text-base font-medium rounded-full py-2 px-3 transition-all duration-300',
+                    'flex-1 text-center text-xs xl:text-base font-medium rounded-full py-2 px-3 transition-all duration-300',
                     isActive ? 'bg-[#107bd4] text-white shadow-sm' : 'text-white hover:bg-white/20'
                   )}
                 >
@@ -64,9 +64,9 @@ const Navbar = () => {
           <Image
             src="/flipkart.svg"
             alt="Flipkart Logo"
-            width={110}
-            height={40}
-            className="pointer-events-auto"
+            width={400}
+            height={400}
+            className="pointer-events-auto h-auto w-24 xl:w-28 2xl:w-32 "
             priority
           />
         </div>

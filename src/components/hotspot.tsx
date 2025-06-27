@@ -27,11 +27,14 @@ export interface HotspotType {
   magnifierZoom?: number;
   magnifierRadius?: number;
   brand?: string;
+  brandClass?: string;
   productName?: string;
   features?: string[];
   price?: string;
   buttonText?: string;
   cardOffsetY?: number;
+  redirectUrl?: string;
+   mediaType?: 'image' | 'video';
 }
 
 interface RenderedImageProps {

@@ -6,7 +6,7 @@ import { exteriorHotspots } from "@/constants/exteriorHotspots";
 
 const Exterior = () => {
   const BG_IMAGE =
-    "https://images.ctfassets.net/m3x6aw9x53qp/11Cp7QsgBRFbooVQGV9SQQ/186b14284923a95a6ceb67223e085c61/Exterior.png";
+    "https://images.ctfassets.net/m3x6aw9x53qp/8I7Rjg7Eqg6aOJtJA9if5/788069718d4985de9cc389ca3a314533/entrance.webp";
 
   return (
     <InteractiveRoom

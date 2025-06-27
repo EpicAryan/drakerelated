@@ -17,6 +17,7 @@ export interface HotspotCardData {
   image: string; 
   cardPosition?: 'top' | 'bottom' | 'left' | 'right';
   brand?: string; 
+  brandClass?: string;
   productName?: string;
   features?: string[];
   featuresWithIcons?: Array<{
@@ -30,6 +31,8 @@ export interface HotspotCardData {
   imageHeight?: number | string;
   imageClassName?: string;
   cardOffsetY?: number;
+  redirectUrl?: string;
+  mediaType?: 'image' | 'video';
 }
 
 interface HotspotCardProps {
@@ -47,6 +50,11 @@ interface _CardContentProps {
   displayFeatures: Array<{ text: string; icon: LucideIcon; isFullWidth?: boolean; }>;
 }
 
+const isVideo = (hotspot: HotspotCardData): boolean => {
+  if (hotspot.mediaType) return hotspot.mediaType === 'video';
+  return /\.(mp4|webm|ogg)$/i.test(hotspot.image);
+};
+
 const _CardContent: React.FC<_CardContentProps> = React.memo(({
   hotspot,
   onClose,
@@ -56,7 +64,7 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
   displayFeatures,
 }) => {
   return (
-    <div className="relative w-64 h-110 sm:w-80 sm:h-125 rounded-3xl overflow-hidden lg:drop-shadow-2xl text-black max-w-[90vw]">
+    <div className="relative w-64 md:w-72 xl:w-80 rounded-3xl overflow-hidden lg:drop-shadow-2xl text-black max-w-[90vw] h-auto ">
       <motion.button
         className="absolute top-3 right-3 z-20 w-8 h-8 bg-black/70 hover:bg-black/90 text-white rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer"
         onClick={(e) => {
@@ -72,26 +80,45 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
         <X className="w-4 h-4" strokeWidth={2} />
       </motion.button>
 
-      <div className="absolute w-full h-64 sm:h-70 flex justify-center items-center bg-white">
+      <div className="w-full h-56 sm:h-64 xl:h-70 flex justify-center items-center bg-white">
         <div className={hotspot.imageClassName ?? "w-32 h-24 sm:w-40 sm:h-28"}>
-          <Image src={hotspot.image} alt={productName} width={900} height={900} sizes="100vw" priority className="w-full h-full object-cover" />
+          {isVideo(hotspot) ? (
+            <video
+              src={hotspot.image}
+              className="w-full h-full object-cover rounded-md"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <Image
+              src={hotspot.image}
+              alt={productName}
+              width={900}
+              height={900}
+              sizes="100vw"
+              priority
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
       </div>
 
-      <div className="absolute bottom-0 text-white p-3 sm:p-4 pt-4">
+      <div className="relative text-white p-3 sm:p-4 pt-4 -mt-22 sm:-mt-32">
         <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 622 498" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 57.0453V32C0 14.3269 14.3269 0 32 0H158.155C165.798 0 173.189 2.73563 178.99 7.71196L227.51 49.3333C233.311 54.3096 240.702 57.0453 248.345 57.0453H590C607.673 57.0453 622 71.3722 622 89.0453V466C622 483.673 607.673 498 590 498H32C14.3269 498 0 483.673 0 466V57.0453Z" fill="#101010" />
         </svg>
 
         <div className="relative z-10">
           <div className="text-sm text-gray-400 font-mono flex items-center">
-            <Image src={brandLogoSrc} alt={`${hotspot.brand || 'Brand'} logo`} width={600} height={100} className="h-4 sm:h-4 w-auto object-contain" />
+            <Image src={brandLogoSrc} alt={`${hotspot.brand || 'Brand'} logo`} width={600} height={600} className={hotspot.brandClass ?? "h-4 sm:h-4 w-auto object-contain"} />
           </div>
-          <h3 className="text-xs sm:text-lg font-bold mt-2 sm:mt-3 mb-1">{productName}</h3>
-          <p className="text-[10px] sm:text-[11px] text-[#EAEAEA] leading-normal mb-1 lg:mb-3">{hotspot.description}</p>
+          <h3 className="text-xs md:text-sm xl:text-lg font-bold mt-2 sm:mt-3 mb-1">{productName}</h3>
+          <p className="text-[10px] xl:text-[11px] text-[#EAEAEA] leading-normal mb-1 lg:mb-3">{hotspot.description}</p>
 
           <div className="mb-1 lg:mb-4">
-            <div className="hidden sm:grid grid-cols-2 gap-1 font-semibold text-[#AEAEAE]">
+            <div className="hidden xl:grid grid-cols-2 gap-1 font-semibold text-[#AEAEAE]">
               {displayFeatures.map((feature, index) => {
                 const Icon = feature.icon;
                 const isFullRow = feature.isFullWidth;
@@ -112,7 +139,7 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
                 );
               })}
             </div>
-            <div className="sm:hidden"> {/* Mobile features */}
+            <div className="xl:hidden"> {/* Mobile features */}
               <div className="overflow-y-auto scrollbar-hide text-[10px] -space-y-0.5 text-[#AEAEAE]" style={{ maxHeight: '100px' }}>
                 {displayFeatures.map((feature, index) => {
                   const Icon = feature.icon;
@@ -137,10 +164,13 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
           </div>
 
           <motion.button
-            className="w-full bg-white text-black font-semibold py-1.5 px-4 sm:px-6 sm:py-2 rounded-xl lg:hover:bg-gray-100 transition-colors duration-200 text-xs sm:text-sm"
+            className="w-full bg-white text-black font-semibold py-1.5 px-4 sm:px-6 sm:py-2 rounded-xl lg:hover:bg-gray-100 transition-colors duration-200 text-xs xl:text-sm"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={(e) => { e.stopPropagation(); console.log("Add to cart clicked for:", productName); }}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              window.open(hotspot.redirectUrl, "_blank");
+            }}
           >
             {buttonText}
           </motion.button>
