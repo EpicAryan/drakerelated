@@ -161,10 +161,8 @@ interface MagnifyingGlassProps {
   originalImageHeight?: number;
   magnifierImageWidth?: number;
   magnifierImageHeight?: number;
-  // highlight-start
-  magnifierFocusX?: number; // Add new prop
-  magnifierFocusY?: number; // Add new prop
-  // highlight-end
+  magnifierFocusX?: number; 
+  magnifierFocusY?: number; 
 }
 
 const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
@@ -181,28 +179,21 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
   originalImageHeight,
   magnifierImageWidth,
   magnifierImageHeight,
-  // highlight-start
   magnifierFocusX,
   magnifierFocusY,
-  // highlight-end
 }) => {
   if (!isVisible) return null;
 
   const magnifierSize = radius * 2;
 
-  // This positioning logic for the magnifier circle itself remains unchanged.
-  // It always follows the hotspot's (x, y).
   const renderedHotspotX = (x / 100) * imageProps.width;
   const renderedHotspotY = (y / 100) * imageProps.height;
   const magnifierLeft = imageProps.left + renderedHotspotX - radius;
   const magnifierTop = imageProps.top + renderedHotspotY - radius;
 
-  // 1. Determine the coordinates to focus on for the zoom effect.
-  // Use the specific focus props if they exist, otherwise fall back to the hotspot's main x/y.
   const focusX = magnifierFocusX ?? x;
   const focusY = magnifierFocusY ?? y;
 
-  // 2. Determine which image and dimensions to use.
   const sourceImage = magnifierImage || backgroundImage;
   const baseMagnificationWidth = (magnifierImage && magnifierImageWidth)
     ? magnifierImageWidth
@@ -211,7 +202,6 @@ const MagnifyingGlass: React.FC<MagnifyingGlassProps> = ({
     ? magnifierImageHeight
     : (originalImageHeight || imageProps.height);
 
-  // 3. Perform the zoom calculation using the determined FOCUS coordinates.
   const hotspotXOnBase = (focusX / 100) * baseMagnificationWidth;
   const hotspotYOnBase = (focusY / 100) * baseMagnificationHeight;
 
