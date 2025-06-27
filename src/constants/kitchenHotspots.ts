@@ -38,7 +38,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     brand: "/tapo-logo.webp",
     brandClass: "absolute h-auto w-8 sm:w-12 ",
     brandLogoWidth: 200,
-    brandLogoHeight: 45, 
+    brandLogoHeight: 48, 
     productName: "Strip Light",
     featuresWithIcons: [
       { text: "16 million colors", icon: Monitor },
@@ -71,7 +71,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     brand: "/qubo-logo.webp",
     brandClass: "h-auto w-12 sm:w-14",
     brandLogoWidth: 200,
-    brandLogoHeight: 45, 
+    brandLogoHeight: 48, 
     productName: "Indoor Security Camera",
     featuresWithIcons: [
       { text: "3MP full HD video clarity", icon: Monitor },
