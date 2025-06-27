@@ -51,7 +51,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     ],
     buttonText: "Buy Now",
     hasMagnifier: true,
-    magnifierZoom: 1.0,
+    magnifierZoom: 1,
     magnifierRadius: 50,
   },
   {
@@ -91,7 +91,13 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     beamOpacity: 0.15,
     beamGlowIntensity: 3,
     hasMagnifier: true,
-    magnifierZoom: 0.8,
+    magnifierZoom: 1.4,
     magnifierRadius: 50,
+    magnifierImage: "/magnify/kitchen-indoorcam.webp",
+    magnifierImageWidth: 200,
+    magnifierImageHeight: 200,
+    magnifierFocusX: 55,
+    magnifierFocusY: 45,
+    
   },
 ];

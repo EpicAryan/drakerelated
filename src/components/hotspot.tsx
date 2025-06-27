@@ -34,7 +34,12 @@ export interface HotspotType {
   buttonText?: string;
   cardOffsetY?: number;
   redirectUrl?: string;
-   mediaType?: 'image' | 'video';
+  mediaType?: 'image' | 'video';
+  magnifierImage?: string;
+  magnifierImageWidth?: number;
+  magnifierImageHeight?: number;
+  magnifierFocusX?: number; 
+  magnifierFocusY?: number;
 }
 
 interface RenderedImageProps {
@@ -216,10 +221,15 @@ const Hotspot: React.FC<HotspotProps> = ({
           isVisible={shouldShowMagnifier}
           x={hotspot.x} y={hotspot.y}
           backgroundImage={backgroundImage} imageProps={imageProps}
+          magnifierImage={hotspot.magnifierImage}
           zoomLevel={hotspot.magnifierZoom || 2.5}
           radius={hotspot.magnifierRadius || 120}
           originalImageWidth={originalImageWidth}
           originalImageHeight={originalImageHeight}
+          magnifierImageWidth={hotspot.magnifierImageWidth}
+          magnifierImageHeight={hotspot.magnifierImageHeight}
+          magnifierFocusX={hotspot.magnifierFocusX}
+          magnifierFocusY={hotspot.magnifierFocusY}
         />
       )}
 
