@@ -85,7 +85,7 @@ const Navbar = () => {
       </div>
 
       {/* Bottom Navbar for Mobile */}
-      <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[90%] max-w-sm bg-white/10 backdrop-blur-sm p-1 rounded-full shadow-lg flex pointer-events-auto">
+      <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[90%] max-w-sm bg-white/10 backdrop-blur-sm p-1 rounded-full shadow-lg flex pointer-events-auto">
         {navItems.map(({ name, href, imageUrl }) => {
           const isActive = pathname === href
           return (
