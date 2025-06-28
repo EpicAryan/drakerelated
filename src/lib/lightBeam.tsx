@@ -23,7 +23,7 @@ const LightBeam: React.FC<LightBeamProps> = ({
   color  = '#ffffff',
   opacity = 0.6,
   spread  = 20,
-  animationDuration = 0.4,
+  animationDuration = 0.2,
   glowIntensity     = 10,
 }) => {
 

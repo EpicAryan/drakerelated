@@ -107,7 +107,7 @@ const Hotspot: React.FC<HotspotProps> = ({
   }, [isOpen, onClose, cardRef, dotRef]);
 
   useEffect(() => {
-    const checkIsMobile = () => setIsMobile(window.innerWidth < 768); // md breakpoint
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 768); 
     checkIsMobile();
     window.addEventListener('resize', checkIsMobile);
     return () => window.removeEventListener('resize', checkIsMobile);
@@ -115,7 +115,7 @@ const Hotspot: React.FC<HotspotProps> = ({
 
   const handleCloseCard = useCallback(() => {
     onClose();
-  }, [onClose]); // Memoized callback
+  }, [onClose]); 
 
   return (
     <>
@@ -147,7 +147,7 @@ const Hotspot: React.FC<HotspotProps> = ({
             opacity={hotspot.beamOpacity || 0.7}
             spread={hotspot.beamSpread || 25}
             glowIntensity={hotspot.beamGlowIntensity || 8}
-            animationDuration={0.3}
+            animationDuration={0.15}
         />
         <motion.div className="relative w-3 h-3">
             <motion.div
@@ -163,11 +163,11 @@ const Hotspot: React.FC<HotspotProps> = ({
                         : ["0 0 10px rgba(0,0,0,0.8)", "0 0 10px rgba(0,0,0,0.8)", "0 0 15px rgba(0,0,0,0.9)", "0 0 10px rgba(0,0,0,0.8)"],
                 }}
                 transition={{
-                    duration: isOpen ? 0.3 : 2.5,
+                    duration: isOpen ? 0.3 : 1.5,
                     repeat: isOpen ? 0 : Infinity,
                     ease: "easeInOut",
                     times: isOpen ? [0, 1] : [0, 0.6, 0.6, 1],
-                    repeatDelay: isOpen ? 0 : 1.2,
+                    repeatDelay: isOpen ? 0 : 0.5,
                 }}
                 whileHover={{
                     scale: 1.2,
@@ -182,8 +182,8 @@ const Hotspot: React.FC<HotspotProps> = ({
                     style={{ transform: "translate(-50%, -50%)", opacity: 0 }}
                     animate={{ scale: [1, 1, 1, 6], opacity: [0, 0, 0.6, 0] }}
                     transition={{
-                        duration: 2.5, delay: 0.8, repeat: Infinity,
-                        ease: "easeOut", times: [0, 0.4, 0.6, 1], repeatDelay: 1.2,
+                        duration: 1.5, delay: 0.5, repeat: Infinity,
+                        ease: "easeOut", times: [0, 0.4, 0.6, 1], repeatDelay: 0.5,
                     }}
                 />
             )}
