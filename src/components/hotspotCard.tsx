@@ -478,14 +478,14 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 + 0.3 }}
                 >
-                  <Icon className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" strokeWidth={2} />
+                  <Icon className="w-[11px] h-[11px] text-blue-400 flex-shrink-0" strokeWidth={2} />
                   <span className="text-[11px] tracking-wide">{feature.text}</span>
                 </motion.div>
               );
             })}
           </div>
           <div className="xl:hidden"> {/* Mobile features */}
-            <div className="overflow-y-auto scrollbar-hide text-xs text-gray-300 space-y-1" style={{ maxHeight: '84px' }}>
+            <div className="overflow-y-auto scrollbar-hide text-xs text-gray-300 space-y-1.5" style={{ maxHeight: '88px' }}>
               {displayFeatures.map((feature, index) => {
                 const Icon = feature.icon;
                 return (
@@ -494,7 +494,7 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: (index * 0.05) + 0.3 }} 
                   >
-                    <Icon className="w-3 h-3 text-blue-400 flex-shrink-0" strokeWidth={2} />
+                    <Icon className="w-auto h-[12px] lg:text-[10px] text-blue-400 flex-shrink-0" strokeWidth={2} />
                     <span className='text-[11px] lg:text-[10px]'>{feature.text}</span>
                   </motion.div>
                 );
