@@ -365,6 +365,7 @@ export interface HotspotCardData {
   mediaType?: 'image' | 'video';
   brandLogoWidth?: number;  
   brandLogoHeight?: number; 
+  mediaBackgroundColor?: string;
 }
 
 interface HotspotCardProps {
@@ -414,9 +415,10 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
         <X className="w-4 h-4" strokeWidth={2} />
       </motion.button>
       
-      {/* highlight-start */}
-      {/* 2. Explicitly set this section's background to white */}
-      <div className="w-full h-48 lg:h-42 xl:h-50 flex justify-center items-center bg-white overflow-hidden">
+      <div className={clsx(
+        "w-full h-42 xl:h-50 flex justify-center items-center overflow-hidden", 
+        hotspot.mediaBackgroundColor || "bg-white" 
+      )}>
       {/* highlight-end */}
         <div className={hotspot.imageClassName}>
           {isVideo(hotspot) ? (

@@ -44,7 +44,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     description: "This smart LED bulb offers vibrant lighting with customizable colors and remote control, enhancing your home's ambiance and convenience. Its energy-efficient design and smart features make it a perfect addition to modern living spaces.",
     image: "https://videos.ctfassets.net/m3x6aw9x53qp/6PlJVoLJZenuSQqIeVSxcD/a54438c6cad3b885a97c86250b5e56ee/Philip_Smart_Light.webm",
     mediaType: "video",
-    imageClassName: "w-auto h-48 xl:h-52 ",
+    imageClassName: "w-auto h-44 xl:h-52 ",
     cardPosition: 'right',
     brand: "/philips-logo.webp",
     brandClass: "h-auto w-14 sm:w-16 translate-y-1 xl:translate-y-2",

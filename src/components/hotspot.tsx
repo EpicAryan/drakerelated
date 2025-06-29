@@ -42,6 +42,7 @@ export interface HotspotType {
   magnifierFocusY?: number;
   brandLogoWidth?: number;
   brandLogoHeight?: number;
+  mediaBackgroundColor?: string;
 }
 
 interface RenderedImageProps {

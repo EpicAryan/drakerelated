@@ -76,6 +76,7 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     description: "This smart 3MP Wi-Fi camera keeps your home secure with clear footage, motion detection, and auto-tracking. AI alerts you to unusual activity, and cloud storage lets you review recordings anytime.",
     image:"https://videos.ctfassets.net/m3x6aw9x53qp/5UJ1I4PX2M0AjyleczmkNm/f39b246a32625675a9bf64b8a5bf4760/Qubo_Indoor_Camera.webm",
     mediaType: "video",
+    mediaBackgroundColor: 'bg-transparent',
     redirectUrl: "https://www.flipkart.com/qubo-smart-cam-360-q100-hero-group-3mp-1296p-wifi-cctv-2-way-talk-night-vision-security-camera/p/itm02c0cd139df73?pid=HSAGZ85BFFSNHZ2Z&lid=LSTHSAGZ85BFFSNHZ2ZN01CZ3",
     // imageClassName: "w-auto h-38 sm:h-42 xl:h-46 absolute top-1",
     imageClassName: "w-auto h-48 sm:h-48 lg:h-44 xl:h-52 absolute ",
