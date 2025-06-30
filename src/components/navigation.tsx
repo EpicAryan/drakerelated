@@ -64,7 +64,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <motion.div
-      className="absolute z-20 cursor-pointer"
+      className="absolute z-20 cursor-pointer "
       style={{
         left: `${calculatedLeft}px`,
         top: `${calculatedTop}px`,
@@ -101,7 +101,7 @@ const Navigation: React.FC<NavigationProps> = ({
       >
         <motion.div
           layout
-          className="flex items-center justify-center flex-shrink-0"
+          className="flex items-center justify-center flex-shrink-0  "
           animate={{
             rotate: getArrowRotation(navigation.direction),
             color: '#ffffff',
@@ -115,7 +115,7 @@ const Navigation: React.FC<NavigationProps> = ({
           {isHovered && (
             <motion.div
               layout
-              className="overflow-hidden flex items-center"
+              className="overflow-hidden flex items-center justify-center "
               initial={{
                 width: 0,
                 opacity: 0,
@@ -144,8 +144,8 @@ const Navigation: React.FC<NavigationProps> = ({
             >
               <motion.span
                 layout
-                className={`text-base text-white font-bold whitespace-nowrap ${
-                  isRight ? 'mr-2' : 'ml-2'
+                className={`text-base text-white font-bold whitespace-nowrap pb-0.5 ${
+                  isRight ? 'mr-1 pl-2' : 'ml-1 pr-2'
                 }`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

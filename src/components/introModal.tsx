@@ -15,6 +15,8 @@ export default function IntroModal() {
           setIsVisible(true);
         }, 500);
         return () => clearTimeout(timer); 
+      }else {
+        sessionStorage.setItem("introModalClosed", "true");
       }
     }
   }, []);
@@ -22,6 +24,7 @@ export default function IntroModal() {
   const close = () => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("seenIntro", "true");
+      sessionStorage.setItem("introModalClosed", "true");
     }
     setIsVisible(false);
   };
@@ -29,7 +32,17 @@ export default function IntroModal() {
   const backdropVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0, transition: { duration: 0.3 } },
+    exit: { 
+      opacity: 0, 
+      transition: { 
+        duration: 0.3 ,
+        onComplete: () => {
+          if (typeof window !== "undefined") {
+            sessionStorage.setItem("introModalClosed", "true");
+            window.dispatchEvent(new CustomEvent('introModalClosed'));
+          }
+        }
+      } },
   };
 
   const modalVariants = {

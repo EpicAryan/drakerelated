@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Smartphone } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 const SHOW_FOR = 20000; 
 const CENTER_DURATION = 5000; 
@@ -15,15 +15,103 @@ const LandscapeHint: React.FC = () => {
     const isMobile = window.innerWidth < 768;
     if (!isMobile) return;
 
-    setVisible(true);
-    setCentered(true);
+    const isHardReload = !sessionStorage.getItem('navigationStarted');
 
-    const centerTimeout = setTimeout(() => setCentered(false), CENTER_DURATION);
-    const hideTimeout = setTimeout(() => setVisible(false), SHOW_FOR);
+    sessionStorage.setItem('navigationStarted', 'true');
+
+    const seenLandscapeHint = localStorage.getItem("seenLandscapeHint");
+    
+    if (!isHardReload && seenLandscapeHint) {
+      return; 
+    }
+
+    if (isHardReload && seenLandscapeHint) {
+      localStorage.removeItem("seenLandscapeHint");
+    }
+
+    const startLandscapeHint = () => {
+      setVisible(true);
+      setCentered(true);
+
+      localStorage.setItem("seenLandscapeHint", "true");
+
+      const centerTimeout = setTimeout(() => setCentered(false), CENTER_DURATION);
+      const hideTimeout = setTimeout(() => setVisible(false), SHOW_FOR);
+
+      return () => {
+        clearTimeout(centerTimeout);
+        clearTimeout(hideTimeout);
+      };
+    };
+
+    const seenIntro = sessionStorage.getItem("seenIntro");
+    const introModalClosed = sessionStorage.getItem("introModalClosed");
+
+    if (seenIntro || introModalClosed) {
+      return startLandscapeHint();
+    } else {
+      let cleanupTimeouts: (() => void) | undefined;
+
+      const handleIntroModalClosed = () => {
+        setTimeout(() => {
+          cleanupTimeouts = startLandscapeHint();
+        }, 500);
+      };
+
+      window.addEventListener('introModalClosed', handleIntroModalClosed);
+
+      const checkInterval = setInterval(() => {
+        const introModalClosed = sessionStorage.getItem("introModalClosed");
+        if (introModalClosed) {
+          clearInterval(checkInterval);
+          handleIntroModalClosed();
+        }
+      }, 100);
+
+      return () => {
+        window.removeEventListener('introModalClosed', handleIntroModalClosed);
+        clearInterval(checkInterval);
+        if (cleanupTimeouts) {
+          cleanupTimeouts();
+        }
+      };
+    }
+  }, []); 
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+
+      if (performance.navigation?.type === 1) { 
+        sessionStorage.removeItem('navigationStarted');
+        sessionStorage.removeItem('introModalClosed');
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        const now = Date.now();
+        sessionStorage.setItem('pageHideTime', now.toString());
+      } else if (document.visibilityState === 'visible') {
+        const hideTime = sessionStorage.getItem('pageHideTime');
+        if (hideTime) {
+          const timeDiff = Date.now() - parseInt(hideTime);
+          if (timeDiff < 1000) {
+            sessionStorage.removeItem('navigationStarted');
+            sessionStorage.removeItem('introModalClosed');
+          }
+          sessionStorage.removeItem('pageHideTime');
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      clearTimeout(centerTimeout);
-      clearTimeout(hideTimeout);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

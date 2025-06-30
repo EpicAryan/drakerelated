@@ -11,24 +11,15 @@ export const useLivingroomNavigation = (): NavigationType[] => {
 
     return livingroomNavConstants.map((item) => ({
         ...item,
-        // onClick: () => {
-        // switch (item.label) {
-        //     case "Exterior":
-        //         startTransition(() => router.push("/rooms/exterior"), item.imageUrl);
-        //     break;
-        //     case "Kitchen":
-        //         startTransition(() => router.push("/rooms/kitchen"), item.imageUrl);
-        //     break;
-        // }},
         onClick: () => {
-      const href =
-        item.label === "Entrance" ? "/rooms/entrance" :
-        item.label === "Kitchen" ? "/rooms/kitchen" :
-        null;
+        const href =
+          item.label === "Entrance" ? "/rooms/entrance" :
+          item.label === "Kitchen" ? "/rooms/kitchen" :
+          null;
 
-      if (href) {
-        startTransition(() => router.push(href), item.imageUrl);
-      }
+        if (href) {
+          startTransition(() => router.push(href), item.imageUrl);
+        }
     }
     }));
 };

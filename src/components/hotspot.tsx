@@ -76,6 +76,7 @@ const Hotspot: React.FC<HotspotProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false); 
+  const [hasHoverCapability, setHasHoverCapability] = useState(true);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
@@ -86,6 +87,29 @@ const Hotspot: React.FC<HotspotProps> = ({
 
   const calculatedLeft = imageProps.left + (hotspot.x / 100) * imageProps.width;
   const calculatedTop = imageProps.top + (hotspot.y / 100) * imageProps.height;
+
+
+    useEffect(() => {
+      const checkDeviceCapabilities = () => {
+        const screenWidth = window.innerWidth;
+        const hasPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const isLargeScreen = screenWidth >= 768;
+        
+        setIsMobile(screenWidth < 768);
+        setHasHoverCapability(hasPointer && isLargeScreen);
+      };
+
+      checkDeviceCapabilities();
+      window.addEventListener('resize', checkDeviceCapabilities);
+      
+      const hoverMediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+      hoverMediaQuery.addEventListener('change', checkDeviceCapabilities);
+      
+      return () => {
+        window.removeEventListener('resize', checkDeviceCapabilities);
+        hoverMediaQuery.removeEventListener('change', checkDeviceCapabilities);
+      };
+    }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -107,16 +131,33 @@ const Hotspot: React.FC<HotspotProps> = ({
     };
   }, [isOpen, onClose, cardRef, dotRef]);
 
-  useEffect(() => {
-    const checkIsMobile = () => setIsMobile(window.innerWidth < 768); 
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-
   const handleCloseCard = useCallback(() => {
     onClose();
   }, [onClose]); 
+
+  const shouldShowTooltip = !isOpen && (
+    (hasHoverCapability && isHovered) || 
+    (!hasHoverCapability)
+  );
+
+   const getTooltipText = () => {
+    if (!hasHoverCapability) {
+      return "Tap to know more";
+    }
+    return shouldShowBeam ? "Camera view" : "Click to magnify";
+  };
+
+  const getTooltipPositionClasses = () => {
+    const baseClasses = "absolute z-40 pointer-events-none bg-black/90 text-white px-3 py-2 rounded-lg text-xs whitespace-nowrap backdrop-blur-sm border border-white/20 shadow-xl left-1/2 transform -translate-x-1/2";
+    
+    const distance = hasHoverCapability ? "3" : "6"; //
+    
+    if (tooltipPosition === "top") {
+      return `${baseClasses} bottom-full mb-${distance}`;
+    } else {
+      return `${baseClasses} top-full mt-${distance}`;
+    }
+  };
 
   return (
     <>
@@ -156,57 +197,59 @@ const Hotspot: React.FC<HotspotProps> = ({
                 style={{ transform: "translate(-50%, -50%)" }}
                 animate={{
                     scale: isOpen ? [1.2, 1.2] : [1, 1, 0.3, 1],
-                    opacity: isOpen ? [1, 1] : [1, 1, 0.7, 1],
+                    opacity: isOpen ? [1, 1] : [1, 1, 0.8, 1],
                     boxShadow: isOpen
-                        ? ["0 0 20px rgba(59, 130, 246, 0.8)", "0 0 20px rgba(59, 130, 246, 0.8)"]
+                        ? ["0 0 30px rgba(59, 130, 246, 1)", "0 0 30px rgba(59, 130, 246, 1)"]
                         : shouldShowBeam && isHovered
-                        ? ["0 0 15px rgba(96, 165, 250, 0.9)", "0 0 15px rgba(96, 165, 250, 0.9)"]
-                        : ["0 0 10px rgba(0,0,0,0.8)", "0 0 10px rgba(0,0,0,0.8)", "0 0 15px rgba(0,0,0,0.9)", "0 0 10px rgba(0,0,0,0.8)"],
+                        ? ["0 0 25px rgba(96, 165, 250, 1)", "0 0 25px rgba(96, 165, 250, 1)"]
+                        : ["0 0 15px rgba(0,0,0,0.9)", "0 0 15px rgba(0,0,0,0.9)", "0 0 20px rgba(0,0,0,1)", "0 0 15px rgba(0,0,0,0.9)"], 
                 }}
                 transition={{
-                    duration: isOpen ? 0.3 : 1.5,
+                    duration: isOpen ? 0.3 : 0.8,
                     repeat: isOpen ? 0 : Infinity,
                     ease: "easeInOut",
                     times: isOpen ? [0, 1] : [0, 0.6, 0.6, 1],
-                    repeatDelay: isOpen ? 0 : 0.5,
+                    repeatDelay: isOpen ? 0 : 0.2,
                 }}
                 whileHover={{
                     scale: 1.2,
                     boxShadow: shouldShowBeam
-                        ? "0 0 20px rgba(96, 165, 250, 0.9)"
-                        : "0 0 20px rgba(59, 130, 246, 0.8)",
+                        ? "0 0 30px rgba(96, 165, 250, 1)" 
+                        : "0 0 30px rgba(59, 130, 246, 1)",
                 }}
             />
             {!isOpen && (
                 <motion.div
                     className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full border border-white"
                     style={{ transform: "translate(-50%, -50%)", opacity: 0 }}
-                    animate={{ scale: [1, 1, 1, 6], opacity: [0, 0, 0.6, 0] }}
+                    animate={{ scale: [1, 1, 1, 6], opacity: [0, 0, 0.9, 0] }}
                     transition={{
-                        duration: 1.5, delay: 0.5, repeat: Infinity,
-                        ease: "easeOut", times: [0, 0.4, 0.6, 1], repeatDelay: 0.5,
+                        duration: 0.8, delay: 0.2, repeat: Infinity,
+                        ease: "easeOut", times: [0, 0.4, 0.6, 1], repeatDelay: 0.2,
                     }}
                 />
             )}
         </motion.div>
         <AnimatePresence>
-            {isHovered && !isOpen && (
+            {shouldShowTooltip  && (
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                   initial={{ 
+                      opacity: hasHoverCapability ? 0 : 1, 
+                      scale: hasHoverCapability ? 0.8 : 1, 
+                      y: hasHoverCapability ? 10 : 0 
+                    }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                    className={`
-                        hidden lg:block absolute z-40 pointer-events-none bg-black/90 text-white 
-                        px-3 py-2 rounded-lg text-xs whitespace-nowrap backdrop-blur-sm 
-                        border border-white/20 shadow-xl left-1/2 transform -translate-x-1/2
-                        ${tooltipPosition === "top" ? "bottom-full mb-3" : ""}
-                        ${tooltipPosition === "bottom" ? "top-full mt-3" : ""}
-                      `}
+                    exit={{ 
+                      opacity: hasHoverCapability ? 0 : 1, 
+                      scale: hasHoverCapability ? 0.8 : 1, 
+                      y: hasHoverCapability ? 10 : 0 
+                    }}
+                    transition={{ duration: hasHoverCapability ? 0.2 : 0 }}
+                    className={getTooltipPositionClasses()}
                 >
-                    <div className="font-semibold">{hotspot.title}</div>
-                    <div className="text-gray-300 text-xs mt-0.5">
-                        {shouldShowBeam ? "Camera view" : "Click to magnify"}
+                    <div className="font-semibold text-[11px] md:text-sm xl:text-base">{hotspot.title}</div>
+                    <div className="text-gray-300 text-[10px] md:text-[11px] xl:text-xs mt-0.5">
+                        {getTooltipText()}
                     </div>
                     {tooltipPosition === "top" && (
                         <div className="absolute top-full left-1/2 -translate-x-1/2 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90" />
