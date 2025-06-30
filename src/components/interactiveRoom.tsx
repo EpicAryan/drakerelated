@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Hotspot, { HotspotType } from './hotspot';
 import { useLoading } from './loading/loadingContext';
 import { LandscapeHint } from '@/components';
+import { Navigation, NavigationType } from "./navigation";
 
 function useRect<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -29,6 +30,7 @@ interface InteractiveRoomProps {
   className?: string;
   originalImageWidth?: number;
   originalImageHeight?: number;
+  navigationItems?: NavigationType[];
 }
 
 export interface RenderedImageProps {
@@ -41,6 +43,7 @@ export interface RenderedImageProps {
 const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   backgroundImage,
   hotspots = [],
+  navigationItems = [],
   className = '',
   originalImageWidth = 3840,
   originalImageHeight = 2160,
@@ -190,7 +193,19 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
               ))}
             </AnimatePresence>
           )}
+
         </motion.div>
+          {rendered && (
+            <AnimatePresence>
+              {navigationItems.map((nav) => (
+                <Navigation 
+                  key={nav.id} 
+                  navigation={nav} 
+                  imageProps={rendered}
+                />
+              ))}
+            </AnimatePresence>
+          )}
       </div>
     </div>
   );

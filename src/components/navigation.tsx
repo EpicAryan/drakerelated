@@ -8,14 +8,26 @@ export interface NavigationType {
   y: number;
   direction: 'left' | 'right';
   label: string;
+  imageUrl: string;
   onClick?: () => void;
+}
+
+interface RenderedImageProps {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 }
 
 interface NavigationProps {
   navigation: NavigationType;
+  imageProps: RenderedImageProps;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
+const Navigation: React.FC<NavigationProps> = ({ 
+  navigation,
+  imageProps,
+ }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -24,14 +36,14 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Check initially
+    handleResize(); 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
     if (isMobile) {
-      setIsHovered(true); // Always expanded on mobile
+      setIsHovered(true); 
     }
   }, [isMobile]);
 
@@ -41,21 +53,31 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
 
   const isRight = navigation.direction === 'right';
 
+  const handleClick = () => {
+    if (navigation.onClick) {
+      navigation.onClick();
+    }
+  };
+
+  const calculatedLeft = imageProps.left + (navigation.x / 100) * imageProps.width;
+  const calculatedTop = imageProps.top + (navigation.y / 100) * imageProps.height;
+
   return (
     <motion.div
       className="absolute z-20 cursor-pointer"
       style={{
-        left: `${navigation.x}%`,
-        top: `${navigation.y}%`,
-        transform: 'translate(-50%, -50%)',
+        left: `${calculatedLeft}px`,
+        top: `${calculatedTop}px`,
       }}
       onMouseEnter={() => !isMobile && setIsHovered(true)}
       onMouseLeave={() => !isMobile && setIsHovered(false)}
-      onClick={navigation.onClick}
+      onClick={handleClick}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       <motion.div
         layout
