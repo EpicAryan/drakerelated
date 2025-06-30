@@ -16,7 +16,6 @@ const Kitchen = () => {
       backgroundImage={BG_IMAGE}
       hotspots={kitchenHotspots}
       navigationItems={navigationItems}
-      focusHotspotId="2"
     />
   );
 };
