@@ -15,6 +15,7 @@ const Livingroom = () => {
       backgroundImage={BG_IMAGE}
       hotspots={livingroomHotspots}
       navigationItems={navigationItems}
+      focusHotspotId="3"
     />
   );
 };

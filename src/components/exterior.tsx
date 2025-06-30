@@ -15,6 +15,7 @@ const Exterior = () => {
       backgroundImage={BG_IMAGE}
       hotspots={exteriorHotspots}
       navigationItems={navigationItems}
+      focusHotspotId="2"
     />
   );
 };

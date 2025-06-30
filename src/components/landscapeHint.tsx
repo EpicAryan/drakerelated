@@ -120,7 +120,7 @@ const LandscapeHint: React.FC = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed z-[40] flex items-center gap-2 bg-black/80 text-white px-3 py-2 rounded-lg shadow-lg text-[11px] font-medium pointer-events-none select-none"
+        className="fixed z-40 flex items-center gap-2 bg-black text-white px-3 py-2 rounded-lg shadow-lg text-[11px] font-medium pointer-events-none select-none"
         initial={{
           top: '50%',
           left: '50%',

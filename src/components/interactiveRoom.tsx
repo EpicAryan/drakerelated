@@ -31,6 +31,8 @@ interface InteractiveRoomProps {
   originalImageWidth?: number;
   originalImageHeight?: number;
   navigationItems?: NavigationType[];
+  focusHotspotId?: string; 
+  autoFocusFirstHotspot?: boolean; 
 }
 
 export interface RenderedImageProps {
@@ -47,15 +49,19 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   className = '',
   originalImageWidth = 3840,
   originalImageHeight = 2160,
+  focusHotspotId,
+  autoFocusFirstHotspot = true, 
 }) => {
   type ScrollMode = 'none' | 'horizontal' | 'both';
   const [scrollMode, setScrollMode] = useState<ScrollMode>('none');
   const [isLoaded, setIsLoaded] = useState(false);
   const [rendered, setRendered] = useState<RenderedImageProps | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [hasAutoScrolled, setHasAutoScrolled] = useState(false);
   const { setPageLoaded } = useLoading();
 
   const [containerRef, rect] = useRect<HTMLDivElement>();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const decideScrollMode = useCallback(() => {
     const vw = window.innerWidth;
@@ -79,7 +85,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
     window.addEventListener('resize', decideScrollMode);
     return () => window.removeEventListener('resize', decideScrollMode);
   }, [decideScrollMode]);
-
 
   useEffect(() => {
     if (!rect) return;
@@ -116,6 +121,73 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
 
 
   useEffect(() => {
+    if (!rendered || !scrollContainerRef.current || hasAutoScrolled || scrollMode === 'none') {
+      return;
+    }
+
+    const shouldAutoScroll = scrollMode === 'horizontal' || scrollMode === 'both';
+    if (!shouldAutoScroll) return;
+
+    let targetHotspot: HotspotType | null = null;
+
+    if (focusHotspotId) {
+      targetHotspot = hotspots.find(h => h.id === focusHotspotId) || null;
+    } else if (autoFocusFirstHotspot && hotspots.length > 0) {
+      targetHotspot = hotspots.reduce((prev, current) => {
+        const prevDistance = Math.abs(prev.x - 50) + Math.abs(prev.y - 50);
+        const currentDistance = Math.abs(current.x - 50) + Math.abs(current.y - 50);
+        return currentDistance < prevDistance ? current : prev;
+      });
+    }
+
+    if (!targetHotspot) return;
+
+    const hotspotX = (targetHotspot.x / 100) * rendered.width;
+    const containerWidth = scrollContainerRef.current.clientWidth;
+    
+    let scrollLeft = 0;
+    
+    if (scrollMode === 'horizontal') {
+      scrollLeft = Math.max(0, hotspotX - containerWidth / 2);
+
+      const maxScrollLeft = rendered.width - containerWidth;
+      scrollLeft = Math.min(scrollLeft, maxScrollLeft);
+    } else if (scrollMode === 'both') {
+      const hotspotY = (targetHotspot.y / 100) * rendered.height;
+      const containerHeight = scrollContainerRef.current.clientHeight;
+      
+      scrollLeft = Math.max(0, hotspotX - containerWidth / 2);
+      const scrollTop = Math.max(0, hotspotY - containerHeight / 2);
+      
+      const maxScrollLeft = rendered.width - containerWidth;
+      const maxScrollTop = rendered.height - containerHeight;
+      
+      scrollLeft = Math.min(scrollLeft, maxScrollLeft);
+
+      scrollContainerRef.current.scrollTo({
+        left: scrollLeft,
+        top: Math.min(scrollTop, maxScrollTop),
+        behavior: 'smooth'
+      });
+      
+      setHasAutoScrolled(true);
+      return;
+    }
+
+    scrollContainerRef.current.scrollTo({
+      left: scrollLeft,
+      behavior: 'smooth'
+    });
+
+    setHasAutoScrolled(true);
+  }, [rendered, scrollMode, hotspots, focusHotspotId, autoFocusFirstHotspot, hasAutoScrolled]);
+
+
+  useEffect(() => {
+    setHasAutoScrolled(false);
+  }, [backgroundImage]); 
+
+  useEffect(() => {
     const MIN_SPLASH_TIME = 3000;
     const imgPromise = new Promise<void>((resolve, reject) => {
       const img = new Image();
@@ -131,7 +203,6 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
 
   const toggleHotspot = useCallback((id: string) => setOpenId((prev) => (prev === id ? null : id)), []);
   const closeHotspot = useCallback(() => setOpenId(null), []);
-
 
   const scrollContainerClass =
     scrollMode === 'none'
@@ -166,7 +237,10 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   return (
     <div className={`relative w-full min-h-screen bg-gray-900 ${className}`}>
       <LandscapeHint />
-      <div className={`relative h-screen ${scrollContainerClass}`}>
+      <div 
+        ref={scrollContainerRef}
+        className={`relative h-screen ${scrollContainerClass}`}
+      >
         <motion.div
           ref={containerRef}
           initial={{ opacity: 0 }}
@@ -193,19 +267,18 @@ const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
               ))}
             </AnimatePresence>
           )}
-
         </motion.div>
-          {rendered && (
-            <AnimatePresence>
-              {navigationItems.map((nav) => (
-                <Navigation 
-                  key={nav.id} 
-                  navigation={nav} 
-                  imageProps={rendered}
-                />
-              ))}
-            </AnimatePresence>
-          )}
+        {rendered && (
+          <AnimatePresence>
+            {navigationItems.map((nav) => (
+              <Navigation 
+                key={nav.id} 
+                navigation={nav} 
+                imageProps={rendered}
+              />
+            ))}
+          </AnimatePresence>
+        )}
       </div>
     </div>
   );
