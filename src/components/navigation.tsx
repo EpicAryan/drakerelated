@@ -1,23 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
-
-export interface NavigationType {
-  id: string;
-  x: number;
-  y: number;
-  direction: 'left' | 'right';
-  label: string;
-  imageUrl: string;
-  onClick?: () => void;
-}
-
-interface RenderedImageProps {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
+import { NavigationType } from '@/types';
+import { RenderedImageProps } from '@/types';
 
 interface NavigationProps {
   navigation: NavigationType;

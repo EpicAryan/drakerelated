@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-import Hotspot, { HotspotType } from './hotspot';
+import { motion, AnimatePresence } from 'motion/react';
+import Hotspot from './hotspot';
 import { useLoading } from './loading/loadingContext';
 import { LandscapeHint } from '@/components';
-import { Navigation, NavigationType } from "./navigation";
+import { Navigation } from "./navigation";
+import { NavigationType, RenderedImageProps, HotspotType } from '@/types';
 
 function useRect<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -35,12 +35,6 @@ interface InteractiveRoomProps {
   autoFocusFirstHotspot?: boolean; 
 }
 
-export interface RenderedImageProps {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
 
 const InteractiveRoom: React.FC<InteractiveRoomProps> = ({
   backgroundImage,

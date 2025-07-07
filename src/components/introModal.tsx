@@ -145,7 +145,7 @@ export default function IntroModal() {
 
             <motion.button
               className="mt-6 w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 py-3 text-base font-semibold text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:opacity-90 hover:shadow-xl hover:shadow-purple-500/30 sm:mt-8"
-              onClick={close} // This will now be the ONLY way to close the modal
+              onClick={close} 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >

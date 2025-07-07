@@ -1,5 +1,4 @@
-import { HotspotType } from "@/components/hotspot";
-import type { LucideIcon } from 'lucide-react';
+import { HotspotType } from "@/types";
 import { 
   Monitor, 
   Mic, 
@@ -24,18 +23,7 @@ import {
   HardDrive
 } from 'lucide-react';
 
-export interface HotspotTypeWithIcons extends HotspotType {
-  featuresWithIcons?: Array<{
-    text: string;
-    icon?: LucideIcon;
-    isFullWidth?: boolean;
-  }>;
-  imageWidth?: number | string;
-  imageHeight?: number | string;
-  imageClassName?: string;
-}
-
-export const livingroomHotspots: HotspotTypeWithIcons[] = [
+export const livingroomHotspots: HotspotType[] = [
   {
     id: "1",
     x: 22,
@@ -44,6 +32,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     description: "This smart LED bulb offers vibrant lighting with customizable colors and remote control, enhancing your home's ambiance and convenience. Its energy-efficient design and smart features make it a perfect addition to modern living spaces.",
     image: "https://videos.ctfassets.net/m3x6aw9x53qp/6PlJVoLJZenuSQqIeVSxcD/a54438c6cad3b885a97c86250b5e56ee/Philip_Smart_Light.webm",
     mediaType: "video",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=LLSFVZZ3BSCRHFGJ&lid=LSTLLSFVZZ3BSCRHFGJNDTCBG&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-44 xl:h-52 ",
     cardPosition: 'right',
     brand: "/philips-logo.webp",
@@ -62,7 +51,6 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
         { text: "No hub required; operates over Wi-Fi", icon: Wifi },
     ],
     buttonText: "Buy Now",
-    redirectUrl: "https://www.flipkart.com/philips-wi-fi-led-wiz-connected-b22-10-watt-smart-bulb/p/itmf57e60256574d?pid=LLSFVZZ3BSCRHFGJ&lid=LSTLLSFVZZ3BSCRHFGJNDTCBG&marketplace=FLIPKART&q=Smart+light+philips&store=igc%2Fb4q&srno=s_1_1&otracker=search&otracker1=search&fm=Search&iid=de645a28-6793-443c-99e4-25ba34853693.LLSFVZZ3BSCRHFGJ.SEARCH&ppt=sp&ppn=sp&ssid=fer61ieqqo0000001747997685247&qH=92eb773793cc9ac7",
     hasMagnifier: true,
     magnifierZoom: 0.7,
     magnifierRadius: 80,
@@ -80,7 +68,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     description: "This compact indoor camera offers crystal-clear Full HD video and full-room coverage with 360° rotation. It's ideal for home or office security with smart features packed into a sleek design.",
     image:"https://images.ctfassets.net/m3x6aw9x53qp/4mYi3srQTg0hGrXL94gCss/48b6c76a4db3ed61d0d1882203007fd2/Tapo_indoor.webp",
     mediaType: "image",
-    redirectUrl: "https://www.flipkart.com/tp-link-tapo-c210-1296p-3mp-pan-tilt-home-wi-fi-smart-security-camera/p/itmfee4c93365099?pid=HSAGCFREHPZZZQRY&lid=LSTHSAGCFREHPZZZQRYRX4PZB&marketplace=FLIPKART&q=tp+link+camera&store=igc%2Fj69%2Fagd&spotlightTagId=default_BestsellerId_igc%2Fj69%2Fagd&srno=s_1_1&otracker=AS_QueryStore_OrganicAutoSuggest_1_3_na_na_ps&otracker1=AS_QueryStore_OrganicAutoSuggest_1_3_na_na_ps&fm=search-autosuggest&iid=997885da-af9d-41b8-8778-c31b2008a7a6.HSAGCFREHPZZZQRY.SEARCH&ppt=sp&ppn=sp&ssid=s1dhrez2800000001747997505231&qH=5bdcdd5ed7ef2337",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=HSAGCFREHPZZZQRY&lid=LSTHSAGCFREHPZZZQRYTMYSRR&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-42 xl:h-48 ",
     cardPosition: 'bottom',
     tooltipPosition: "bottom",
@@ -126,7 +114,7 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     description: "Keep your baby safe and comfortable with this smart Wi-Fi PT camera. It offers sharp 3MP video, 360° panoramic view, and 85° tilt to cover every corner - minimizing blind spots and keeping you connected from anywhere.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/2MH1knjEQo4yvOhLx7Lh6/065ed794a92347be3b6df4d8c5995cbf/CP_Plus_Baby_Camera.webp",
     mediaType: "image",
-    redirectUrl: "https://www.flipkart.com/cp-plus-cp-e35a-3mp-wi-fi-pt-360-view-2-way-talk-motion-alert-security-camera/p/itmc4a2169d1659c?pid=HSAGJT9QGHKH9U4S&lid=LSTHSAGJT9QGHKH9U4SPM8AL4",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=HSAGJT9QGHKH9U4S&lid=LSTHSAGJT9QGHKH9U4SPM8AL4&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-48 xl:h-52 ",
     cardPosition: 'left',
     cardOffsetY: -60,
@@ -173,13 +161,11 @@ export const livingroomHotspots: HotspotTypeWithIcons[] = [
     description: "This smart switch module transforms your existing switches into smart ones, enabling remote control and automation without altering your current setup. Its seamless integration with voice assistants and mobile apps offers enhanced convenience and energy efficiency.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/5qCmGcwpkOkAZUCo5Et0o3/3a2790762ed38768c5fd7ae953aecaa0/Wirpo_Smart_Switch.webp",
     mediaType: "image",
-    redirectUrl: "https://www.flipkart.com/wipro-wi-fi-smart-plug-universal-socket-white/p/itmbc6599da0cff8?pid=SSWFYKYBJZYFNSBN&lid=LSTSSWFYKYBJZYFNSBNVKOBV2&marketplace=FLIPKART&q=smart+plug+&store=igc%2Fsnr&spotlightTagId=default_FkPickId_igc%2Fsnr&srno=s_1_1&otracker=search&otracker1=search&fm=Search&iid=19bb8153-7666-4e44-9507-e97dca242227.SSWFYKYBJZYFNSBN.SEARCH&ppt=sp&ppn=sp&ssid=jsplfc15800000001747997833834&qH=e17aa0db40d8c4ed",
-    // imageClassName: "w-auto h-50 xl:h-56 absolute -top-6",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=SSWGHNPCQAJGGDAR&lid=LSTSSWGHNPCQAJGGDARN8W028&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-64 xl:h-72 -translate-y-2",
     cardPosition: 'left',
     cardOffsetY: -20,
     brand: "/wipro-logo.webp",
-    // brandClass: "h-auto w-7 ml-3 sm:ml-5 invert brightness-0",
     brandClass: "h-auto w-8 lg:w-10 invert brightness-0 absolute right-4 -translate-y-1",
     brandLogoWidth: 200,
     brandLogoHeight: 48,

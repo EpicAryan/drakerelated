@@ -5,63 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import HotspotCard from "./hotspotCard"; 
 import LightBeam from "@/lib/lightBeam";
 import MagnifyingGlass from "@/lib/magnifying";
-
-export interface HotspotType {
-  id: string;
-  x: number;
-  y: number;
-  title: string;
-  description: string;
-  image: string;
-  cardPosition?: "top" | "bottom" | "left" | "right";
-  tooltipPosition?: "top" | "bottom";
-  hasLightBeam?: boolean;
-  beamAngle?: number;
-  beamLength?: number;
-  beamWidth?: number;
-  beamColor?: string;
-  beamSpread?: number;
-  beamOpacity?: number;
-  beamGlowIntensity?: number;
-  hasMagnifier?: boolean;
-  magnifierZoom?: number;
-  magnifierRadius?: number;
-  brand?: string;
-  brandClass?: string;
-  productName?: string;
-  features?: string[];
-  price?: string;
-  buttonText?: string;
-  cardOffsetY?: number;
-  redirectUrl?: string;
-  mediaType?: 'image' | 'video';
-  magnifierImage?: string;
-  magnifierImageWidth?: number;
-  magnifierImageHeight?: number;
-  magnifierFocusX?: number; 
-  magnifierFocusY?: number;
-  brandLogoWidth?: number;
-  brandLogoHeight?: number;
-  mediaBackgroundColor?: string;
-}
-
-interface RenderedImageProps {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-interface HotspotProps {
-  hotspot: HotspotType;
-  imageProps: RenderedImageProps;
-  backgroundImage: string;
-  originalImageWidth?: number;
-  originalImageHeight?: number;
-  isOpen: boolean;
-  onToggle: () => void; 
-  onClose: () => void; 
-}
+import type { HotspotProps } from "@/types";
 
 
 const Hotspot: React.FC<HotspotProps> = ({

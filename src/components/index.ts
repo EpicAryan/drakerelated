@@ -4,7 +4,7 @@ import InitialLoader from "./loading/initialLoader";
 import ClientLayout from "../lib/clientLayout";
 import InteractiveRoom from "./interactiveRoom";
 import Kitchen from "./kitchen";
-import Exterior from "./exterior";
+import Entrance from "./entrance";
 import { LoadingProvider } from "./loading/loadingContext";
 import IntroModal from "./introModal";
 import LandscapeHint from "./landscapeHint";
@@ -16,7 +16,7 @@ export {
     ClientLayout,
     InteractiveRoom,
     Kitchen,
-    Exterior,
+    Entrance,
     LoadingProvider,
     IntroModal,
     LandscapeHint

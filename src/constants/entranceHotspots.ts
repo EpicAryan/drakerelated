@@ -1,5 +1,4 @@
-import { HotspotType } from "@/components/hotspot";
-import type { LucideIcon } from 'lucide-react';
+import { HotspotType } from "@/types";
 import { 
   Monitor, 
   Wifi, 
@@ -27,18 +26,8 @@ import {
   MoonStar
 } from 'lucide-react';
 
-export interface HotspotTypeWithIcons extends HotspotType {
-  featuresWithIcons?: Array<{
-    text: string;
-    icon: LucideIcon;
-    isFullWidth?: boolean;
-  }>;
-  imageWidth?: number | string;
-  imageHeight?: number | string;
-  imageClassName?: string;
-}
 
-export const exteriorHotspots: HotspotTypeWithIcons[] = [
+export const entranceHotspots: HotspotType[] = [
   {
     id: "1",
     x: 63.4,
@@ -47,7 +36,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     description: "This smart video door phone provides high-resolution video and two-way communication, ensuring secure and convenient visitor management. Its sleek design and advanced features make it ideal for modern homes.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/2jo4LN0GrmiafAqkrS4lgt/9f477c436ac0015a82f23289a48c67bb/Qubo_Door_phone.webp",
     mediaType: "image",
-    redirectUrl: "https://www.flipkart.com/qubo-wifi-door-bell-pro-tab-hero-group-3mp-1296p-instant-visitor-video-phone/p/itmb010a84980eb3?pid=VIPHYXQG8FPKS8GK&lid=LSTVIPHYXQG8FPKS8GKTJEWND&marketplace=FLIPKART&q=video+door+phone&store=search.flipkart.com&srno=s_1_13&otracker=search&otracker1=search&fm=Search&iid=f5670266-7fdc-4b30-844a-1f0b8b9f9806.VIPHYXQG8FPKS8GK.SEARCH&ppt=sp&ppn=sp&ssid=l63i6nbxxs0000001747997597196&qH=8a816cd0662dea57",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=VIPHYXQG8FPKS8GK&lid=LSTVIPHYXQG8FPKS8GK27ROPB&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-40 xl:h-46 translate-y-3 -translate-x-5",
     cardPosition: 'left',
     cardOffsetY: 40,
@@ -86,7 +75,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/lKQ6knBnjJiH1hSk9PA5M/ecdac03b8eb88957b9ae497749c7210f/smart-door-lock.webp",
     mediaType: "image",
     mediaBackgroundColor: "bg-transparent lg:bg-black",
-    redirectUrl: "https://www.flipkart.com/atomberg-sl1-6-ways-unlocking-fingerprint-5-ss-bolt-free-installation-smart-door-lock/p/itm51cdcb8b535b2?pid=SLOGTBZ36YXCVHPM&lid=LSTSLOGTBZ36YXCVHPM8CTW34",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=SLOGTBZ36YXCVHPM&lid=LSTSLOGTBZ36YXCVHPMKFHYJT&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-48 lg:h-44 xl:h-56 ",
     cardPosition: 'left',
     tooltipPosition: "bottom",
@@ -127,7 +116,7 @@ export const exteriorHotspots: HotspotTypeWithIcons[] = [
     image: "https://images.ctfassets.net/m3x6aw9x53qp/316VrAONe8k9J1gyOscLNZ/b7b480eca210bc8bd258e1e8c3c020aa/Outdoor_cab.webp",
     mediaType: "image",
     mediaBackgroundColor: "bg-transparent",
-    redirectUrl: "https://www.flipkart.com/qubo-outdoor-bullet-cam-hero-group-3mp-1296p-wifi-cctv-full-hd-weather-resistant-security-camera/p/itmfb298d0933008?pid=HSAGSREGRFVFADJX&lid=LSTHSAGSREGRFVFADJXLHHWIG&marketplace=FLIPKART&q=qubo+outdoor+camera&store=igc%2Fj69%2Fagd&srno=s_1_2&otracker=AS_QueryStore_OrganicAutoSuggest_1_9_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_9_na_na_na&fm=search-autosuggest&iid=947cb6f5-fc7d-4652-b0cf-e2b7b9e54855.HSAGSREGRFVFADJX.SEARCH&ppt=sp&ppn=sp&ssid=1qt5yao7r40000001747997759818&qH=5888d2ed8fc132e6",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=HSAGSREGRFVFADJX&lid=LSTHSAGSREGRFVFADJXLHHWIG&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-92 xl:h-106 translate-y-14 lg:translate-y-16",
     cardPosition: 'left',
     cardOffsetY: 170,

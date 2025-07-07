@@ -1,5 +1,4 @@
-import { HotspotType } from "@/components/hotspot";
-import type { LucideIcon } from 'lucide-react';
+import { HotspotType } from "@/types";
 import { 
   Wifi,  
   Eye, 
@@ -21,19 +20,9 @@ import {
   Volume2, 
 } from 'lucide-react';
 
-export interface HotspotTypeWithIcons extends HotspotType {
-  featuresWithIcons?: Array<{
-    text: string;
-    icon: LucideIcon;
-    isFullWidth?: boolean;
-  }>;
-  imageWidth?: number | string;
-  imageHeight?: number | string;
-  imageClassName?: string;
-}
 
 
-export const kitchenHotspots: HotspotTypeWithIcons[] = [
+export const kitchenHotspots: HotspotType[] = [
   {
     id: "1",
     x: 23,
@@ -42,11 +31,10 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     description: "This smart LED strip offers vibrant, customizable lighting with flexible installation and intuitive app control. Its multicolor effects and smart assistant compatibility make it ideal for enhancing ambiance in any space.",
     image: "https://images.ctfassets.net/m3x6aw9x53qp/4dTfm7O291u6wqv7xINl2c/72ef4aa0e8152acbb13142b56eafb5d7/Tapo_Strip_Lights.webp",
     mediaType: "image",
-    redirectUrl: "https://www.flipkart.com/tp-link-tapo-l930-5-smart-wi-fi-led-5m-work-alexa-google-light-strip/p/itm53bb64849bd6a?pid=LLSGRB6DGEY35HJG&lid=LSTLLSGRB6DGEY35HJG4UQ7ZT&marketplace=FLIPKART&q=smart+strip+light+tp+link&store=igc%2Fb4q&srno=s_1_2&otracker=search&otracker1=search&fm=Search&iid=89836717-9a80-41fa-ab49-d8cf46fcdec9.LLSGRB6DGEY35HJG.SEARCH&ppt=sp&ppn=sp&ssid=j439wcacvk0000001747997724639&qH=cd037957e067b7fd",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=LLSGRB6DGEY35HJG&lid=LSTLLSGRB6DGEY35HJG4UQ7ZT&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-40 xl:h-48 absolute top-0",
     cardPosition: 'right',
     brand: "/tapo-logo.webp",
-    // brandClass: "absolute h-auto w-8 sm:w-12 ",
     brandClass: "h-auto w-9 sm:w-12 absolute right-4 -translate-y-2.5 lg:-translate-y-2.75 xl:-translate-y-2",
     brandLogoWidth: 200,
     brandLogoHeight: 48, 
@@ -77,13 +65,11 @@ export const kitchenHotspots: HotspotTypeWithIcons[] = [
     image:"https://videos.ctfassets.net/m3x6aw9x53qp/5UJ1I4PX2M0AjyleczmkNm/f39b246a32625675a9bf64b8a5bf4760/Qubo_Indoor_Camera.webm",
     mediaType: "video",
     mediaBackgroundColor: 'bg-transparent',
-    redirectUrl: "https://www.flipkart.com/qubo-smart-cam-360-q100-hero-group-3mp-1296p-wifi-cctv-2-way-talk-night-vision-security-camera/p/itm02c0cd139df73?pid=HSAGZ85BFFSNHZ2Z&lid=LSTHSAGZ85BFFSNHZ2ZN01CZ3",
-    // imageClassName: "w-auto h-38 sm:h-42 xl:h-46 absolute top-1",
+    redirectUrl: "https://www.flipkart.com/redmi-watch-move-1-85-premium-amoled-14-day-battery-best-accuracy-dual-core-processor-smartwatch/p/itm3f270f4a5747a?pid=HSAGZ85BFFSNHZ2Z&lid=LSTHSAGZ85BFFSNHZ2ZN01CZ3&marketplace=FLIPKART&cmpid=shameta2025",
     imageClassName: "w-auto h-48 sm:h-48 lg:h-44 xl:h-52 absolute ",
     cardPosition: 'bottom',
     tooltipPosition: "bottom",
     brand: "/qubo-logo.webp",
-    // brandClass: "h-auto w-12 sm:w-14",
     brandClass: "h-auto w-12 sm:w-14 xl:w-16 absolute right-4 translate-y-0.5 lg:translate-y-0.75 xl:translate-y-1",
     brandLogoWidth: 200,
     brandLogoHeight: 48, 

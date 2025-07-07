@@ -1,6 +1,6 @@
 import { NavigationType } from "@/components/navigation";
 
-export const exteriorNavConstants: Omit<NavigationType, "onClick">[] = [
+export const entranceNavConstants: Omit<NavigationType, "onClick">[] = [
   {
     id: "nav1",
     x: 46,

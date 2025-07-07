@@ -119,7 +119,6 @@ const LightBeam: React.FC<LightBeamProps> = ({
               transition={{ duration: 0.1 }}
             />
 
-            {/* Optional dim secondary beam */}
             <motion.path
               d={beamPath}
               fill={`url(#${gradientId})`}

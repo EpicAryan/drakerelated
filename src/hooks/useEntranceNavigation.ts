@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { NavigationType } from "@/components/navigation";
-import { exteriorNavConstants } from "@/constants/exteriorNavItems";
+import { entranceNavConstants } from "@/constants/entranceNavItems";
 import { useTransition } from "@/components/Transition/transitionContext"
 
-export const useExteriorNavigation = (): NavigationType[] => {
+export const useEntranceNavigation = (): NavigationType[] => {
   const router = useRouter();
   const { startTransition } = useTransition();
 
-  return exteriorNavConstants.map((item) => ({
+  return entranceNavConstants.map((item) => ({
     ...item,
     onClick: () => {
       switch (item.label) {
