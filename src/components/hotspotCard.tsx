@@ -8,7 +8,7 @@ import { Check, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import clsx from 'clsx';
 import type { HotspotType, HotspotCardProps, FeatureWithIcon } from "@/types";
-import { trackButtonClick, trackExternalLink, trackProductInteraction } from '@/lib/analytics';
+import { trackButtonClick, trackExternalLink } from '@/lib/analytics';
 
 
 interface _CardContentProps {
@@ -34,10 +34,6 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
   displayFeatures,
 }) => {
   const handleCloseClick = () => {
-    trackProductInteraction(productName, 'close_card', {
-      product_id: hotspot.id,
-      card_position: hotspot.cardPosition
-    });
     onClose();
   };
 

@@ -15,7 +15,7 @@ export const kitchenNavConstants: Omit<NavigationType, "onClick">[] = [
     x: 75,
     y: 20,
     direction: "right",
-    label: "Exterior",
+    label: "Entrance",
     imageUrl: "https://images.ctfassets.net/m3x6aw9x53qp/8I7Rjg7Eqg6aOJtJA9if5/788069718d4985de9cc389ca3a314533/entrance.webp"
   },
 ];
