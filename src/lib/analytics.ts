@@ -1,13 +1,24 @@
-// utils/analytics.ts
+interface PlausibleFunction {
+  (event: string, options?: { props?: Record<string, unknown> }): void;
+  q?: unknown[][];
+}
 declare global {
   interface Window {
-    plausible: (event: string, options?: { props?: Record<string, unknown> }) => void;
+    plausible: PlausibleFunction;
   }
 }
 
 export const trackEvent = (eventName: string, props?: Record<string, unknown>) => {
-  if (typeof window !== 'undefined' && window.plausible) {
-    window.plausible(eventName, { props });
+  if (typeof window !== 'undefined') {
+    if (window.plausible) {
+      window.plausible(eventName, { props });
+    } else {
+      console.warn('Plausible not loaded yet, event queued:', eventName);
+      window.plausible = window.plausible || function(...args: unknown[]) { 
+        (window.plausible.q = window.plausible.q || []).push(args) 
+    }
+      window.plausible(eventName, { props });
+    }
   }
 };
 
