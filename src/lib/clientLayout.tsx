@@ -1,30 +1,30 @@
 "use client";
 
 import { Navbar, InitialLoader, IntroModal } from "@/components";
-import { TransitionProvider } from "../components/Transition/transitionContext";
-import TransitionOverlay from "../components/Transition/transitionOverlay";
+import { TransitionProvider } from "../components/transition/transitionContext";
+import TransitionOverlay from "../components/transition/transitionOverlay";
 import { useLoading } from "@/components/loading/loadingContext";
-import { AnimatePresence } from "motion/react"; 
+import { AnimatePresence } from "motion/react";
 
 export default function ClientLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  const { isPageLoaded } = useLoading();
+    const { isPageLoaded } = useLoading();
 
-  return (
-    <>
-      <AnimatePresence>
-        {!isPageLoaded && <InitialLoader />}
-      </AnimatePresence>
-         
-      <TransitionProvider>
-         {isPageLoaded && <Navbar />}
-        <TransitionOverlay />
-        {isPageLoaded && <IntroModal />}
-        {children}
-      </TransitionProvider>
-    </>
-  );
+    return (
+        <>
+            <AnimatePresence>
+                {!isPageLoaded && <InitialLoader />}
+            </AnimatePresence>
+
+            <TransitionProvider>
+                {isPageLoaded && <Navbar />}
+                <TransitionOverlay />
+                {isPageLoaded && <IntroModal />}
+                {children}
+            </TransitionProvider>
+        </>
+    );
 }

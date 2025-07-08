@@ -1,36 +1,218 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Home Interactive Experience
 
-## Getting Started
+A modern, interactive smart home showcase built with **Next.js**, featuring immersive room experiences with smart device demonstrations, product information, and seamless e-commerce integration.
 
-First, run the development server:
+---
+
+## Features
+
+### Interactive Room Experience
+- **Multi-room Navigation**: Explore Kitchen, Living Room, and Entrance areas
+- **Interactive Hotspots**: Click on smart devices to view detailed product information
+- **Smooth Transitions**: Seamless navigation between rooms with custom animations
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+
+### Smart Device Showcase
+- **Product Cards**: Detailed specifications, features, and pricing
+- **Media Integration**: High-quality images and videos for each product
+- **Purchase Integration**: Direct links to e-commerce platforms (Flipkart)
+- **Brand Integration**: Featured products from Qubo, Tapo, Atomberg, Philips, and Wipro
+
+### Advanced Features
+- **Camera Light Beams**: Visual representation of camera coverage areas
+- **Magnifying Glass**: Zoom functionality for detailed product inspection
+- **Auto-scroll**: Intelligent focus on featured products
+- **Loading States**: Smooth loading transitions and splash screens
+
+---
+
+## Technology Stack
+
+### Frontend Framework
+- **Next.js 15+** – React framework with App Router
+- **TypeScript** – Type-safe development
+- **Tailwind CSS** – Utility-first CSS framework
+- **Motion** – Advanced animations and transitions
+
+### Content Management
+- **Contentful** – Headless CMS serving as CDN for images and videos
+- **Optimized Media Delivery** – Fast, reliable content delivery worldwide
+
+### Analytics & Tracking
+- **Plausible Analytics** – Privacy-focused web analytics
+- **Custom Event Tracking** – Button clicks, navigation, and user interactions
+
+### Development Tools
+- **ESLint** – Code linting and best practices
+- **Lucide React** – Modern icon library
+- **clsx** – Conditional `className` utility
+
+---
+
+## Prerequisites
+
+Ensure you have the following before starting:
+
+- Node.js (v18.0.0 or higher)
+- npm or yarn
+- Contentful account for media assets
+- Plausible Analytics account for tracking
+
+---
+
+## Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/EpicAryan/drakerelated.git
+cd drakerelated
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Environment Configuration
+
+```bash
+# Plausible Analytics Configuration
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com
+```
+Replace yourdomain.com with myapp.vercel.app or localhost:3000.
+
+### 4. Contentful Setup
+
+- Assets are already configured and served via CDN
+- No extra setup required
+
+### 5. Plausible Analytics Setup
+
+- Create an account at plausible.io
+- Add your domain
+- Update .env.local
+- Track:
+    - Page visits
+    - Product clicks
+    - External link redirections
+    - Room navigation
+
+## Running the Application
 
 ```bash
 npm run dev
 # or
 yarn dev
+```
+Visit: http://localhost:3000
+
+## Production Build
+
+```bash
+npm run build
+npm start
 # or
-pnpm dev
-# or
-bun dev
+yarn build
+yarn start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+smart-home-app/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── rooms/
+│       ├── kitchen/page.tsx
+│       └── entrance/page.tsx
+├── components/
+│   ├── loading/
+│   ├── transition/
+│   ├── ui/
+│   ├── index.ts
+│   ├── routeTracker.ts
+│   ├── entrance.tsx
+│   ├── hotspot.tsx
+│   ├── hotspotCard.tsx
+│   ├── introModal.tsx
+│   ├── interactiveRoom.tsx
+│   ├── kitchen.tsx
+│   ├── landscapeHint.tsx
+│   ├── livingroom.tsx
+│   ├── navbar.tsx
+│   └── navigation.tsx
+├── constants/
+│   ├── kitchenHotspots.ts
+│   ├── livingroomHotspots.ts
+│   ├── entranceHotspots.ts
+│   ├── entranceNavItems.ts
+│   ├── kitchenNavItems.ts
+│   └── livingroomNavItems.ts
+├── hooks/
+│   ├── useKitchenNavigation.ts
+│   ├── useLivingroomNavigation.ts
+│   ├── useEntranceNavigation.ts
+│   └── usePageExit.ts
+├── lib/
+│   ├── analytics.ts
+│   ├── utils.ts
+│   ├── clientLayout.tsx
+│   ├── lightBeam.tsx
+│   └── magnifying.tsx
+├── types/
+│   └── index.ts
+└── public/
+    ├── magnify/
+    
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Production Build
 
-## Learn More
+### Navigating Rooms
 
-To learn more about Next.js, take a look at the following resources:
+- Use the navbar (top on desktop, bottom on mobile)
+- Use in-room arrows for contextual navigation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Interacting with Products
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Click hotspots to reveal product details
+- Browse specs, features, and click Buy Now
+- Use magnifying glass (desktop only)
 
-## Deploy on Vercel
+### Analytics Tracking
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tracks:
+- Page views & time per room
+- Product interactions
+- Button clicks & purchases
+- Navigation patterns
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Content Delivery
+### Contentful CDN Integration
+
+- Serves images, videos, and logos
+- Offers:
+    - Global caching
+    - Image optimization
+    - Fast response times
+
+## Deployment
+
+### Deploy on Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Required Environment Variables
+```bash
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com
+```
+
+Built with ❤️ using Next.js, TypeScript, and modern web technologies.

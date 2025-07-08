@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { livingroomNavConstants } from "@/constants/livingroomNavItems";
-import { useTransition } from "@/components/Transition/transitionContext"
+import { useTransition } from "@/components/transition/transitionContext"
 import { NavigationType } from "@/types";
 import { trackNavigation } from "@/lib/analytics";
 

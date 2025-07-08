@@ -38,7 +38,6 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
   };
 
   const handleBuyNowClick = () => {
-    console.log('🚀 Buy Now button clicked for:', productName);
     trackButtonClick('buy_now', 'product_card', {
       product_name: productName,
       product_id: hotspot.id,
@@ -48,7 +47,6 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
     trackExternalLink(hotspot.redirectUrl || '', 'product_purchase');
     
     if (hotspot.redirectUrl) {
-      console.log('🌐 Opening URL:', hotspot.redirectUrl);
       window.open(hotspot.redirectUrl, "_blank");
     }
   };
@@ -92,7 +90,6 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
               alt={productName}
               width={920}
               height={920}
-              // sizes="100vw"
               priority
               className="w-full h-full object-contain"
             />
