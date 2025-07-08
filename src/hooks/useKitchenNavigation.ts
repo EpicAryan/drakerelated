@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { NavigationType } from "@/components/navigation";
 import { kitchenNavConstants } from "@/constants/kitchenNavItems";
 import { useTransition } from "@/components/Transition/transitionContext"
+import { NavigationType } from "@/types";
+import { trackNavigation } from "@/lib/analytics";
 
 export const useKitchenNavigation = (): NavigationType[] => {
   const router = useRouter();
@@ -12,11 +13,13 @@ export const useKitchenNavigation = (): NavigationType[] => {
   return kitchenNavConstants.map((item) => ({
     ...item,
     onClick: () => {
+      trackNavigation('kitchen', item.label.toLowerCase().replace(' ', '-'), 'room-navigation');
+      
       switch (item.label) {
         case "Living Room":
           startTransition(() => router.push("/"), item.imageUrl);
           break;
-        case "Exterior":
+        case "Entrance":
           startTransition(() => router.push("/rooms/entrance"), item.imageUrl);
           break;
       }

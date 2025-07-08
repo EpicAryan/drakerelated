@@ -1,4 +1,5 @@
-import { NavigationType } from "@/components/navigation";
+import { NavigationType } from "@/types";
+
 
 export const kitchenNavConstants: Omit<NavigationType, "onClick">[] = [
   {

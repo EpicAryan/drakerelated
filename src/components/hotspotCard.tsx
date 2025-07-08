@@ -8,6 +8,7 @@ import { Check, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import clsx from 'clsx';
 import type { HotspotType, HotspotCardProps, FeatureWithIcon } from "@/types";
+import { trackButtonClick, trackExternalLink, trackProductInteraction } from '@/lib/analytics';
 
 
 interface _CardContentProps {
@@ -32,13 +33,36 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
   buttonText,
   displayFeatures,
 }) => {
+  const handleCloseClick = () => {
+    trackProductInteraction(productName, 'close_card', {
+      product_id: hotspot.id,
+      card_position: hotspot.cardPosition
+    });
+    onClose();
+  };
+
+  const handleBuyNowClick = () => {
+    trackButtonClick('buy_now', 'product_card', {
+      product_name: productName,
+      product_id: hotspot.id,
+      redirect_url: hotspot.redirectUrl
+    });
+    
+    trackExternalLink(hotspot.redirectUrl || '', 'product_purchase');
+    
+    if (hotspot.redirectUrl) {
+      window.open(hotspot.redirectUrl, "_blank");
+    }
+  };
+
+
   return (
     <div className="relative w-76 md:w-78 xl:w-90 rounded-2xl overflow-hidden lg:drop-shadow-2xl text-black max-w-[90vw] h-auto bg-[#101010]">
       <motion.button
         className="absolute top-3 right-3 z-20 w-8 h-8 bg-black/70 hover:bg-black/90 text-white rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
-          onClose();
+          handleCloseClick();
         }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -147,7 +171,7 @@ const _CardContent: React.FC<_CardContentProps> = React.memo(({
           whileTap={{ scale: 0.98 }}
           onClick={(e) => { 
             e.stopPropagation(); 
-            if (hotspot.redirectUrl) window.open(hotspot.redirectUrl, "_blank");
+             handleBuyNowClick();
           }}
         >
           {buttonText}

@@ -6,6 +6,7 @@ import { motion } from 'motion/react'
 import { usePathname, useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { useTransition } from '@/components/Transition/transitionContext'
+import { trackNavigation } from '@/lib/analytics'
 
 const navItems = [
   { 
@@ -31,6 +32,10 @@ const Navbar = () => {
   const { startTransition } = useTransition()
 
   const handleNavigation = (href: string, imageUrl?: string) => {
+    const currentRoom = pathname === '/' ? 'living-room' : pathname.replace('/rooms/', '');
+    const targetRoom = href === '/' ? 'living-room' : href.replace('/rooms/', '');
+    
+    trackNavigation(currentRoom, targetRoom, 'main-navbar');
     startTransition(() => router.push(href), imageUrl)
   }
 

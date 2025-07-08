@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { NavigationType } from "@/components/navigation";
 import { livingroomNavConstants } from "@/constants/livingroomNavItems";
 import { useTransition } from "@/components/Transition/transitionContext"
+import { NavigationType } from "@/types";
 
 export const useLivingroomNavigation = (): NavigationType[] => {
     const router = useRouter();

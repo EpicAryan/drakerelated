@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {  LoadingProvider, ClientLayout  } from "@/components";
+import Script from "next/script";
+import RouteTracker from "@/components/routeTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +27,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          defer
+          data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+          src="https://plausible.io/js/script.js"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LoadingProvider>
-          <ClientLayout>{children}</ClientLayout>
+          <ClientLayout>
+            <RouteTracker />
+            {children}
+          </ClientLayout>
         </LoadingProvider>
       </body>
     </html>

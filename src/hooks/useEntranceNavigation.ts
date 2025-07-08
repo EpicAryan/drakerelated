@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { NavigationType } from "@/components/navigation";
 import { entranceNavConstants } from "@/constants/entranceNavItems";
 import { useTransition } from "@/components/Transition/transitionContext"
+import { NavigationType } from "@/types";
 
 export const useEntranceNavigation = (): NavigationType[] => {
   const router = useRouter();
