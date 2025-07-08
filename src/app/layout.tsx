@@ -33,6 +33,13 @@ export default function RootLayout({
           data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
           src="https://plausible.io/js/script.js"
         />
+        <Script id="plausible-fallback" strategy="beforeInteractive">
+          {`
+            window.plausible = window.plausible || function(...args) { 
+              (window.plausible.q = window.plausible.q || []).push(args);
+            };
+          `}
+        </Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
